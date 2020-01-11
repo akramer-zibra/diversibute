@@ -1,38 +1,27 @@
 var Combinatorics = require('js-combinatorics');
 var distance = require('euclidean-distance');
 
+// Load helpers
+const shuffle = require('./src/helpers/shuffle');
+const distribute = require('./src/helpers/distribute');
+
 // Load input data
 const input = require("./input.json");
 
 // Confguration
 const POCKET_NR = 3;
 
-
-// Initialize chromosome with k groups 
-chromosome = [];
-for(let k = 0; k < POCKET_NR; k++) {
-    chromosome.push([]);
-}
-
 // Get element keys
 var keys = Object.keys(input);
 
-// TODO: randomize array elements
+// Shuffle array elements for randomization
+keys = shuffle(keys);
 
 // Seperate keys into k groups
-var i = 0;
-while(i < keys.length) {
-
-    // Calculate chromosome pocket
-    var pocket = (i % POCKET_NR);
-
-    chromosome[pocket].push(keys[i]);
-
-    // Increase counter
-    i++;
-}
+var chromosome = distribute(POCKET_NR, keys);
 
 // Calculate combinations of the pocket elements
+var internalPocketDistances = [];
 chromosome.forEach((pocket) => {
 
     console.log(pocket);
@@ -53,6 +42,15 @@ chromosome.forEach((pocket) => {
         dSum += distance(input[combination[0]], input[combination[1]]);
     });
 
+    internalPocketDistances.push(dSum);
     console.log(dSum);
 });
+console.log(internalPocketDistances);
 
+// Calculate the average of the internal pocket distances
+var internalDistanceSum = internalPocketDistances.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue;  
+}, 0.0);
+var internalDistanceAverage = internalDistanceSum / internalPocketDistances.length;
+
+console.log(internalDistanceAverage);
