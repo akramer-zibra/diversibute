@@ -1,11 +1,13 @@
+// Dependencies
 var Combinatorics = require('js-combinatorics');
 var distance = require('euclidean-distance');
 
-/** 
- * This function calculates internal difference of given groups
- * and returns a list with numbers
+// Functions
+/**
+ * This function calculates the internal difference sum from given groups
+ * @param {*} groups 
  */
-module.exports = (groups, data) => {
+var differencesGroups = (groups) => {
     
     // Initialize result collection
     var internalGroupDifferences = [];
@@ -13,6 +15,7 @@ module.exports = (groups, data) => {
     // Calculate difference sum for each group
     Object.keys(groups).forEach((element, index) => {
 
+        
         // Create distance combinations 
         var combinations = [];
         var cmb = Combinatorics.combination(groups[element], 2);
@@ -23,43 +26,59 @@ module.exports = (groups, data) => {
         combinations.forEach(combination => {
             dSum += distance(combination[0], combination[1]);  // Calculate euclidean distance
         });
+        
+        console.log(groups[element]);
 
         // Collect this difference in result collection
         internalGroupDifferences[index] = dSum;        
     });
     return internalGroupDifferences;
+};
+
+/**
+ * This function calculates the sum of differences of the given list values
+ * @param {*} values 
+ */
+var differencesSum = (values) => {
+
+    // Create distance combinations 
+    var combinations = [];
+    var cmb = Combinatorics.combination(values, 2);
+    while(a = cmb.next()) combinations.push(a);
+
+    // Sum up euclidean distance
+    var dSum = 0.0;
+    combinations.forEach(combination => {
+        dSum += distance(combination[0], combination[1]);  // Calculate euclidean distance
+    });
+
+    return dSum;
+};
+
+/**
+ * This function calculates a difference sum of given list of numbers
+ * @param {*} values 
+ */
+var differences1Dimensional = (values) => {
+
+    // Create combinations
+    var combinations = [];
+    var cmb = Combinatorics.combination(values, 2);
+    while(a = cmb.next()) combinations.push(a);
+
+    // Sum up simple distance
+    var dSum = 0.0;
+    combinations.forEach(combination => {
+        dSum += Math.abs(combination[0] - combination[1]);
+    });
+
+    return dSum;
 }
 
 /**
- * @deprecated
- */ 
-var legacyDistance = (chromosome, data) => {
-
-    var internalPocketDistances = [];
-    chromosome.forEach((pocket) => {
-
-        console.log(pocket);
-        console.log('------------');
-
-        // Initialize empty combination result array
-        var combinations = [];
-
-        var cmb = Combinatorics.combination(pocket, 2);
-        while(a = cmb.next()) combinations.push(a);
-
-        // Sum up euclidean distance
-        var dSum = 0.0;
-
-        combinations.forEach(combination => {
-
-            // Calculate euclidean distance
-            dSum += distance(data[combination[0]], data[combination[1]]);
-        });
-
-        internalPocketDistances.push(dSum);
-        console.log(dSum);
-    });
-
-    console.log(internalPocketDistances);
-    return internalPocketDistances;
-}
+ * This module contains function to calculate euclidean differences
+ */
+module.exports = {
+    differencesGroups,
+    differences1Dimensional
+};
