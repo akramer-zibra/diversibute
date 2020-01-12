@@ -1,8 +1,6 @@
-// Load helpers
-const shuffle = require('./src/helpers/shuffle');
-const distribute = require('./src/helpers/distribute');
-const distances = require('./src/helpers/distances');
-const regression = require('./src/helpers/regression');
+// Load genetic algorithm functions
+const seedFunc = require('./src/genetic-algorithm/seed');
+const fitnessFunc = require('./src/genetic-algorithm/fitness');
 
 // Load input data
 const input = require("./input.json");
@@ -10,6 +8,16 @@ const input = require("./input.json");
 // Get element keys
 var keys = Object.keys(input);
 
+// Create an initial seed chromosome
+var chromosome = seedFunc(keys, 3);
+
+console.log(chromosome);
+
+// Calculate fitness of this given chromosome
+var fitnessScore = fitnessFunc(chromosome, input);
+console.log(fitnessScore);
+
+/*
 // Shuffle array elements for randomization
 keys = shuffle(keys);
 
@@ -22,3 +30,4 @@ internalPocketDistances = distances(input, chromosome);
 
 // Calculate a linear regression func 
 regression(internalPocketDistances);
+*/
