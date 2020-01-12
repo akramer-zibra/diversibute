@@ -1,10 +1,10 @@
 const regression = require('regression');
 
-module.exports = (internalPocketDistances) => {
+module.exports = (values) => {
 
     // Reduce distances to 2d matrix
     var points = [];
-    internalPocketDistances.filter((currentValue) => {
+    values.filter((currentValue) => {
         points.push([points.length, currentValue]);
     });
     console.log(points);
