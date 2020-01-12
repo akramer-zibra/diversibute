@@ -1,7 +1,21 @@
 var Combinatorics = require('js-combinatorics');
 var distance = require('euclidean-distance');
 
-module.exports = (data, chromosome) => {
+/** 
+ * This function calculates internal difference of given groups
+ * and returns a 
+ */
+module.exports = (groups, data) => {
+    
+
+
+    return [];
+}
+
+/**
+ * @deprecated
+ */ 
+var legacyDistance = (chromosome, data) => {
 
     var internalPocketDistances = [];
     chromosome.forEach((pocket) => {
