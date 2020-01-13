@@ -1,11 +1,21 @@
-const difference = require('../helpers/difference');
-const regression = require('../helpers/regression');
+// Require data
+const data = require('../../input');
+
+// Require dependency functions
+const constraints = require('../constraints/chromosome');
+const differencesGroups = require('../helpers/difference').differencesGroups;
+const differences1Dimensional = require('../helpers/difference').differences1Dimensional;
 
 /**
  * This function calculates a fitness value for given chromosome 
- * It needs access to the input data
+ * It uses data input with module require
  */
-module.exports = (chromosome, data) => {
+module.exports = (chromosome) => {
+
+    // First check if chromosome matches base constraints
+    if(!constraints(chromosome)) {
+        return undefined;
+    }
 
     // Get array with data keys
     // NOTICE: key ordering must be deterministic!
@@ -30,15 +40,17 @@ module.exports = (chromosome, data) => {
     console.log(groups);
 
     // Calculate internal group difference
-    var groupDifferences = difference(groups, data);
-    console.log(groupDifferences);
+    var internalGroupDifferences = differencesGroups(groups);
+    console.log(internalGroupDifferences);
 
-    // Calculate a linear regression function
-    var linearFunction = regression(groupDifferences);
-    console.log(linearFunction);
+    // Calculate euclidean differences between internal group differences
+    var outerGroupDifference = differences1Dimensional(internalGroupDifferences);
+    console.log(outerGroupDifference);
 
-    // Calculate a fitness score from linear regression 
-    var fitnessScore = (Math.abs(linearFunction['equation'][0]) > 1) ? 0 : linearFunction['equation'][1];
+    // Fitness is Max(heterogenity) - Difference between groups  
+    var maxGroupHeterogenity = Math.max(...internalGroupDifferences);
+    var fitness = maxGroupHeterogenity - outerGroupDifference;
 
-    return fitnessScore;
+    // FInal fitness score
+    return fitness;
 }
