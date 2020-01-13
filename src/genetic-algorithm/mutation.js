@@ -7,6 +7,11 @@ const counter = require('../helpers/counter');
  */
 var mutate = (chromosome) => {
 
+    // Cast chromosome to value array 
+    if(!Array.isArray(chromosome)) {
+        chromosome = Object.values(chromosome);
+    }
+
     // Count group members
     var counts = counter(chromosome);
     var numberGroups = Object.keys(counts).length;
@@ -25,8 +30,13 @@ var mutate = (chromosome) => {
  */
 module.exports = (chromosome) => {
 
+    // Cast chromosome to value array 
+    if(!Array.isArray(chromosome)) {
+        chromosome = Object.values(chromosome);
+    }
+
     // Clone chromosome
-    var clone = chromosome.slice(0);
+    var clone = chromosome.splice(0);
 
     // Mutate given chromosome
     return mutate(clone);
