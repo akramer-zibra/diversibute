@@ -26,8 +26,6 @@ var differencesGroups = (groups) => {
             dSum += distance(combination[0], combination[1]);  // Calculate euclidean distance
         });
         
-        console.log(groups[element]);
-
         // Collect this difference in result collection
         internalGroupDifferences[index] = dSum;        
     });
