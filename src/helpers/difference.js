@@ -35,26 +35,6 @@ var differencesGroups = (groups) => {
 };
 
 /**
- * This function calculates the sum of differences of the given list values
- * @param {*} values 
- */
-var differencesSum = (values) => {
-
-    // Create distance combinations 
-    var combinations = [];
-    var cmb = Combinatorics.combination(values, 2);
-    while(a = cmb.next()) combinations.push(a);
-
-    // Sum up euclidean distance
-    var dSum = 0.0;
-    combinations.forEach(combination => {
-        dSum += distance(combination[0], combination[1]);  // Calculate euclidean distance
-    });
-
-    return dSum;
-};
-
-/**
  * This function calculates a difference sum of given list of numbers
  * @param {*} values 
  */
