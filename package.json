@@ -10,8 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "euclidean-distance": "1.0.0",
-    "genetic-js": "0.1.14",
     "js-combinatorics": "0.5.5",
-    "regression": "2.0.1"
+    "regression": "2.0.1",
+    "@petsinho/geneticjs": "2.1.1"
   }
 }
