@@ -1,33 +1,51 @@
+const config = require('./config');
+const Genetics = require('@petsinho/geneticjs').Genetics;
+
 // Load genetic algorithm functions
 const seedFunc = require('./src/genetic-algorithm/seed');
 const fitnessFunc = require('./src/genetic-algorithm/fitness');
+const mutationFunc = require('./src/genetic-algorithm/mutation');
+const crossoverFunc = require('./src/genetic-algorithm/crossover');
 
 // Load input data
 const input = require("./input.json");
 
-// Get element keys
+// Get group member keys
 var keys = Object.keys(input);
 
-// Create an initial seed chromosome
-var chromosome = seedFunc(keys, 3);
-
-console.log(chromosome);
-
-// Calculate fitness of this given chromosome
-var fitnessScore = fitnessFunc(chromosome, input);
-console.log(fitnessScore);
+// Create initial population with seed function
+var population = [];
+for(let n = 0; n < config.initialSeeds; n++) {
+    population.push(seedFunc(keys, 3));
+}
+//console.log(population[0])
 
 /*
-// Shuffle array elements for randomization
-keys = shuffle(keys);
+// Test mutation method
+var mutated = mutationFunc(population[0]);
+console.log(mutated);
 
-// Seperate keys into k groups
-var k = 3;
-var chromosome = distribute(k, keys);
+// Calculate fitness score
+var fitness = fitnessFunc(mutated);
+console.log(fitness);
 
-// Calculate combinations of the pocket elements and their internal distances
-internalPocketDistances = distances(input, chromosome);
-
-// Calculate a linear regression func 
-regression(internalPocketDistances);
+// Create a crossover
+var crossover = crossoverFunc(population[0], population[1]);
+console.log(crossover);
 */
+
+// Use genetic algorithm object here 
+// with custom configuration
+const geneticAlgorithm = Genetics({
+    mutationFunction: mutationFunc,
+    crossoverFunction: crossoverFunc,
+    fitnessFunction: fitnessFunc,
+//    doesABeatBFunction: yourCompetitionFunction,
+    population: population,
+    populationSize: config.initialPopulationSize 	// defaults to 100
+});
+
+var result = await geneticAlgorithm.evolve(100).best();
+
+// Evolve results
+console.log(geneticAlgorithm.best());
