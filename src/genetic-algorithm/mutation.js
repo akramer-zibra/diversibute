@@ -15,7 +15,7 @@ var mutate = (chromosome) => {
     var randomPointer = Math.floor(Math.random() * (chromosome.length - 1 - 0 + 1)) + 0; // @see https://stackoverflow.com/a/1527820
     console.log(randomPointer);
     
-    /* Increase one bit */
+    /* Increase one bit and prevent "zero" value */
     chromosome[randomPointer] = ((chromosome[randomPointer] + 1) % numberGroups) + 1; 
     
     return chromosome;
@@ -33,7 +33,7 @@ module.exports = (chromosome) => {
     // Mutate given chromosome
     clone = mutate(clone);
 
-    // TODO.. move constraint test into fitness function!!!
+    // FIXME.. move constraint test into fitness function!!!
     // Mutate until constraints are valid
     /*while(!constraint(clone)) {
         clone = mutate(clone);
