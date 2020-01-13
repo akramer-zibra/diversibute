@@ -4,6 +4,14 @@
  */
 module.exports = (a, b) => {
 
+    // Cast chromosome to value array 
+    if(!Array.isArray(a)) {
+        a = Object.values(a);
+    }
+    if(!Array.isArray(b)) {
+        b = Object.values(b);
+    }
+
     // Get a random split pointer
     // Math.floor(Math.random() * (max - min + 1)) + min;
     var splitPtr = Math.floor(Math.random() * ((a.length - 1) - 1 + 1)) + 1; // @see https://stackoverflow.com/a/1527820
