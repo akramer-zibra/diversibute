@@ -1,3 +1,6 @@
+const constraint = require('../constraints/chromosome');
+
+
 /**
  * This module function creates a chromosome seed
  * 
@@ -19,7 +22,7 @@ module.exports = (keys, groupAmount) => {
     var chromosome = [];
 
     // Initialize Group counter for constraint check
-    counter = initGroupCounter(groupAmount);
+    counter = {};
 
     var pointer = 0;
     while(pointer < keys.length) {
@@ -28,45 +31,31 @@ module.exports = (keys, groupAmount) => {
         randomGroupNr = Math.ceil(Math.random() * groupAmount);
 
         // Skip this selected group if it is already full
-        if(counter[randomGroupNr] <= maxGroupSize) {
+        if(counter[randomGroupNr] == undefined || counter[randomGroupNr] <= maxGroupSize) {
 
             // Assign a random groupNr to current pointed chromosome item
             chromosome[pointer] = randomGroupNr;
 
             // Increase group counter
-            counter[randomGroupNr]++;
+            counter[randomGroupNr] = counter[randomGroupNr] ? counter[randomGroupNr] + 1 : 1;
 
             // Move chromosome pointer
             pointer++;
         }
 
-        // Do a constraint check in final round
+        // Do a constraint check when pointer reached final chromosome position
         if(pointer == (keys.length -1)) {
 
-            // Check if there aren't groups with just one member
-            Object.keys(counter).forEach((groupNr) => {
-                if(counter[groupNr] < minGroupSize) {
-                    // Resize group counter
-                    counter = initGroupCounter(groupAmount);
+            // If constraint fails
+            if(!constraint(chromosome)) {
 
-                    // and start at the chromosome beginning
-                    pointer = 0;
-                }
-            });
+                // Reset this generation
+                counter = {};    // Reset counter
+                pointer = 0;     // and start at the chromosome beginning
+            }
         }
     }
 
     // e.g.: [1, 1, 1, 3, 2, 2, 3, 3, 2, 2]
     return chromosome; 
-}
-
-/**
- * This function initializes a fresh indexed group counter
- */
-var initGroupCounter = (groupAmount) => {
-    var counter = {};
-    for(let groupNr = 1; groupNr <= groupAmount; groupNr++) {
-        counter[groupNr] = 0;
-    }
-    return counter;
 }
