@@ -12,11 +12,11 @@ var mutate = (chromosome) => {
     var numberGroups = Object.keys(counts).length;
 
     // Select a random chromosome bit
-    var randomPointer = Math.floor(Math.random() * (chromosome.length - 1 - 0 + 1)) + 0; // @see https://stackoverflow.com/a/1527820
-    console.log(randomPointer);
+    var randomPtr = Math.floor(Math.random() * (chromosome.length - 1 - 0 + 1)) + 0; // @see https://stackoverflow.com/a/1527820
+    console.log(randomPtr);
     
     /* Increase one bit and prevent "zero" value */
-    chromosome[randomPointer] = ((chromosome[randomPointer] + 1) % numberGroups) + 1; 
+    chromosome[randomPtr] = ((chromosome[randomPtr] + 1) % numberGroups) + 1; 
     
     return chromosome;
 }
