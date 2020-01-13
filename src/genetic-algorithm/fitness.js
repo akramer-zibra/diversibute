@@ -34,18 +34,13 @@ module.exports = (chromosome) => {
 
         // Push Data key into indexed group collection
         groups[element].push(dataEntry);
-
-        console.log(element);
     });
-    console.log(groups);
 
     // Calculate internal group difference
     var internalGroupDifferences = differencesGroups(groups);
-    console.log(internalGroupDifferences);
 
     // Calculate euclidean differences between internal group differences
     var outerGroupDifference = differences1Dimensional(internalGroupDifferences);
-    console.log(outerGroupDifference);
 
     // Fitness is Max(heterogenity) - Difference between groups  
     var maxGroupHeterogenity = Math.max(...internalGroupDifferences);
