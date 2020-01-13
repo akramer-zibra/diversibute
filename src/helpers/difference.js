@@ -15,7 +15,6 @@ var differencesGroups = (groups) => {
     // Calculate difference sum for each group
     Object.keys(groups).forEach((element, index) => {
 
-        
         // Create distance combinations 
         var combinations = [];
         var cmb = Combinatorics.combination(groups[element], 2);
