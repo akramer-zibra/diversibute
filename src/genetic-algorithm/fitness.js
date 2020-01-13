@@ -12,8 +12,10 @@ const differences1Dimensional = require('../helpers/difference').differences1Dim
  */
 module.exports = (chromosome) => {
 
+    // FIXME: Something is here wrong
+    // ...Drop "undefined" chromosomes 
     if(chromosome == undefined) {
-        return undefined;
+        return Number.NEGATIVE_INFINITY;
     }
 
     // Cast chromosome to value array 
@@ -23,7 +25,7 @@ module.exports = (chromosome) => {
 
     // First check if chromosome matches base constraints
     if(!constraints(chromosome)) {
-        return undefined;
+        return Number.NEGATIVE_INFINITY;
     }
 
     // Get array with data keys
