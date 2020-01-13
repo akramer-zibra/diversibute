@@ -1,3 +1,6 @@
+const config = require('../../config');
+const counter = require('../helpers/counter');
+
 /**
  * This function checks if given chromosome is valid
  * 
@@ -6,12 +9,8 @@
 module.exports = (chromosome) => {
 
     // Count group occurences
-    var counts = {};
-    for (var i = 0; i < chromosome.length; i++) {
-        var num = chromosome[i];
-        counts[num] = counts[num] ? counts[num] + 1 : 1;
-    }
-
+    var counts = counter(chromosome);
+    
     // 
     var groupSizes = Object.values(counts);
     var minSize = Math.min(...groupSizes);
@@ -24,6 +23,11 @@ module.exports = (chromosome) => {
 
     // 2. Check if group size is still balanced
     if(maxSize - minSize > 1) {
+        return false;
+    }
+
+    // 3. Check given group size
+    if(Object.keys(counts).length != config.amountGroups) {
         return false;
     }
 
