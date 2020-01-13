@@ -5,12 +5,6 @@
  */
 module.exports = (chromosome) => {
 
-    // Calculate elements
-    var length = chromosome.length;
-
-    // Calculate number of groups
-    var groupAmount = Math.max(...chromosome);
-
     // Count group occurences
     var counts = {};
     for (var i = 0; i < chromosome.length; i++) {
