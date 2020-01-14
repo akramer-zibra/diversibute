@@ -20,8 +20,8 @@ var mutate = (chromosome) => {
     var randomPtr = Math.floor(Math.random() * (chromosome.length - 1 - 0 + 1)) + 0; // @see https://stackoverflow.com/a/1527820
     
     /* Increase one bit and prevent "zero" value */
-    chromosome[randomPtr] = ((chromosome[randomPtr] + 1) % numberGroups) + 1; 
-    
+    chromosome[randomPtr] = (chromosome[randomPtr] % numberGroups) + 1; 
+        
     return chromosome;
 }
 
