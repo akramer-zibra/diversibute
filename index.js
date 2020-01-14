@@ -16,29 +16,29 @@ var keys = Object.keys(input);
 // Create initial population with seed function
 var population = [];
 for(let n = 0; n < config.initialSeeds; n++) {
-    population.push(seedFunc(keys, 3));
+    population.push(seedFunc(keys, config.amountGroups));
 }
-//console.log(population[0])
 
-// Configure  
+// Configure genetic algorithm
 var gaConfig = {
     mutationFunction: mutationFunc,
     crossoverFunction: crossoverFunc,
     fitnessFunction: fitnessFunc,
     population: population,
-    populationSize: config.initialPopulationSize 	// defaults to 100
+    populationSize: config.populationSize 	// defaults to 100
 }
 
-// Use genetic algorithm object here 
+// Create a fresh algorithm object here
 const geneticAlgorithm = Genetics(gaConfig);
-console.log(geneticAlgorithm.scoredPopulation());
 
-// Use algorithm
-geneticAlgorithm.evolve(250).then((result) => {
 
-    console.log(geneticAlgorithm.scoredPopulation());
+// Start algorithm
+for(let c = 0; c <= 200; c++) {
+    geneticAlgorithm.evolve(1).then((result) => {
+        console.log('Evolution: '+ c);
+        console.log(result.best()[0].score);
+    });
+}
 
-    console.log(result.best());
-});
 
 

@@ -5,6 +5,6 @@ module.exports = {
     amountGroups: 3,
 
     // Algorithm settings
-    initialSeeds: 15,
-    initialPopulationSize: 100
+    initialSeeds: 33,
+    populationSize: 200
 }
