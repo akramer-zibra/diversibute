@@ -1,15 +1,18 @@
 const counter = require('../helpers/counter');
+const shuffle = require('../helpers/shuffle');
+
+// Possible mutations:
+// - increase bit
+// - decrease bit
+// - twist two bits
+// - shuffle
 
 /**
  * Internal method mutates given chromosome
  * @param {seq: Array} chromosome 
  * @returns {seq: Array}
  */
-var mutate = (chromosome) => {
-
-    // Clone chromosome's sequence
-    var clone = {seq: []};
-    clone.seq = chromosome.seq.slice(0);
+var increaseRandomBit = (chromosome) => {
 
     // Count group members
     var counts = counter(clone);
@@ -24,12 +27,38 @@ var mutate = (chromosome) => {
     return clone;
 }
 
+var decreaseRandomBit = () => {};
+var twistTwoRandomBit = () => {};
+
+/**
+ * This function create a mutation function which 
+ * shuffles all 
+ */
+var shuffleAll = (chromosome) => {
+
+    // Use complete shuffle
+    chromosome.seq = shuffle(chromosome.seq);
+
+    // 
+    return chromosome;
+};
+
 /**
  * This function creates a valid mutation of given chromosome
  * @param {seq: Array} chromosome 
  */
 module.exports = (chromosome) => {
 
+    // Clone chromosome's sequence
+    var clone = {seq: []};
+    clone.seq = chromosome.seq.slice(0);
+
+    // Mutate (increase bit)
+//    clone = increaseRandomBit(clone);
+
+    // Mutation (shuffle all)
+    clone = shuffleAll(clone);
+
     // Mutate given chromosome
-    return mutate(chromosome);
+    return clone;
 }

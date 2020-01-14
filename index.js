@@ -61,7 +61,7 @@ const geneticAlgorithm = Genetics(gaConfig);
 console.log(geneticAlgorithm.scoredPopulation());
 
 // Start algorithm
-for(let c = 0; c <= 10; c++) {
+for(let c = 0; c <= 20; c++) {
     geneticAlgorithm.evolve(10).then((result) => {
 //        console.log('Evolution: '+ c*10);
 //        console.log(result.best()[0].score);
