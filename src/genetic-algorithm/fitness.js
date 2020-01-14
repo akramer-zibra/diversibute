@@ -9,6 +9,8 @@ const differences1Dimensional = require('../helpers/difference').differences1Dim
 /**
  * This function calculates a fitness value for given chromosome 
  * It uses data input with module require
+ * @param {seq: Array} chromosome 
+ * @returns Number
  */
 module.exports = (chromosome) => {
 
@@ -16,11 +18,6 @@ module.exports = (chromosome) => {
     // ...Drop "undefined" chromosomes 
     if(chromosome == undefined) {
         return Number.NEGATIVE_INFINITY;
-    }
-
-    // Cast chromosome to value array 
-    if(!Array.isArray(chromosome)) {
-        chromosome = Object.values(chromosome);
     }
 
     // First check if chromosome matches base constraints
@@ -34,7 +31,7 @@ module.exports = (chromosome) => {
 
     // Create a group Index with its data
     var groups = {};
-    chromosome.forEach((element, index) => {
+    chromosome.seq.forEach((element, index) => {
         
         if(groups[element] == undefined) {
             groups[element] = [];

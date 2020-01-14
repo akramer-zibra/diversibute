@@ -3,7 +3,7 @@ const counter = require('../helpers/counter');
 
 /**
  * This function checks if given chromosome is valid
- * 
+ * @param chromosome Type of {seq: Array}
  * @returns FALSE in case of failing and TRUE in case of validness
  */
 module.exports = (chromosome) => {

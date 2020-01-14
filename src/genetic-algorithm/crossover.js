@@ -1,24 +1,31 @@
 /**
  * This function creates two childs by crossover from given two 
  * chromosomes
+ * @param {seq: Array} a
+ * @param {seq: Array} b
+ * @returns Array<{seq: Array}>
  */
 module.exports = (a, b) => {
 
-    // Cast chromosome to value array 
-    if(!Array.isArray(a)) {
-        a = Object.values(a);
-    }
-    if(!Array.isArray(b)) {
-        b = Object.values(b);
-    }
+    console.log(a);
+    console.log(b);
 
     // Get a random split pointer
     // Math.floor(Math.random() * (max - min + 1)) + min;
-    var splitPtr = Math.floor(Math.random() * ((a.length - 1) - 1 + 1)) + 1; // @see https://stackoverflow.com/a/1527820
+    var splitPtr = Math.floor(Math.random() * ((a.seq.length - 1) - 1 + 1)) + 1; // @see https://stackoverflow.com/a/1527820
+    // NOTE: a's sequence length is always same as b's sequence
 
-    // Create crossover children
-    var child1 = [].concat(a.slice(0, splitPtr), b.slice(splitPtr, b.length));
-    var child2 = [].concat(b.slice(0, splitPtr), a.slice(splitPtr, a.length));
+    // Split both chromosome's sequences
+    var a1 = a.seq.slice(0, splitPtr);
+    var a2 = a.seq.slice(splitPtr);
+
+    var b1 = b.seq.slice(0, splitPtr);
+    var b2 = b.seq.slice(splitPtr);
+
+
+    // Create crossover children chromosomes
+    var child1 = {seq: [].concat(a1, b2)};
+    var child2 = {seq: [].concat(b1, a2)};
     
     // Return both childs
     return [child1, child2];

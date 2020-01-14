@@ -4,7 +4,7 @@ const constraint = require('../constraints/chromosome');
 /**
  * This module function creates a chromosome seed
  * 
- * @returns A list. Values are Group-IDs and keys are index of given keys
+ * @returns Array<{seq: Array}> A list with objects, which contain a list of groups ids in a seq-property
  */
 module.exports = (keys, groupAmount) => {
 
@@ -19,7 +19,8 @@ module.exports = (keys, groupAmount) => {
     }
 
     // Initialize chromosome
-    var chromosome = [];
+    // NOTE: Chromosomes must be object, other structures cause problems with the ga framework
+    var chromosome = {seq: []};
 
     // Initialize Group counter for constraint check
     counter = {};
@@ -34,7 +35,7 @@ module.exports = (keys, groupAmount) => {
         if(counter[randomGroupNr] == undefined || counter[randomGroupNr] <= maxGroupSize) {
 
             // Assign a random groupNr to current pointed chromosome item
-            chromosome[pointer] = randomGroupNr;
+            chromosome.seq[pointer] = randomGroupNr;
 
             // Increase group counter
             counter[randomGroupNr] = counter[randomGroupNr] ? counter[randomGroupNr] + 1 : 1;
@@ -56,6 +57,6 @@ module.exports = (keys, groupAmount) => {
         }
     }
 
-    // e.g.: [1, 1, 1, 3, 2, 2, 3, 3, 2, 2]
+    // e.g.: {seq: [1, 1, 1, 3, 2, 2, 3, 3, 2, 2]}
     return chromosome; 
 }

@@ -18,7 +18,21 @@ var population = [];
 for(let n = 0; n < config.initialSeeds; n++) {
     population.push(seedFunc(keys, config.amountGroups));
 }
+console.log(population[0]);
+console.log(population[1]);
 
+// Test mutation
+console.log('Mutation...');
+console.log(mutationFunc(population[0]));
+
+// Test Crossover
+console.log('Crossover...');
+console.log(population[0]);
+console.log(population[1]);
+console.log('+++');
+console.log(crossoverFunc(population[0], population[1]));
+
+/*
 // Configure genetic algorithm
 var gaConfig = {
     mutationFunction: mutationFunc,
@@ -31,14 +45,11 @@ var gaConfig = {
 // Create a fresh algorithm object here
 const geneticAlgorithm = Genetics(gaConfig);
 
-
 // Start algorithm
-for(let c = 0; c <= 200; c++) {
-    geneticAlgorithm.evolve(1).then((result) => {
-        console.log('Evolution: '+ c);
+for(let c = 0; c <= 20; c++) {
+    geneticAlgorithm.evolve(10).then((result) => {
+        console.log('Evolution: '+ c*10);
         console.log(result.best()[0].score);
     });
 }
-
-
-
+*/
