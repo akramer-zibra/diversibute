@@ -8,7 +8,7 @@ const mutationFunc = require('./src/genetic-algorithm/mutation');
 const crossoverFunc = require('./src/genetic-algorithm/crossover');
 
 // Load input data
-const input = require("./examples/data/input-xs.json");
+const input = require("./data")();
 
 // Get group member keys
 var keys = Object.keys(input);

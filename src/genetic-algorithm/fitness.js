@@ -1,5 +1,5 @@
 // Require data
-const data = require('../../examples/data/input-xs.json');
+const data = require('../../data')();
 
 // Require dependency functions
 const constraints = require('../constraints/chromosome');
