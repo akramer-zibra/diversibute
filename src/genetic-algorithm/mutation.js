@@ -84,15 +84,14 @@ module.exports = (chromosome) => {
     var clone = {seq: []};
     clone.seq = chromosome.seq.slice(0);
 
-    // Mutate (increase bit)
-//    clone = increaseRandomBit(clone);
-
     // Use with a 50% chance different mutations
     if(Math.random() < 0.7) {
         clone = shuffleAll(clone);
     } else {
         clone = twistTwoRandomBit(clone);
     }
+    // Deprecated mutations
+    //    clone = increaseRandomBit(clone);     // Increases one bit
 
     // Mutate given chromosome
     return clone;
