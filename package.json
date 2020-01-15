@@ -1,5 +1,5 @@
 {
-  "name": "kreatives-feld-ga",
+  "name": "kreatives-feld",
   "version": "0.0.1",
   "description": "Ein Versuch mithilfe eines Genetischen Algorithmus eine Gruppenzusammensetzung nach dem Konzept des \"Kreativen Felds\" zu finden",
   "main": "index.js",
@@ -11,7 +11,6 @@
   "dependencies": {
     "euclidean-distance": "1.0.0",
     "js-combinatorics": "0.5.5",
-    "regression": "2.0.1",
     "@petsinho/geneticjs": "2.1.1"
   }
 }
