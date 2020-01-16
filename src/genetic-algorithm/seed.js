@@ -48,7 +48,7 @@ module.exports = (keys, groupAmount) => {
         if(pointer == (keys.length -1)) {
 
             // If constraint fails
-            if(!constraint(chromosome)) {
+            if(!constraint(chromosome, {groups: groupAmount})) {
 
                 // Reset this generation
                 counter = {};    // Reset counter

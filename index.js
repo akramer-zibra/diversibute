@@ -2,7 +2,7 @@ const Genetics = require('@petsinho/geneticjs').Genetics;
 
 // Load genetic algorithm functions
 const seedFunc = require('./src/genetic-algorithm/seed');
-const fitnessFunc = require('./src/genetic-algorithm/fitness');
+const fitnessModule = require('./src/genetic-algorithm/fitness');
 const mutationFunc = require('./src/genetic-algorithm/mutation');
 const crossoverFunc = require('./src/genetic-algorithm/crossover');
 
@@ -24,6 +24,9 @@ var monteCarloAlgorithm = (input, groups) => {
         throw new Error("Error: Number of groups must be at least 1. Given: "+groups);
     }
 
+    // We need to pass input and options as context to fitness function
+    fitnessModule.context(input, groups);
+
     // Create initial population with seed function
     // NOTICE: We use a population 10 times bigger than the given set of members
     var scores = [];
@@ -34,7 +37,7 @@ var monteCarloAlgorithm = (input, groups) => {
         var seed = seedFunc(keys, groups)
         
         // Calculate Score for each population
-        var score = fitnessFunc(seed);
+        var score = fitnessModule.func(seed);
         
         // 
         scoredPopulation[score] = seed; // Use this as an index
@@ -52,11 +55,15 @@ var monteCarloAlgorithm = (input, groups) => {
 };
 
 /**
- * This function searches for best scored combination
- * @param {*} input 
- * @param {*} groups 
+ * This function searches for best scored combination 
+ * with a genetic algorithm
+ * @param {{String: Array<Number>}} input 
+ * @param {Number} groups 
  */
 var geneticAlgorithm = (input, groups) => {
+
+    // Settings
+    var evolutions = 100;
 
     // 
     var keys = Object.keys(input);
@@ -67,36 +74,34 @@ var geneticAlgorithm = (input, groups) => {
         population.push(seedFunc(keys, groups));
     }
 
+    // We need to pass input and options as context to fitness function
+    fitnessModule.context(input, groups);
+
     // Configure genetic algorithm
     var gaConfig = {
         mutationFunction: mutationFunc,
         crossoverFunction: crossoverFunc,
-        fitnessFunction: fitnessFunc,
+        fitnessFunction: fitnessModule.func,
         population: population,
-        populationSize: keys.length*4 	// defaults to 100
+        populationSize: keys.length*4, 	// defaults to 100
+        groupSize: groups
     }
 
     // Create a fresh algorithm object here
     const geneticAlgorithm = Genetics(gaConfig);
-    console.log(geneticAlgorithm.scoredPopulation().slice(0,5));
 
-    /*
-    // Start genetic algorithm
-    for(let c = 0; c <= 56; c++) {
-        geneticAlgorithm.evolve(10).then((result) => {
-    //        console.log('Evolution: '+ c*10);
-    //        console.log(result.best()[0].score);
+    // Genetic evolution is async!
+    return new Promise((resolve, reject) => {
 
-            // Print final population in last round
-            if(c == 10) {
-                console.log(result.scoredPopulation().slice(0,5));
-            }
+        // Use genetic algorithm 
+        geneticAlgorithm.evolve(evolutions).then((result) => {
+            // Resolve winning chromosome with its score
+            var winner = result.scoredPopulation()[0];
+            resolve({combination: winner.phenotype.seq, score: winner.score});
+        }).catch(err => {
+            reject(err);
         });
-    }
-    */
-
-    // TODO
-    return {combination: [], score: 0};
+    });
 }
 
 /**
@@ -117,9 +122,18 @@ module.exports = {
     }
 }
 
-// Test run
-const input = require("./data")();      // Load input data
-console.log(monteCarloAlgorithm(input, 3));
+// TEST
+const input = require("./data")();      // Load test input data
+const groups = 3;
+
+// Test run #1
+console.log(monteCarloAlgorithm(input, groups));
+
+// Test run #2
+geneticAlgorithm(input, groups).then(result => {
+    console.log(result);
+});
+
 
 /* Test competition run */
 /*const fs = require('fs');

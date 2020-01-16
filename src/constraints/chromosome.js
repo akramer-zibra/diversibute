@@ -1,12 +1,12 @@
-const config = require('../../config');
 const counter = require('../helpers/counter');
 
 /**
  * This function checks if given chromosome is valid
  * @param chromosome Type of {seq: Array}
+ * @param {{String: any}} options Object with rule params 
  * @returns FALSE in case of failing and TRUE in case of validness
  */
-module.exports = (chromosome) => {
+module.exports = (chromosome, options) => {
 
     // Count group occurences
     var counts = counter(chromosome);
@@ -27,7 +27,7 @@ module.exports = (chromosome) => {
     }
 
     // 3. Check given group size
-    if(Object.keys(counts).length != config.amountGroups) {
+    if(Object.keys(counts).length != options.groups) {
         return false;
     }
 
