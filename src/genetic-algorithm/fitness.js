@@ -50,9 +50,8 @@ module.exports = {
         var groups = {};
         chromosome.seq.forEach((element, index) => {
             
-            if(groups[element] == undefined) {
-                groups[element] = [];
-            }
+            // Initialize element index
+            if(groups[element] == undefined) { groups[element] = []; }
 
             // Resolve chromosome index to data key and its data entry
             var dataEntry = context.input[dataKeys[index]];
