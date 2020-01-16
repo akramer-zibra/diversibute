@@ -1,4 +1,3 @@
-const config = require('./config');
 const Genetics = require('@petsinho/geneticjs').Genetics;
 
 // Load genetic algorithm functions
@@ -12,7 +11,7 @@ const crossoverFunc = require('./src/genetic-algorithm/crossover');
  * @param {*} input 
  * @param {*} groups 
  */
-var randomAlgorithm = (input, groups) => {
+var monteCarloAlgorithm = (input, groups) => {
 
     // Get group member keys
     var keys = Object.keys(input);
@@ -43,9 +42,7 @@ var randomAlgorithm = (input, groups) => {
     }
 
     // Sort scores
-    var ranking = scores.sort((a, b) => {
-        return a-b;
-    });
+    var ranking = scores.sort((a, b) => {return a-b;});
 
     // Use highest ranking fpr result
     var highestScore = ranking.pop();
@@ -55,28 +52,33 @@ var randomAlgorithm = (input, groups) => {
 };
 
 /**
- * 
+ * This function searches for best scored combination
  * @param {*} input 
  * @param {*} groups 
  */
 var geneticAlgorithm = (input, groups) => {
 
-    throw new Error('TODO...');
+    // 
+    var keys = Object.keys(input);
 
-    /*
+    // Create an initial population
+    var population = [];
+    for(let n = 0; n < keys.length*2; n++) {
+        population.push(seedFunc(keys, groups));
+    }
+
     // Configure genetic algorithm
     var gaConfig = {
         mutationFunction: mutationFunc,
         crossoverFunction: crossoverFunc,
         fitnessFunction: fitnessFunc,
         population: population,
-        populationSize: config.populationSize 	// defaults to 100
+        populationSize: keys.length*4 	// defaults to 100
     }
 
     // Create a fresh algorithm object here
     const geneticAlgorithm = Genetics(gaConfig);
     console.log(geneticAlgorithm.scoredPopulation().slice(0,5));
-    */
 
     /*
     // Start genetic algorithm
@@ -101,12 +103,14 @@ var geneticAlgorithm = (input, groups) => {
  * Module definition of this kreatives-feld package
  */
 module.exports = {
-    /** This function creates groups from given input 
+    /** 
+     * This function creates groups from given input
+     * with a simple monte carlo algorithm
      * @param {{String: Array<Number>}} input 
      * @param {Number} groups Number of groups
      */
-    random: (input, groups) => {
-        return randomAlgorithm(input, groups);
+    monteCarlo: (input, groups) => {
+        return monteCarloAlgorithm(input, groups);
     },
     genetic: (input, groups) => {
         return {combination: [], score: 0};
@@ -115,7 +119,7 @@ module.exports = {
 
 // Test run
 const input = require("./data")();      // Load input data
-console.log(randomAlgorithm(input, 3));
+console.log(monteCarloAlgorithm(input, 3));
 
 /* Test competition run */
 /*const fs = require('fs');
