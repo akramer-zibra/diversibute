@@ -1,6 +1,6 @@
 {
   "name": "kreatives-feld",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "Ein Versuch mithilfe eines Genetischen Algorithmus eine Gruppenzusammensetzung nach dem Konzept des \"Kreativen Felds\" zu finden",
   "main": "index.js",
   "scripts": {
