@@ -118,22 +118,9 @@ module.exports = {
         return monteCarloAlgorithm(input, groups);
     },
     genetic: (input, groups) => {
-        return {combination: [], score: 0};
+        return geneticAlgorithm(input, groups);
     }
 }
-
-// TEST
-const input = require("./data")();      // Load test input data
-const groups = 3;
-
-// Test run #1
-console.log(monteCarloAlgorithm(input, groups));
-
-// Test run #2
-geneticAlgorithm(input, groups).then(result => {
-    console.log(result);
-});
-
 
 /* Test competition run */
 /*const fs = require('fs');
