@@ -19,5 +19,9 @@ RUN yarn global add ijavascript --prefix /usr/local
 # Change to base image user
 USER $NB_UID
 
+# Create a mount folder in home dir
+RUN mkdir /home/$NB_USER/mount
+VOLUME "/home/$NB_USER/mount"
+
 # Install nodejs Kernel for jupyter
 RUN ijsinstall
