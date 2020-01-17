@@ -119,6 +119,9 @@ module.exports = {
     },
     genetic: (input, groups) => {
         return geneticAlgorithm(input, groups);
+    },
+    kmeans: (input, groups) => {
+        throw new Error('https://www.npmjs.com/package/skmeans');
     }
 }
 
