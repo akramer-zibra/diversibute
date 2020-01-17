@@ -28,7 +28,7 @@ module.exports = (keys, groupAmount) => {
     var pointer = 0;
     while(pointer < keys.length) {
 
-        // Create random number
+        // Create random number between 1 and "groupAmount"
         randomGroupNr = Math.ceil(Math.random() * groupAmount);
 
         // Skip this selected group if it is already full
@@ -50,6 +50,7 @@ module.exports = (keys, groupAmount) => {
             // If constraint fails
             if(!constraint(chromosome, {groups: groupAmount})) {
 
+                // ENHANCEMENT: This is not an efficient seeding algorthm for this kind of problem!
                 // Reset this generation
                 counter = {};    // Reset counter
                 pointer = 0;     // and start at the chromosome beginning
