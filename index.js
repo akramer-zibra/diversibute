@@ -105,6 +105,45 @@ var geneticAlgorithm = (input, groups) => {
 }
 
 /**
+ * This function uses kmeans algorithm to generate heterogenous groups
+ * @param {{String: Array<Number>}} input 
+ * @param {Number} groups 
+ */
+var kmeansAlgorithm = (input, groups) => {
+    
+    // k-means does not care about same size groups
+    // There is one approach to post process k-means clusters and
+    // Push elements from oversized clusters to underfilled clusters...
+    // @see https://stackoverflow.com/questions/8796682/group-n-points-in-k-clusters-of-equal-size
+    throw new Error('This is not running well yet!');
+
+    // Require library package
+    // @see https://www.npmjs.com/package/skmeans
+    var skmeans = require("skmeans");
+
+    // Search for clusters for the number of groupmembers
+    var clusters = Math.floor(Object.keys(input).length / groups);
+
+    // Use skmeans to calculate clusters
+//    var data = [1,12,13,4,25,21,22,3,14,5,11,2,23,24,15];
+    var data = Object.values(input);
+    var result = skmeans(data, clusters, "kmpp");
+
+    // 
+    var sequence = result.idxs.map(i => i+1);    // NOTICE: this algorithm starts with 0 first, not with smallest number 1
+
+    // Construct fitness module 
+    // We need to pass input and options as context to fitness function
+    fitnessModule.context(input, groups);
+
+    // Calculate fitness score
+    var score = fitnessModule.func({seq: sequence});
+
+    // 
+    return {combination: sequence, score: score};
+}
+
+/**
  * Module definition of this kreatives-feld package
  */
 module.exports = {
@@ -121,77 +160,6 @@ module.exports = {
         return geneticAlgorithm(input, groups);
     },
     kmeans: (input, groups) => {
-        throw new Error('https://www.npmjs.com/package/skmeans');
+        return kmeansAlgorithm(input, groups);
     }
 }
-
-/* Test competition run */
-/*const fs = require('fs');
-var scores = [];
-
-// Do 1000 times a random seed batch generation with scoring
-for(let i = 0; i < 1000; i++) {
-
-    // We use 10times seed population size
-    var popSize = keys.length * 10;
-
-    // Generate pupulation
-    var population = [];
-    for(let n = 0; n < popSize; n++) {
-        population.push(seedFunc(keys, config.amountGroups));
-    }
-
-    // Default ga config
-    var gaConfig = {
-        mutationFunction: mutationFunc,
-        crossoverFunction: crossoverFunc,
-        fitnessFunction: fitnessFunc,
-        population: population,
-        populationSize: config.populationSize 	// defaults to 100
-    }
-
-    const geneticAlgorithm = Genetics(gaConfig);
-
-    scores.push(geneticAlgorithm.scoredPopulation()[0].score);
-}
-
-let data = JSON.stringify(scores);
-fs.writeFileSync('./test/results/3feat-L-1000x/random.json', data);
-*/
-
-
-/*
-console.log(population[0]);
-console.log(population[1]);
-
-// Test mutation
-console.log('Mutation...');
-var mutated = mutationFunc(population[0])
-console.log(mutated);
-
-// Test Crossover
-console.log('Crossover...');
-var crossed = crossoverFunc(population[0], population[1]);
-console.log(crossed);
-
-// Test fintess
-console.log('Fitness...');
-console.log(population[0]);
-console.log(fitnessFunc(population[0]));
-console.log(population[1]);
-console.log(fitnessFunc(population[1]));
-console.log(crossed[0]);
-console.log(fitnessFunc(crossed[0]));
-console.log(crossed[1]);
-console.log(fitnessFunc(crossed[1]));
-console.log(mutated);
-console.log(fitnessFunc(mutated));
-*/
-
-/*
-// Create initial population with seed function
-var population = [];
-for(let n = 0; n < config.initialSeeds; n++) {
-    population.push(seedFunc(keys, config.amountGroups));
-}
-*/
