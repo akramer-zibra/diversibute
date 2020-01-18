@@ -16,6 +16,9 @@ RUN npm install -g yarn
 # Install ijavascript notebook
 RUN yarn global add ijavascript --prefix /usr/local
 
+# TODO install plotly in system scope
+RUN pip install plotly numpy
+
 # Change to base image user
 USER $NB_UID
 
