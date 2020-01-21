@@ -135,12 +135,6 @@ module.exports = (keys, groups, options = {minShuffle: 5, maxShuffle: 20}) => {
         elementSet.remove(randomGroupNumberPtr);   
     }
 
-    // Assert if constraints are not fullfilled
-    // FIXME
-    if(!constraint(chromosome, {groups: groups})) {
-        throw new Error('Something went wrong with this seed algorithm');
-    }
-
     // Return generated chromosome
     return chromosome;
 }
