@@ -31,6 +31,8 @@ module.exports = (chromosome, options) => {
         return false;
     }
 
+    // [Feature] Check if every group has "edge" members 
+
     // ...else this chromosome is OK!
     return true;
 }
