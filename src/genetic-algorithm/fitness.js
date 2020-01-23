@@ -1,6 +1,3 @@
-// Require data
-// const data = require('../../data')();
-
 // Require dependency functions
 const constraints = require('../constraints/chromosome');
 const differencesGroups = require('../helpers/difference').differencesGroups;
