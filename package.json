@@ -4,7 +4,7 @@
   "description": "Ein Versuch mithilfe eines Genetischen Algorithmus eine Gruppenzusammensetzung nach dem Konzept des \"Kreativen Felds\" zu finden",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --reporter spec --recursive"
   },
   "author": "Achim Kramer <achim@zibra.de>",
   "license": "ISC",
@@ -13,5 +13,9 @@
     "js-combinatorics": "0.5.5",
     "@petsinho/geneticjs": "2.1.1",
     "skmeans": "0.11.2"
+  },
+  "devDependencies": {
+    "mocha": "7.0.0",
+    "chai": "4.2.0"
   }
 }
