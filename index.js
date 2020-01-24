@@ -24,34 +24,42 @@ var monteCarloAlgorithm = (input, groups) => {
         throw new Error("Error: Number of groups must be at least 1. Given: "+groups);
     }
 
-    // We need to pass input and options as context to fitness function
-    fitnessModule.context(input, groups);
+    return new Promise((resolve, reject) => {
+        try {
 
-    // Create initial population with seed function
-    // NOTICE: We use a population 10 times bigger than the given set of members
-    var scores = [];
-    var scoredPopulation = {};
-    for(let n = 0; n < keys.length*10; n++) {
+            // We need to pass input and options as context to fitness function
+            fitnessModule.context(input, groups);
 
-        // Create a seed
-        var seed = seedFunc(keys, groups)
-        
-        // Calculate Score for each population
-        var score = fitnessModule.func(seed);
-        
-        // 
-        scoredPopulation[score] = seed; // Use this as an index
-        scores.push(score);
-    }
+            // Create initial population with seed function
+            // NOTICE: We use a population 10 times bigger than the given set of members
+            var scores = [];
+            var scoredPopulation = {};
+            for(let n = 0; n < keys.length*10; n++) {
 
-    // Sort scores
-    var ranking = scores.sort((a, b) => {return a-b;});
+                // Create a seed
+                var seed = seedFunc(keys, groups)
+                
+                // Calculate Score for each population
+                var score = fitnessModule.calc(seed);
+                
+                // 
+                scoredPopulation[score] = seed; // Use this as an index
+                scores.push(score);
+            }
 
-    // Use highest ranking fpr result
-    var highestScore = ranking.pop();
+            // Sort scores
+            var ranking = scores.sort((a, b) => {return a-b;});
 
-    // Return result
-    return {combination: scoredPopulation[highestScore].seq, score: highestScore};
+            // Use highest ranking fpr result
+            var highestScore = ranking.pop();
+
+            // Return result
+            resolve({combination: scoredPopulation[highestScore].seq, score: highestScore});
+
+        } catch(err) {
+            reject(err);
+        }
+    });
 };
 
 /**
@@ -81,7 +89,7 @@ var geneticAlgorithm = (input, groups) => {
     var gaConfig = {
         mutationFunction: mutationFunc,
         crossoverFunction: crossoverFunc,
-        fitnessFunction: fitnessModule.func,
+        fitnessFunction: fitnessModule.calc,
         population: population,
         populationSize: keys.length*4, 	// defaults to 100
         groupSize: groups
@@ -137,7 +145,7 @@ var kmeansAlgorithm = (input, groups) => {
     fitnessModule.context(input, groups);
 
     // Calculate fitness score
-    var score = fitnessModule.func({seq: sequence});
+    var score = fitnessModule.calc({seq: sequence});
 
     // 
     return {combination: sequence, score: score};
@@ -152,6 +160,7 @@ module.exports = {
      * with a simple monte carlo algorithm
      * @param {{String: Array<Number>}} input 
      * @param {Number} groups Number of groups
+     * @returns {Promise<{combination: Array<Number>, score: Number}>}
      */
     monteCarlo: (input, groups) => {
         return monteCarloAlgorithm(input, groups);
