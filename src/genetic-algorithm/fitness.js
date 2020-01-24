@@ -21,7 +21,7 @@ module.exports = {
      * @param {seq: Array} chromosome 
      * @returns Number
      */
-    func: (chromosome) => {
+    calc: (chromosome) => {
 
         // Check if necessary context is set
         if(context['input'] == undefined || context['groups'] == undefined) {
