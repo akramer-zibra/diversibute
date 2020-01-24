@@ -24,7 +24,7 @@ describe("Fitness function", function() {
         var fitness = require("../../src/genetic-algorithm/fitness");
 
         // Fitness function should throw error in case of missing context
-        expect(fitness.func({seq: []})).to.throw('error');
+        expect(fitness.calc({seq: []})).to.throw('error');
     });
 
     it("Returns NEGATIVE_INFINITY in case of undefined argument", function() {
@@ -35,7 +35,7 @@ describe("Fitness function", function() {
         // Configure dummy context
         fitness.context([], []);
 
-        expect(fitness.func(undefined)).to.equal(Number.NEGATIVE_INFINITY);
+        expect(fitness.calc(undefined)).to.equal(Number.NEGATIVE_INFINITY);
     });
 
     it("Returns NEGATIVE_INFINITY if constraints fail", function() {
@@ -51,7 +51,7 @@ describe("Fitness function", function() {
         // Configure dummy context
         fitness.context([], []);
 
-        expect(fitness.func({seq: []})).to.equal(Number.NEGATIVE_INFINITY);
+        expect(fitness.calc({seq: []})).to.equal(Number.NEGATIVE_INFINITY);
     });    
   });
   
