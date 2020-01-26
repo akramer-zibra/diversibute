@@ -9,7 +9,15 @@ beforeEach(function() {
     });
 
     mockery.registerAllowable('../index');
-    mockery.registerAllowables(['../helpers/difference', '../helpers/counter', 'js-combinatorics', 'euclidean-distance', './squared', '../constraints/chromosome']);
+    mockery.registerAllowables(['@petsinho/geneticjs', 
+                                'lodash', 
+                                'util', 
+                                './src/genetic-algorithm/seed', 
+                                '../helpers/shuffle', 
+                                './src/genetic-algorithm/fitness', 
+                                './src/genetic-algorithm/mutation', 
+                                './src/genetic-algorithm/crossover']);
+
 });
 
 afterEach(function() {
@@ -19,27 +27,53 @@ afterEach(function() {
 // module API test
 describe("Module API", function() {
     describe("Monte Carlo function", function() {
-        it("Works with simple example", function() {
+        it("Works with medium sized example", function(done) {
           
-            throw new Error('TODO');
+            // Load input data
+            mockery.registerAllowable('../examples/data/3features/input-m.json');
+            var input = require('../examples/data/3features/input-m.json');
+
+            // Source under test
+            var api = require("../index");
+
+            // Run api
+            api.monteCarlo(input, 5).then(result => {
+
+                // Check response object
+                expect(result).to.be.an('object').has.all.keys('combination', 'score');
+                done();
+            });
         });
     });
 
     describe("Genetic Algorithm function", function() {
-        it("Works with simple example", function() {
+        it("Works with medium sized example", function(done) {
             
-            throw new Error('TODO');
+            // Load input data
+            mockery.registerAllowable('../examples/data/3features/input-m.json');
+            var input = require('../examples/data/3features/input-m.json');
+
+            // Source under test
+            var api = require("../index");
+
+            // Run api
+            api.genetic(input, 5).then(result => {
+
+                // Check response object
+                expect(result).to.be.an('object').has.all.keys('combination', 'score');
+                done();
+            });
         });
     });
 
     describe("kmeans function", function() {
-        it("Works with simple example", function() {
+        it("Throws error because it is not implemented yet", function() {
             
             // Source under test
             var moduleApi = require("../index");
 
             // Fitness function should throw error in case of missing context
-            expect(moduleApi.kmeans([], 5)).to.throw('error');
+            expect(function() { moduleApi.kmeans([], 5)}).to.throw('This is not running well yet');
         });
     });
   });
