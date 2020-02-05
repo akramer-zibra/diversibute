@@ -142,6 +142,8 @@ var kmeansAlgorithm = (input, groups) => {
     // @see https://stackoverflow.com/questions/8796682/group-n-points-in-k-clusters-of-equal-size
     throw new Error('This is not running well yet!');
 
+    /* eslint-disable no-unreachable */
+
     // Require library package
     // @see https://www.npmjs.com/package/skmeans
     var skmeans = require("skmeans");
@@ -166,6 +168,8 @@ var kmeansAlgorithm = (input, groups) => {
 
     // 
     return {combination: sequence, score: score};
+
+    /* eslint-enable no-unreachable */
 }
 
 /**
