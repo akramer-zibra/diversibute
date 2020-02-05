@@ -10,6 +10,9 @@ var context = {};
  * Fitness function module with customizeable context
  */
 module.exports = {
+    /**
+     * This function caches given parameters within a context object 
+     */
     context: (input, groups) => {
         context['input'] = input;
         context['groups'] = groups;
