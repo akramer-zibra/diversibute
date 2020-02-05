@@ -1,4 +1,3 @@
-const constraint = require('../constraints/chromosome');
 const shuffle = require('../helpers/shuffle');
 
 // Array Remove - By John Resig (MIT Licensed)
@@ -16,7 +15,6 @@ var seedFunc = (keys, groups, options = {minShuffle: 5, maxShuffle: 20}) => {
 
     // Configure constraint limits
     var minGroupSize = 2;
-    var maxGroupSize = Math.ceil(keys.length / groups);
 
     // Check if it is possible to create a reasonable seed with given combination
     // Minimum Group size is 2
