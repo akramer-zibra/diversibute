@@ -12,7 +12,8 @@
     "euclidean-distance": "1.0.0",
     "js-combinatorics": "0.5.5",
     "@petsinho/geneticjs": "2.1.1",
-    "skmeans": "0.11.2"
+    "skmeans": "0.11.2",
+    "bottlejs": "1.7.2"
   },
   "devDependencies": {
     "mocha": "7.0.0",
