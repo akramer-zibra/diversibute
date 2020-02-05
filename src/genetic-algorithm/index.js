@@ -8,7 +8,7 @@ module.exports = {
     /**
      * This function builds necessary function dependencies for genetic algorithm
      */
-    build: (bottle) => {
+    register: (bottle) => {
 
         // Load genetic algorithm functions
         bottle.constant('seed', require('./seed'));

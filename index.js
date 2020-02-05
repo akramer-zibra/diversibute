@@ -2,8 +2,8 @@
 const Bottle = require('bottlejs');
 const di = new Bottle();
 
-// Build genetic algorithm 
-require('./src/genetic-algorithm').build(di);
+// Register genetic-algorithm functions
+require('./src/genetic-algorithm').register(di);
 
 /**
  * This function searches for best combination by a bunch of random combinations
