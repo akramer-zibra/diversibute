@@ -6,7 +6,7 @@
 module.exports = {
 
     /**
-     * This function builds necessary function dependencies for genetic algorithm
+     * This function registers necessary function dependencies for genetic algorithm
      */
     register: (bottle) => {
 
