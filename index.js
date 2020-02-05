@@ -67,10 +67,10 @@ var monteCarloAlgorithm = (input, groups) => {
  * with a genetic algorithm
  * @param {{String: Array<Number>}} input 
  * @param {Number} groups 
- * @param {String: any} options
+ * @param {String: any} settings
  * @return {combination: Array<number>, score: Number, options: {String: any}}
  */
-var geneticAlgorithm = (input, groups, options = {}) => {
+var geneticAlgorithm = (input, groups, settings = {}) => {
 
     // Defaults
     var defaults = {
@@ -80,14 +80,14 @@ var geneticAlgorithm = (input, groups, options = {}) => {
     }
 
     // Use given options and merge with default values
-    options = Object.assign(defaults, options);
+    settings = Object.assign(defaults, settings);
 
     // Load keys from input data
     var keys = Object.keys(input);
 
     // Create an initial population
     var population = [];
-    for(let n = 0; n < defaults.populationStartSize; n++) {
+    for(let n = 0; n < settings.populationStartSize; n++) {
         population.push(seedFunc(keys, groups));
     }
 
@@ -100,7 +100,7 @@ var geneticAlgorithm = (input, groups, options = {}) => {
         crossoverFunction: crossoverFunc,
         fitnessFunction: fitnessModule.calc,
         population: population,
-        populationSize: defaults.populationMaxSize, 	// defaults to 100
+        populationSize: settings.populationMaxSize, 	// defaults to 100
         groupSize: groups
     }
 
@@ -111,13 +111,13 @@ var geneticAlgorithm = (input, groups, options = {}) => {
     return new Promise((resolve, reject) => {
 
         // Use genetic algorithm 
-        geneticAlgorithm.evolve(defaults.evolutions).then((result) => {
+        geneticAlgorithm.evolve(settings.evolutions).then((result) => {
             // Resolve winning chromosome with its score
             var winner = result.scoredPopulation()[0];
             resolve({
                 combination: winner.phenotype.seq, 
                 score: winner.score,
-                options});
+                settings});
         }).catch(err => {
             reject(err);
         });
@@ -182,11 +182,11 @@ module.exports = {
      * and returns combination with its fitness score
      * @param {{String: Array<Number>}} input
      * @param {Number} groups Number of groups
-     * @param {String: any} options Object with option properties 
+     * @param {String: any} settings Object with option properties 
      * @returns {Promise<{combination: Array<Number>, score: Number}>}
      */
-    genetic: (input, groups, options = {}) => {
-        return geneticAlgorithm(input, groups, options);
+    genetic: (input, groups, settings = {}) => {
+        return geneticAlgorithm(input, groups, settings);
     },
     /**
      * This funtion is work in progress

@@ -60,7 +60,7 @@ describe("Module API", function() {
             api.genetic(input, 5).then(result => {
 
                 // Check response object
-                expect(result).to.be.an('object').has.all.keys('combination', 'score', 'options');
+                expect(result).to.be.an('object').has.all.keys('combination', 'score', 'settings');
                 done();
             });
         });
@@ -75,17 +75,17 @@ describe("Module API", function() {
             var api = require("../index");
 
             // Define some custom options 
-            var options = {
+            var settings = {
                 populationStartSize: 40, 
                 populationMaxSize: 200, 
                 evolutions: 300
             };
 
             // Run api
-            api.genetic(input, 5, options).then(result => {
+            api.genetic(input, 5, settings).then(result => {
 
                 // Check response object and returned options
-                expect(result.options).to.deep.equal(options);
+                expect(result.settings).to.deep.equal(settings);
                 done();
             });
         });
