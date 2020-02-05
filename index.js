@@ -90,18 +90,10 @@ var geneticAlgorithm = (input, groups, settings = {}) => {
         populationMaxSize: 100,
         evolutions: 100
     }
-
-    // Use given options and merge with default values
-    settings = Object.assign(defaults, settings);
+    settings = Object.assign(defaults, settings);   // Use given options and merge with default values
 
     // Load keys from input data
     var keys = Object.keys(input);
-
-    // Create an initial population
-    var population = [];
-    for(let n = 0; n < settings.populationStartSize; n++) {
-        population.push(seedModule.seed(keys, groups));
-    }
 
     // We need to pass input and options as context to fitness function
     fitnessModule.context(input, groups);
@@ -111,8 +103,9 @@ var geneticAlgorithm = (input, groups, settings = {}) => {
         mutationFunction: mutationFunction,
         crossoverFunction: crossoverFunction,
         fitnessFunction: fitnessModule.calc,
-        population: population,
-        populationSize: settings.populationMaxSize, 	// defaults to 100
+        // 
+        population: seedModule.population(keys, groups, settings.populationStartSize),  // Create an initial population
+        populationSize: settings.populationMaxSize, 	
         groupSize: groups
     }
 
