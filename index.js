@@ -194,6 +194,7 @@ module.exports = {
         return geneticAlgorithm(input, groups, settings);
     },
     /**
+     * @deprecated
      * This funtion is work in progress
      */
     kmeans: (input, groups) => {
