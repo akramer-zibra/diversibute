@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dstools": "akramer-zibra/dstools",
+    "dstools": "https://github.com/akramer-zibra/dstools.git",
     "benchmark": "2.1.4",
     "microtime": "3.0.0"
   }
