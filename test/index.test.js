@@ -47,7 +47,7 @@ describe("Module API", function() {
     });
 
     describe("Genetic Algorithm function", function() {
-        it("Works with medium sized example", function(done) {
+        it("Works with medium sized example an default options", function(done) {
             
             // Load input data
             mockery.registerAllowable('../examples/data/3features/input-m.json');
@@ -64,7 +64,7 @@ describe("Module API", function() {
                 done();
             });
         });
-        
+
         it("Works with custom options", function(done) {
             
             // Load input data
