@@ -9,12 +9,6 @@ beforeEach(function() {
     });
 
     mockery.registerAllowable('../../src/constraints/chromosome');
-    /* mockery.registerAllowables(['../helpers/difference', 
-                                '../helpers/counter', 
-                                'js-combinatorics', 
-                                'euclidean-distance', 
-                                './squared', 
-                                '../constraints/chromosome']); */
 });
 
 afterEach(function() {
