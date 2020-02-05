@@ -165,9 +165,19 @@ module.exports = {
     monteCarlo: (input, groups) => {
         return monteCarloAlgorithm(input, groups);
     },
+    /**
+     * This function creates a group combination from given input
+     * and returns combination with its fitness score
+     * @param {{String: Array<Number>}} input
+     * @param {Number} groups Number of groups
+     * @returns {Promise<{combination: Array<Number>, score: Number}>}
+     */
     genetic: (input, groups) => {
         return geneticAlgorithm(input, groups);
     },
+    /**
+     * This funtion is work in progress
+     */
     kmeans: (input, groups) => {
         return kmeansAlgorithm(input, groups);
     }
