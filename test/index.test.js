@@ -60,7 +60,32 @@ describe("Module API", function() {
             api.genetic(input, 5).then(result => {
 
                 // Check response object
-                expect(result).to.be.an('object').has.all.keys('combination', 'score');
+                expect(result).to.be.an('object').has.all.keys('combination', 'score', 'options');
+                done();
+            });
+        });
+        
+        it("Works with custom options", function(done) {
+            
+            // Load input data
+            mockery.registerAllowable('../examples/data/3features/input-m.json');
+            var input = require('../examples/data/3features/input-m.json');
+
+            // Source under test
+            var api = require("../index");
+
+            // Define some custom options 
+            var options = {
+                populationStartSize: 40, 
+                populationMaxSize: 200, 
+                evolutions: 300
+            };
+
+            // Run api
+            api.genetic(input, 5, options).then(result => {
+
+                // Check response object and returned options
+                expect(result.options).to.deep.equal(options);
                 done();
             });
         });
