@@ -69,23 +69,21 @@ var monteCarloAlgorithm = (input, groups) => {
  * @param {Number} groups 
  * @param {String: any} options
  */
-var geneticAlgorithm = (input, groups, options = {}) => {
+var geneticAlgorithm = (input, groups, defaults = {}) => {
 
     // Defaults
-    var options = {
+    var defaults = {
         populationStartSize: 40,
         populationMaxSize: 100,
         evolutions: 100
     }
-    
-    var evolutions = 100;
 
     // Load keys from input data
     var keys = Object.keys(input);
 
     // Create an initial population
     var population = [];
-    for(let n = 0; n < options.populationStartSize; n++) {
+    for(let n = 0; n < defaults.populationStartSize; n++) {
         population.push(seedFunc(keys, groups));
     }
 
@@ -98,7 +96,7 @@ var geneticAlgorithm = (input, groups, options = {}) => {
         crossoverFunction: crossoverFunc,
         fitnessFunction: fitnessModule.calc,
         population: population,
-        populationSize: options.populationMaxSize, 	// defaults to 100
+        populationSize: defaults.populationMaxSize, 	// defaults to 100
         groupSize: groups
     }
 
@@ -109,7 +107,7 @@ var geneticAlgorithm = (input, groups, options = {}) => {
     return new Promise((resolve, reject) => {
 
         // Use genetic algorithm 
-        geneticAlgorithm.evolve(options.evolutions).then((result) => {
+        geneticAlgorithm.evolve(defaults.evolutions).then((result) => {
             // Resolve winning chromosome with its score
             var winner = result.scoredPopulation()[0];
             resolve({combination: winner.phenotype.seq, score: winner.score});
