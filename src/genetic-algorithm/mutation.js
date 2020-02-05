@@ -1,4 +1,3 @@
-const counter = require('../helpers/counter');
 const shuffle = require('../helpers/shuffle');
 
 // Possible mutations:
@@ -6,28 +5,6 @@ const shuffle = require('../helpers/shuffle');
 // - decrease bit
 // - twist two bits
 // - shuffle
-
-/**
- * Internal method mutates given chromosome
- * @param {seq: Array} chromosome 
- * @returns {seq: Array}
- */
-var increaseRandomBit = (chromosome) => {
-
-    // Count group members
-    var counts = counter(clone);
-    var numberGroups = Object.keys(counts).length;
-
-    // Select a random chromosome bit
-    var randomPtr = Math.floor(Math.random() * (chromosome.seq.length - 1 - 0 + 1)) + 0; // @see https://stackoverflow.com/a/1527820
-    
-    /* Increase one bit and prevent "zero" value */
-    clone.seq[randomPtr] = (clone.seq[randomPtr] % numberGroups) + 1; 
-        
-    return clone;
-}
-
-var decreaseRandomBit = () => {};
 
 /**
  * This function mutates given chromosome by twisting bits
