@@ -68,7 +68,7 @@ describe("Fitness function", function() {
     it("Returns NEGATIVE_INFINITY if constraints fail", function() {
 
         // Register mocks for required modules
-        mockery.registerMock('../constraints/chromosome', (chromosome, options) => {
+        mockery.registerMock('../constraints/chromosome', () => {
             return false;
         });
 
