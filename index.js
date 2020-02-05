@@ -27,11 +27,11 @@ var monteCarloAlgorithm = (input, groups) => {
         try {
 
             // Dependencies
-            var fitnessFunction = di.container.fitness;
-            var seedFunction = di.container.seed;
+            var fitnessModule = di.container.fitness;
+            var seedModule = di.container.seed;
 
             // We need to pass input and options as context to fitness function
-            fitnessFunction.context(input, groups);
+            fitnessModule.context(input, groups);
 
             // Create initial population with seed function
             // NOTICE: We use a population 10 times bigger than the given set of members
@@ -40,10 +40,10 @@ var monteCarloAlgorithm = (input, groups) => {
             for(let n = 0; n < keys.length*10; n++) {
 
                 // Create a seed
-                var seed = seedFunction(keys, groups)
+                var seed = seedModule.seed(keys, groups)
                 
                 // Calculate Score for each population
-                var score = fitnessFunction.calc(seed);
+                var score = fitnessModule.calc(seed);
                 
                 // 
                 scoredPopulation[score] = seed; // Use this as an index
@@ -79,8 +79,8 @@ var geneticAlgorithm = (input, groups, settings = {}) => {
     const Genetics = require('@petsinho/geneticjs').Genetics;
 
     // Dependencies
-    var fitnessFunction = di.container.fitness;
-    var seedFunction = di.container.seed;
+    var fitnessModule = di.container.fitness;
+    var seedModule = di.container.seed;
     var mutationFunction = di.container.mutation;
     var crossoverFunction = di.container.crossover;
 
@@ -100,17 +100,17 @@ var geneticAlgorithm = (input, groups, settings = {}) => {
     // Create an initial population
     var population = [];
     for(let n = 0; n < settings.populationStartSize; n++) {
-        population.push(seedFunction(keys, groups));
+        population.push(seedModule.seed(keys, groups));
     }
 
     // We need to pass input and options as context to fitness function
-    fitnessFunction.context(input, groups);
+    fitnessModule.context(input, groups);
 
     // Configure genetic algorithm
     var gaConfig = {
         mutationFunction: mutationFunction,
         crossoverFunction: crossoverFunction,
-        fitnessFunction: fitnessFunction.calc,
+        fitnessFunction: fitnessModule.calc,
         population: population,
         populationSize: settings.populationMaxSize, 	// defaults to 100
         groupSize: groups
