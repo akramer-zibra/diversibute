@@ -1,10 +1,9 @@
-const Genetics = require('@petsinho/geneticjs').Genetics;
+// Start with an initial Inverion of Control container
+const Bottle = require('bottlejs');
+const di = new Bottle();
 
-// Load genetic algorithm functions
-const seedFunc = require('./src/genetic-algorithm/seed');
-const fitnessModule = require('./src/genetic-algorithm/fitness');
-const mutationFunc = require('./src/genetic-algorithm/mutation');
-const crossoverFunc = require('./src/genetic-algorithm/crossover');
+// Build genetic algorithm 
+require('./src/genetic-algorithm').build(di);
 
 /**
  * This function searches for best combination by a bunch of random combinations
@@ -27,8 +26,12 @@ var monteCarloAlgorithm = (input, groups) => {
     return new Promise((resolve, reject) => {
         try {
 
+            // Dependencies
+            var fitnessFunction = di.container.fitness;
+            var seedFunction = di.container.seed;
+
             // We need to pass input and options as context to fitness function
-            fitnessModule.context(input, groups);
+            fitnessFunction.context(input, groups);
 
             // Create initial population with seed function
             // NOTICE: We use a population 10 times bigger than the given set of members
@@ -37,10 +40,10 @@ var monteCarloAlgorithm = (input, groups) => {
             for(let n = 0; n < keys.length*10; n++) {
 
                 // Create a seed
-                var seed = seedFunc(keys, groups)
+                var seed = seedFunction(keys, groups)
                 
                 // Calculate Score for each population
-                var score = fitnessModule.calc(seed);
+                var score = fitnessFunction.calc(seed);
                 
                 // 
                 scoredPopulation[score] = seed; // Use this as an index
@@ -72,6 +75,15 @@ var monteCarloAlgorithm = (input, groups) => {
  */
 var geneticAlgorithm = (input, groups, settings = {}) => {
 
+    // Require genetic algorithm library
+    const Genetics = require('@petsinho/geneticjs').Genetics;
+
+    // Dependencies
+    var fitnessFunction = di.container.fitness;
+    var seedFunction = di.container.seed;
+    var mutationFunction = di.container.mutation;
+    var crossoverFunction = di.container.crossover;
+
     // Defaults
     var defaults = {
         populationStartSize: 40,
@@ -88,17 +100,17 @@ var geneticAlgorithm = (input, groups, settings = {}) => {
     // Create an initial population
     var population = [];
     for(let n = 0; n < settings.populationStartSize; n++) {
-        population.push(seedFunc(keys, groups));
+        population.push(seedFunction(keys, groups));
     }
 
     // We need to pass input and options as context to fitness function
-    fitnessModule.context(input, groups);
+    fitnessFunction.context(input, groups);
 
     // Configure genetic algorithm
     var gaConfig = {
-        mutationFunction: mutationFunc,
-        crossoverFunction: crossoverFunc,
-        fitnessFunction: fitnessModule.calc,
+        mutationFunction: mutationFunction,
+        crossoverFunction: crossoverFunction,
+        fitnessFunction: fitnessFunction.calc,
         population: population,
         populationSize: settings.populationMaxSize, 	// defaults to 100
         groupSize: groups

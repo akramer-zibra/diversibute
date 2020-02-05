@@ -9,14 +9,16 @@ beforeEach(function() {
     });
 
     mockery.registerAllowable('../index');
-    mockery.registerAllowables(['@petsinho/geneticjs', 
+    mockery.registerAllowables(['bottlejs',
+                                '@petsinho/geneticjs', 
                                 'lodash', 
                                 'util', 
-                                './src/genetic-algorithm/seed', 
                                 '../helpers/shuffle', 
-                                './src/genetic-algorithm/fitness', 
-                                './src/genetic-algorithm/mutation', 
-                                './src/genetic-algorithm/crossover']);
+                                './src/genetic-algorithm',
+                                './seed',                                 
+                                './fitness', 
+                                './mutation', 
+                                './crossover']);
 
 });
 
