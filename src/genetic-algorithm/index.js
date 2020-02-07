@@ -26,7 +26,7 @@ var run = (input, settings = {}) => {
     // Require genetic algorithm library
     const Genetics = require('@petsinho/geneticjs').Genetics;
 
-    // Dependencies
+    // Get dependencies
     var fitnessModule = di.container.fitness;
     var seedModule = di.container.seed;
     var mutationFunction = di.container.mutation;
@@ -46,13 +46,16 @@ var run = (input, settings = {}) => {
     // We need to pass input as context to fitness function
     fitnessModule.context(input);
 
+    // Generate an initial population
+    var population = seedModule.population(keys, input.groups, settings.populationStartSize)
+
     // Configure genetic algorithm
     var gaConfig = {
         mutationFunction: mutationFunction,
         crossoverFunction: crossoverFunction,
         fitnessFunction: fitnessModule.calc,
-        // 
-        population: seedModule.population(keys, input.groups, settings.populationStartSize),  // Create an initial population
+        // Customize with settings
+        population: population,  // Create an initial population
         populationSize: settings.populationMaxSize, 	
         groupSize: input.groups
     }
