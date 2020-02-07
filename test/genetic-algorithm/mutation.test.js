@@ -20,7 +20,7 @@ afterEach(function() {
 });
 
 describe("Mutation module", function() {
-    it("mutates with default settings", function() {
+    it("Mutates with default settings", function() {
 
         // Dummy chromosome data
         var chromosome = {seq: [1,1,2,2,3,3,4,4]};
@@ -34,7 +34,7 @@ describe("Mutation module", function() {
         expect(chromosome).to.not.deep.equal(mutated);
     });
 
-    it("mutates with 100percent shuffle probability", function() {
+    it("Mutates with 100percent shuffle probability", function() {
 
         // Dummy chromosome data
         var chromosome = {seq: [1,1,2,2,3,3,4,4]};
@@ -48,7 +48,7 @@ describe("Mutation module", function() {
         expect(chromosome).to.not.deep.equal(mutated);
     });
 
-    it("mutates with 100percent twist probability", function() {
+    it("Mutates with 100percent twist probability", function() {
 
         // Dummy chromosome data
         var chromosome = {seq: [1,1,2,2,3,3,4,4]};
