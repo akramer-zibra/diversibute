@@ -8,7 +8,10 @@ beforeEach(function() {
         useCleanCache: true
     });
 
+    // Allow source under test module
     mockery.registerAllowable('../../src/genetic-algorithm/fitness');
+
+    // Allow source's dependencies
     mockery.registerAllowables(['../helpers/difference', 
                                 '../helpers/counter', 
                                 'js-combinatorics', 
@@ -23,7 +26,7 @@ afterEach(function() {
 
 describe("Fitness function", function() {
   describe("Essential calculation", function() {
-    it("works with medium size example data", function() {
+    it("Works with medium size example data", function() {
 
         // Example input data
         mockery.registerAllowable("../../examples/data/3features/input-m.json");
