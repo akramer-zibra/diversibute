@@ -14,9 +14,7 @@ module.exports = {
      * This function caches given parameters within a context object 
      */
     context: (input) => {
-//    context: (input, groups) => {
-        context['input'] = input.data;
-        context['groups'] = input.groups;
+        context = Object.assign(context, input); 
     },
 
     /**
@@ -28,7 +26,7 @@ module.exports = {
     calc: (chromosome) => {
 
         // Check if necessary context is set
-        if(context['input'] == undefined || context['groups'] == undefined) {
+        if(context['data'] == undefined || context['groups'] == undefined) {
             throw new Error('Error: context is missing!');
         }
 
@@ -45,7 +43,7 @@ module.exports = {
 
         // Get array with data keys
         // NOTICE: key ordering must be deterministic!
-        var dataKeys = Object.keys(context.input);
+        var dataKeys = Object.keys(context.data);
 
         // Create a group Index with its data
         var groups = {};
@@ -55,7 +53,7 @@ module.exports = {
             if(groups[element] == undefined) { groups[element] = []; }
 
             // Resolve chromosome index to data key and its data entry
-            var dataEntry = context.input[dataKeys[index]];
+            var dataEntry = context.data[dataKeys[index]];
 
             // Push Data key into indexed group collection
             groups[element].push(dataEntry);
