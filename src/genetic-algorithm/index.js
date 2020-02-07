@@ -1,7 +1,7 @@
 /*
  * Internal member variables
  */
-var di = undefined
+var di
 
 /**
  * This internal function runs prepared genetic algorithm as

@@ -17,7 +17,7 @@ var twistTwoRandomBit = (clone) => {
   // Twist with random pointer
   // - which must be different
   // - and twisted bit values must be different
-  while (ptr1 == ptr2 || clone.seq[ptr1] == clone.seq[ptr2]) {
+  while (ptr1 === ptr2 || clone.seq[ptr1] === clone.seq[ptr2]) {
     // Get two random pointer
     // Math.floor(Math.random() * (max - min +1)) + min
     ptr1 = Math.floor(Math.random() * (clone.seq.length - 1 - 0 + 1)) + 0

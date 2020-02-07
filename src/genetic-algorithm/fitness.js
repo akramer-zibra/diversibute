@@ -25,13 +25,13 @@ module.exports = {
      */
   score: (chromosome) => {
     // Check if necessary context is set
-    if (context.data == undefined || context.groups == undefined) {
+    if (context.data === undefined || context.groups === undefined) {
       throw new Error('Error: context is missing!')
     }
 
     // FIXME: Something is here wrong
     // ...Drop "undefined" chromosomes
-    if (chromosome == undefined) {
+    if (chromosome === undefined) {
       return Number.NEGATIVE_INFINITY
     }
 
@@ -48,7 +48,7 @@ module.exports = {
     var groups = {}
     chromosome.seq.forEach((element, index) => {
       // Initialize element index
-      if (groups[element] == undefined) { groups[element] = [] }
+      if (groups[element] === undefined) { groups[element] = [] }
 
       // Resolve chromosome index to data key and its data entry
       var dataEntry = context.data[dataKeys[index]]

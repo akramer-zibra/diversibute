@@ -26,7 +26,7 @@ module.exports = (chromosome, options) => {
   }
 
   // 3. Check given group size
-  if (Object.keys(counts).length != options.groups) {
+  if (Object.keys(counts).length !== options.groups) {
     return false
   }
 
