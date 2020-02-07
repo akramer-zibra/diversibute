@@ -29,10 +29,27 @@ describe("Crossover module", function() {
         // Use crossover function
         var crossed = crossover(chromosomeA, chromosomeB);
 
-        // CExpect both chrildren are not equal to their parents
+        // Expect both chrildren are not equal to their parents
         expect(crossed[0]).to.not.deep.equal(chromosomeA);
         expect(crossed[1]).to.not.deep.equal(chromosomeA);
         expect(crossed[0]).to.not.deep.equal(chromosomeB);
         expect(crossed[1]).to.not.deep.equal(chromosomeB);
+    });
+
+    it("Keeps its chromosome structure", function() {
+
+        // Dummy chromosome data
+        var chromosomeA = {seq: [1,1,2,2,3,3,4,4]};
+        var chromosomeB = {seq: [4,4,3,3,2,2,1,1]};
+
+        // Source under test
+        var crossover = require("../../src/genetic-algorithm/crossover");
+
+        // Use crossover function
+        var crossed = crossover(chromosomeA, chromosomeB);
+
+        // Expect both chrildren are not equal to their parents
+        expect(crossed[0].seq).to.be.an('array');
+        expect(crossed[1].seq).to.be.an('array');
     });
 });
