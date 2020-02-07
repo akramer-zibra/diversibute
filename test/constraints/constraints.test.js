@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 var expect = require("chai").expect;
 var mockery = require("mockery");
 

@@ -4,7 +4,7 @@
   "description": "Dieses Modul ermittelt möglichst heterogene Untergruppen anhand skalarer Eigenschaftswerte von Gruppenmitgliedern.",
   "main": "index.js",
   "scripts": {
-    "lint": "npx eslint index.js src/** test/**",
+    "lint": "npx standard index.js src/** test/**",
     "test": "./node_modules/.bin/mocha --reporter spec --recursive"
   },
   "author": "Achim Kramer <achim@zibra.de>",
@@ -21,6 +21,7 @@
     "mocha": "7.0.0",
     "chai": "4.2.0",
     "mockery": "2.1.0",
-    "sinon": "8.1.1"
+    "sinon": "8.1.1",
+    "standard": "14.3.1"
   }
 }
