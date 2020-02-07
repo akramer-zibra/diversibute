@@ -56,18 +56,22 @@ var shuffleAll = (clone) => {
  * @param {seq: Array} chromosome 
  * @param {String: any} settings Settings-Object with properties to configure this mutation  
  */
-module.exports = (chromosome, settings = {shuffleQuota: 0.3}) => {
+module.exports = (chromosome, settings = {shuffleQuota: 0.1, twistQuota: 1}) => {
 
     // Clone chromosome's sequence
     var clone = {seq: []};
     clone.seq = chromosome.seq.slice(0);
 
-    // Use with a xx% chance different mutations
-    if(Math.random() < settings.shuffleQuota) {
-        clone = shuffleAll(clone);
-    } else {
+    // Twist with a yy% chance some bits
+    if(Math.random() < settings.twistQuota) {
         clone = twistTwoRandomBit(clone);
     }
+
+    // Shuffle with a xx% chance this mutation
+    if(Math.random() < settings.shuffleQuota) {
+        clone = shuffleAll(clone);
+    }
+    
     // Deprecated mutations
     //    clone = increaseRandomBit(clone);     // Increases one bit
 
