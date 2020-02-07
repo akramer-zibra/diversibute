@@ -33,4 +33,32 @@ describe("Mutation module", function() {
 
         expect(chromosome).to.not.deep.equal(mutated);
     });
+
+    it("mutates with 100percent shuffle probability", function() {
+
+        // Dummy chromosome data
+        var chromosome = {seq: [1,1,2,2,3,3,4,4]};
+
+        // Source under test
+        var mutation = require("../../src/genetic-algorithm/mutation");
+
+        // Use mutation function
+        var mutated = mutation(chromosome, {shuffleQuota: 1.0, twistQuota: 0});
+
+        expect(chromosome).to.not.deep.equal(mutated);
+    });
+
+    it("mutates with 100percent twist probability", function() {
+
+        // Dummy chromosome data
+        var chromosome = {seq: [1,1,2,2,3,3,4,4]};
+
+        // Source under test
+        var mutation = require("../../src/genetic-algorithm/mutation");
+
+        // Use mutation function
+        var mutated = mutation(chromosome, {shuffleQuota: 0, twistQuota: 1.0});
+
+        expect(chromosome).to.not.deep.equal(mutated);
+    });
 });
