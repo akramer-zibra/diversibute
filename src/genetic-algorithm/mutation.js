@@ -54,15 +54,16 @@ var shuffleAll = (clone) => {
 /**
  * This function creates a valid mutation of given chromosome
  * @param {seq: Array} chromosome 
+ * @param {String: any} settings Settings-Object with properties to configure this mutation  
  */
-module.exports = (chromosome) => {
+module.exports = (chromosome, settings = {shuffleQuota: 0.3}) => {
 
     // Clone chromosome's sequence
     var clone = {seq: []};
     clone.seq = chromosome.seq.slice(0);
 
-    // Use with a 50% chance different mutations
-    if(Math.random() < 0.7) {
+    // Use with a xx% chance different mutations
+    if(Math.random() < settings.shuffleQuota) {
         clone = shuffleAll(clone);
     } else {
         clone = twistTwoRandomBit(clone);
