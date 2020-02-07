@@ -2,8 +2,8 @@
 const Bottle = require('bottlejs');
 const di = new Bottle();
 
-// Register genetic-algorithm functions
-require('./src/genetic-algorithm').register(di);
+// Build genetic-algorithm functions
+const ga = require('./src/genetic-algorithm')(di);
 
 /**
  * This function searches for best combination by a bunch of random combinations
@@ -72,6 +72,7 @@ var monteCarloAlgorithm = (input) => {
 };
 
 /**
+ * @deprecated
  * This function searches for best scored combination 
  * with a genetic algorithm 
  * @param {data: {String: Number}, groups: Number} input 
@@ -79,6 +80,8 @@ var monteCarloAlgorithm = (input) => {
  * @return {combination: Array<number>, score: Number, options: {String: any}}
  */
 var geneticAlgorithm = (input, settings = {}) => {
+
+    throw new Error('deprecated');
 
     // Validate input arguments
     if(input.data === undefined) {
@@ -215,7 +218,8 @@ module.exports = {
         // Wrap data- and groups-input into one input object
         var input = {data, groups};
 
-        return geneticAlgorithm(input, settings);
+        // Run algorithm with arguments
+        return ga.run(input, settings);
     },
     /**
      * @deprecated
