@@ -2,14 +2,20 @@
 const Bottle = require('bottlejs');
 const di = new Bottle();
 
-// Build genetic-algorithm functions
+// Build genetic-algorithm module
 const ga = require('./src/genetic-algorithm')(di);
 
+// Build montecarlo algorithm module
+const mc = require('./src/monte-carlo')(di);
+
 /**
+ * @deprecated
  * This function searches for best combination by a bunch of random combinations
  * @param {data: {String: Number}, groups: Number} input 
  */
 var monteCarloAlgorithm = (input) => {
+
+    throw new Error('deprecated');
 
     /* Validate input arguments */
     // Check necessary arguments
@@ -203,7 +209,9 @@ module.exports = {
         // Wrap data- and groups-input into one input group 
         var input = {data, groups};
 
-        return monteCarloAlgorithm(input);
+        // Run monte-carlo algorithm
+        return mc.run(input);
+//        return monteCarloAlgorithm(input);
     },
     /**
      * This function creates a group combination from given input
@@ -222,7 +230,7 @@ module.exports = {
         return ga.run(input, settings);
     },
     /**
-     * @deprecated
+     * @bleedingendge
      * This funtion is work in progress
      */
     kmeans: (data, groups) => {

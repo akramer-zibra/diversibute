@@ -8,7 +8,10 @@ beforeEach(function() {
         useCleanCache: true
     });
 
+    // Allow source under test module
     mockery.registerAllowable('../index');
+
+    // Allow source dependencies
     mockery.registerAllowables(['bottlejs',
                                 '@petsinho/geneticjs', 
                                 'lodash', 
@@ -31,6 +34,11 @@ describe("Module API", function() {
     describe("Monte Carlo function", function() {
         it("Works with medium sized example", function(done) {
           
+            // Allow source dependencies
+            mockery.registerAllowables(['bottlejs',
+                                        './src/genetic-algorithm',
+                                        './src/monte-carlo']);
+
             // Load input data
             mockery.registerAllowable('../examples/data/3features/input-m.json');
             var input = require('../examples/data/3features/input-m.json');
