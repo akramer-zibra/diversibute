@@ -15,8 +15,6 @@ var run = (input, settings = {}) => {
     if(di === undefined) {
         throw new Error("You need to run 'register' method first");
     }
-
-    // 
     // Validate input arguments
     if(input.data === undefined) {
         throw new Error("Given input arguments are not valid: 'data' is missing.");
