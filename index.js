@@ -67,13 +67,20 @@ var monteCarloAlgorithm = (input, groups) => {
 
 /**
  * This function searches for best scored combination 
- * with a genetic algorithm
- * @param {{String: Array<Number>}} input 
- * @param {Number} groups 
+ * with a genetic algorithm 
+ * @param {data: {String: Array<Number>}, groups: Number} input 
  * @param {String: any} settings
  * @return {combination: Array<number>, score: Number, options: {String: any}}
  */
-var geneticAlgorithm = (input, groups, settings = {}) => {
+var geneticAlgorithm = (input, settings = {}) => {
+
+    // Validate input
+    if(input.data === undefined) {
+        throw new Error("Given input arguments are not valid: 'data' is missing.");
+    }
+    if(input.groups === undefined) {
+        throw new Error("Given input arguments are not valid: 'groups' is missing.");
+    }
 
     // Require genetic algorithm library
     const Genetics = require('@petsinho/geneticjs').Genetics;
@@ -93,10 +100,10 @@ var geneticAlgorithm = (input, groups, settings = {}) => {
     settings = Object.assign(defaults, settings);   // Use given options and merge with default values
 
     // Load keys from input data
-    var keys = Object.keys(input);
+    var keys = Object.keys(input.data);
 
     // We need to pass input and options as context to fitness function
-    fitnessModule.context(input, groups);
+    fitnessModule.context(input.data, input.groups);
 
     // Configure genetic algorithm
     var gaConfig = {
@@ -104,9 +111,9 @@ var geneticAlgorithm = (input, groups, settings = {}) => {
         crossoverFunction: crossoverFunction,
         fitnessFunction: fitnessModule.calc,
         // 
-        population: seedModule.population(keys, groups, settings.populationStartSize),  // Create an initial population
+        population: seedModule.population(keys, input.groups, settings.populationStartSize),  // Create an initial population
         populationSize: settings.populationMaxSize, 	
-        groupSize: groups
+        groupSize: input.groups
     }
 
     // Create a fresh algorithm object here
@@ -194,8 +201,15 @@ module.exports = {
      * @param {String: any} settings Object with option properties 
      * @returns {Promise<{combination: Array<Number>, score: Number}>}
      */
-    genetic: (input, groups, settings = {}) => {
-        return geneticAlgorithm(input, groups, settings);
+    genetic: (data, groups, settings = {}) => {
+
+        // Wrap data- and groups-input into one input object
+        var input = {
+            data,
+            groups
+        }
+
+        return geneticAlgorithm(input, settings);
     },
     /**
      * @deprecated
