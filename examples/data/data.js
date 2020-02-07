@@ -1,11 +1,11 @@
-const inputXS = require('./3features/input-xs.json');   // Best known score is: 4.438407168565259
-const inputS = require('./3features/input-s.json');     // Best known score is: 42.46570983903612
-const inputM = require('./3features/input-m.json');     // Best known score is: 233.4154995819719
-const inputL = require('./3features/input-l.json');     // Best known score is: 604.3560387144068
+const inputXS = require('./3features/input-xs.json') // Best known score is: 4.438407168565259
+const inputS = require('./3features/input-s.json') // Best known score is: 42.46570983903612
+const inputM = require('./3features/input-m.json') // Best known score is: 233.4154995819719
+const inputL = require('./3features/input-l.json') // Best known score is: 604.3560387144068
 
 /**
- * This function is a facade for reading input data 
+ * This function is a facade for reading input data
  */
 module.exports = () => {
-    return inputM;
+  return inputM
 }
