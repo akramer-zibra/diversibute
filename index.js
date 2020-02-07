@@ -11,7 +11,7 @@ require('./src/genetic-algorithm').register(di);
  */
 var monteCarloAlgorithm = (input) => {
 
-    /* Validate input */
+    /* Validate input arguments */
     // Check necessary arguments
     if(input.data === undefined) {
         throw new Error("Given input arguments are not valid: 'data' is missing.");
@@ -74,13 +74,13 @@ var monteCarloAlgorithm = (input) => {
 /**
  * This function searches for best scored combination 
  * with a genetic algorithm 
- * @param {data: {String: Array<Number>}, groups: Number} input 
+ * @param {data: {String: Number}, groups: Number} input 
  * @param {String: any} settings
  * @return {combination: Array<number>, score: Number, options: {String: any}}
  */
 var geneticAlgorithm = (input, settings = {}) => {
 
-    // Validate input
+    // Validate input arguments
     if(input.data === undefined) {
         throw new Error("Given input arguments are not valid: 'data' is missing.");
     }
@@ -144,7 +144,7 @@ var geneticAlgorithm = (input, settings = {}) => {
 
 /**
  * This function uses kmeans algorithm to generate heterogenous groups
- * @param {data: {String: Array<Number>}, groups: NUmber} input 
+ * @param {data: {String: Number}, groups: Number} input 
  */
 var kmeansAlgorithm = (input) => {
     
@@ -198,10 +198,7 @@ module.exports = {
     monteCarlo: (data, groups) => {
 
         // Wrap data- and groups-input into one input group 
-        var input = {
-            data,
-            groups
-        }
+        var input = {data, groups};
 
         return monteCarloAlgorithm(input);
     },
@@ -216,10 +213,7 @@ module.exports = {
     genetic: (data, groups, settings = {}) => {
 
         // Wrap data- and groups-input into one input object
-        var input = {
-            data,
-            groups
-        }
+        var input = {data, groups};
 
         return geneticAlgorithm(input, settings);
     },
@@ -230,10 +224,7 @@ module.exports = {
     kmeans: (data, groups) => {
 
         // Wrap data- and groups-input into one input group 
-        var input = {
-            data,
-            groups
-        }
+        var input = {data, groups};
 
         return kmeansAlgorithm(input);
     }
