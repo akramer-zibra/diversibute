@@ -143,14 +143,4 @@ describe('Module API', function () {
       })
     })
   })
-
-  describe('kmeans function', function () {
-    it('Throws error because it is not implemented yet', function () {
-      // Source under test
-      var moduleApi = require('../index')
-
-      // Fitness function should throw error in case of missing context
-      expect(function () { moduleApi.kmeans([], 5) }).to.throw('This is not running well yet')
-    })
-  })
 })
