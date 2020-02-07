@@ -13,9 +13,10 @@ module.exports = {
     /**
      * This function caches given parameters within a context object 
      */
-    context: (input, groups) => {
-        context['input'] = input;
-        context['groups'] = groups;
+    context: (input) => {
+//    context: (input, groups) => {
+        context['input'] = input.data;
+        context['groups'] = input.groups;
     },
 
     /**

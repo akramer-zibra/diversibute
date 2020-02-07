@@ -36,7 +36,7 @@ describe("Fitness function", function() {
         var fitness = require("../../src/genetic-algorithm/fitness");
 
         // Set context for testing
-        fitness.context(input, 5);
+        fitness.context({data: input, groups: 5});
 
         // Use score function
         var score = fitness.calc({seq: [4, 2, 5, 3, 4, 1, 3, 1, 4, 2, 1, 4, 5, 5, 5, 1, 1, 5, 3, 2, 2, 2, 1, 3, 3, 4]});
@@ -63,7 +63,7 @@ describe("Fitness function", function() {
         var fitness = require("../../src/genetic-algorithm/fitness");
 
         // Configure dummy context
-        fitness.context([], []);
+        fitness.context({data: [], groups: []});
 
         expect(fitness.calc(undefined)).to.equal(Number.NEGATIVE_INFINITY);
     });
@@ -79,7 +79,7 @@ describe("Fitness function", function() {
         var fitness = require("../../src/genetic-algorithm/fitness");
 
         // Configure dummy context
-        fitness.context([], []);
+        fitness.context({data: [], groups: []});
 
         expect(fitness.calc({seq: []})).to.equal(Number.NEGATIVE_INFINITY);
     });    

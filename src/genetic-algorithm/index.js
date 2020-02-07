@@ -43,8 +43,8 @@ var run = (input, settings = {}) => {
     // Load keys from input data
     var keys = Object.keys(input.data);
 
-    // We need to pass input and options as context to fitness function
-    fitnessModule.context(input.data, input.groups);
+    // We need to pass input as context to fitness function
+    fitnessModule.context(input);
 
     // Configure genetic algorithm
     var gaConfig = {

@@ -35,8 +35,8 @@ var run = (input) => {
             var fitnessModule = di.container.fitness;
             var seedModule = di.container.seed;
 
-            // We need to pass input and options as context to fitness function
-            fitnessModule.context(input.data, input.groups);
+            // We need to pass input as context to fitness function
+            fitnessModule.context(input);
 
             // Create initial population with seed function
             // NOTICE: We use a population 10 times bigger than the given set of members
