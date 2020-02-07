@@ -88,7 +88,9 @@ describe("Module API", function() {
             var settings = {
                 populationStartSize: 40, 
                 populationMaxSize: 200, 
-                evolutions: 300
+                evolutions: 300,
+                steps: 1,
+                interceptor: undefined
             };
 
             // Run api

@@ -36,7 +36,9 @@ var run = (input, settings = {}) => {
     var defaults = {
         populationStartSize: 40,
         populationMaxSize: 100,
-        evolutions: 100
+        evolutions: 100,
+        steps: 1,
+        interceptor: undefined
     }
     settings = Object.assign(defaults, settings);   // Use given options and merge with default values
 
@@ -66,8 +68,17 @@ var run = (input, settings = {}) => {
     // Genetic evolution is async!
     return new Promise((resolve, reject) => {
 
+        // Calculate progress step
+        var evolutionStep = settings.evolutions / settings.steps;
+
         // Use genetic algorithm 
-        geneticAlgorithm.evolve(settings.evolutions).then((result) => {
+        geneticAlgorithm.evolve(evolutionStep).then((result) => {
+
+            // Integrate interceptor function
+            if(settings.interceptor !== undefined) {
+                settings.interceptor(result);
+            }
+
             // Resolve winning chromosome with its score
             var winner = result.scoredPopulation()[0];
             resolve({
