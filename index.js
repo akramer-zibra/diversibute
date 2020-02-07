@@ -7,21 +7,27 @@ require('./src/genetic-algorithm').register(di);
 
 /**
  * This function searches for best combination by a bunch of random combinations
- * @param {*} input 
- * @param {*} groups 
+ * @param {data: {String: Number}, groups: Number} input 
  */
-var monteCarloAlgorithm = (input, groups) => {
+var monteCarloAlgorithm = (input) => {
 
-    // Get group member keys
-    var keys = Object.keys(input);
-
-    // Check constraints
-    if(groups > keys.length) {
+    /* Validate input */
+    // Check necessary arguments
+    if(input.data === undefined) {
+        throw new Error("Given input arguments are not valid: 'data' is missing.");
+    }
+    if(input.groups === undefined) {
+        throw new Error("Given input arguments are not valid: 'groups' is missing.");
+    }
+    // Check group argument plausibility
+    if(input.groups < 1) {
+        throw new Error("Error: Number of groups must be at least 1. Given: "+input.groups);
+    }
+    // Check given arguments distribution plausibility
+    var keys = Object.keys(input.data);      // Get group member keys
+    if(input.groups > keys.length) {
         throw new Error("Error: We can't distribute given numbers of members to a higher number of groups");
-    }
-    if(groups < 1) {
-        throw new Error("Error: Number of groups must be at least 1. Given: "+groups);
-    }
+    }    
 
     return new Promise((resolve, reject) => {
         try {
@@ -31,7 +37,7 @@ var monteCarloAlgorithm = (input, groups) => {
             var seedModule = di.container.seed;
 
             // We need to pass input and options as context to fitness function
-            fitnessModule.context(input, groups);
+            fitnessModule.context(input.data, input.groups);
 
             // Create initial population with seed function
             // NOTICE: We use a population 10 times bigger than the given set of members
@@ -40,7 +46,7 @@ var monteCarloAlgorithm = (input, groups) => {
             for(let n = 0; n < keys.length*10; n++) {
 
                 // Create a seed
-                var seed = seedModule.seed(keys, groups)
+                var seed = seedModule.seed(keys, input.groups)
                 
                 // Calculate Score for each population
                 var score = fitnessModule.calc(seed);
@@ -138,10 +144,9 @@ var geneticAlgorithm = (input, settings = {}) => {
 
 /**
  * This function uses kmeans algorithm to generate heterogenous groups
- * @param {{String: Array<Number>}} input 
- * @param {Number} groups 
+ * @param {data: {String: Array<Number>}, groups: NUmber} input 
  */
-var kmeansAlgorithm = (input, groups) => {
+var kmeansAlgorithm = (input) => {
     
     // k-means does not care about same size groups
     // There is one approach to post process k-means clusters and
@@ -186,12 +191,19 @@ module.exports = {
     /** 
      * This function creates groups from given input
      * with a simple monte carlo algorithm
-     * @param {{String: Array<Number>}} input 
+     * @param {{String: Array<Number>}} data 
      * @param {Number} groups Number of groups
      * @returns {Promise<{combination: Array<Number>, score: Number}>}
      */
-    monteCarlo: (input, groups) => {
-        return monteCarloAlgorithm(input, groups);
+    monteCarlo: (data, groups) => {
+
+        // Wrap data- and groups-input into one input group 
+        var input = {
+            data,
+            groups
+        }
+
+        return monteCarloAlgorithm(input);
     },
     /**
      * This function creates a group combination from given input
@@ -215,7 +227,14 @@ module.exports = {
      * @deprecated
      * This funtion is work in progress
      */
-    kmeans: (input, groups) => {
-        return kmeansAlgorithm(input, groups);
+    kmeans: (data, groups) => {
+
+        // Wrap data- and groups-input into one input group 
+        var input = {
+            data,
+            groups
+        }
+
+        return kmeansAlgorithm(input);
     }
 }
