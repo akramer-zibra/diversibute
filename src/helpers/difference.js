@@ -16,6 +16,7 @@ var differencesGroups = (groups) => {
     // Create distance combinations
     var combinations = []
     var cmb = Combinatorics.combination(groups[element], 2)
+    var a
     while ((a = cmb.next())) combinations.push(a)
 
     // Sum up euclidean distance
@@ -38,6 +39,7 @@ var differences1Dimensional = (values) => {
   // Create combinations
   var combinations = []
   var cmb = Combinatorics.combination(values, 2)
+  var a
   while ((a = cmb.next())) combinations.push(a)
 
   // Sum up simple distance

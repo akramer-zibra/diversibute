@@ -2,7 +2,7 @@ const shuffle = require('../helpers/shuffle')
 
 // Array Remove - By John Resig (MIT Licensed)
 // @see https://stackoverflow.com/a/9815010
-Array.prototype.remove = function (from, to) {
+Array.prototype.remove = function (from, to) {            // eslint-disable-line
   var rest = this.slice((to || from) + 1 || this.length)
   this.length = from < 0 ? this.length + from : from
   return this.push.apply(this, rest)

@@ -1,7 +1,7 @@
 /*
  * Internal member variable
  */
-var di = undefined
+var di
 
 /**
  * This function searches for best combination by a bunch of random combinations
