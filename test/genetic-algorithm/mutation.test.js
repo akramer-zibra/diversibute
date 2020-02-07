@@ -31,7 +31,22 @@ describe("Mutation module", function() {
         // Use mutation function
         var mutated = mutation(chromosome);
 
-        expect(chromosome).to.not.deep.equal(mutated);
+        expect(chromosome).to.not.deep.equal(mutated);      // mutated choromosome sequence must be different to initial one
+    });
+
+    it("Mutates and keeps its structure", function() {
+
+        // Dummy chromosome data
+        var chromosome = {seq: [1,1,2,2,3,3,4,4]};
+
+        // Source under test
+        var mutation = require("../../src/genetic-algorithm/mutation");
+
+        // Use mutation function
+        var mutated = mutation(chromosome);
+
+        expect(mutated).to.have.own.property('seq');     // mutated chromosome needs a sequence
+        expect(mutated.seq).to.be.an('array');           // sequence must be an array
     });
 
     it("Mutates with 100percent shuffle probability", function() {
