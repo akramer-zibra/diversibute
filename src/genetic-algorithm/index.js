@@ -9,6 +9,11 @@ var di = undefined;
  */
 var interceptedEvolve = (ga, settings) => {
 
+    // Validate given settings
+    if(settings.steps < 1) {
+        throw new Error('Number of configured steps must be a number an at least 1');
+    }
+
     return new Promise((resolve, reject) => { 
     
         // 
