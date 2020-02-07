@@ -48,7 +48,7 @@ var run = (input) => {
                 var seed = seedModule.seed(keys, input.groups)
                 
                 // Calculate Score for each population
-                var score = fitnessModule.calc(seed);
+                var score = fitnessModule.score(seed);
                 
                 // 
                 scoredPopulation[score] = seed; // Use this as an index

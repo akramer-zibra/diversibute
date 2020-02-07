@@ -111,7 +111,7 @@ var run = (input, settings = {}) => {
     var configuration = {
         mutationFunction: mutationFunction,
         crossoverFunction: crossoverFunction,
-        fitnessFunction: fitnessModule.calc,
+        fitnessFunction: fitnessModule.score,
         // Customize with settings
         population: population,  // Create an initial population
         populationSize: settings.populationMaxSize, 	

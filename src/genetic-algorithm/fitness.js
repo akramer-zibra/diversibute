@@ -23,7 +23,7 @@ module.exports = {
      * @param {seq: Array} chromosome 
      * @returns Number
      */
-    calc: (chromosome) => {
+    score: (chromosome) => {
 
         // Check if necessary context is set
         if(context['data'] == undefined || context['groups'] == undefined) {
