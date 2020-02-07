@@ -1,14 +1,11 @@
 /**
  * This function creates two childs by crossover from given two 
  * chromosomes
- * @param {seq: Array} a
- * @param {seq: Array} b
+ * @param {seq: Array<Number>} a First chromosome
+ * @param {seq: Array<Number>} b Second chromosome
  * @returns Array<{seq: Array}>
  */
 module.exports = (a, b) => {
-
-    console.log(a);
-    console.log(b);
 
     // Get a random split pointer
     // Math.floor(Math.random() * (max - min + 1)) + min;
