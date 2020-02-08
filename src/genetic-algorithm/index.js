@@ -3,6 +3,16 @@
  */
 var di
 
+/** Default settings for genetic algorithm */
+var defaults = {
+  populationStartSize: 40,
+  populationMaxSize: 100,
+  evolutions: 100,
+  elitism: 1, // Every chroosome is elite
+  steps: 1,
+  interceptor: undefined
+}
+
 /**
  * This internal function runs prepared genetic algorithm as
  * an intercepted chain
@@ -62,15 +72,7 @@ var run = (input, settings = {}) => {
   var mutationFunction = di.container.mutation
   var crossoverFunction = di.container.crossover
 
-  // Defaults
-  var defaults = {
-    populationStartSize: 40,
-    populationMaxSize: 100,
-    evolutions: 100,
-    elitism: 1, // Every chroosome is elite
-    steps: 1,
-    interceptor: undefined
-  }
+  // Merge given settings with defaults
   settings = Object.assign(defaults, settings) // Use given options and merge with default values
 
   // Load keys from input data
