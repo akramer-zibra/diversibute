@@ -4,15 +4,16 @@
   "description": "Dieses Modul ermittelt möglichst heterogene Untergruppen anhand skalarer Eigenschaftswerte von Gruppenmitgliedern.",
   "main": "index.js",
   "scripts": {
+    "debug": "node --nolazy --inspect-brk=9229 index.js",
     "lint": "npx standard index.js src/** test/**",
     "test": "./node_modules/.bin/mocha --reporter spec --recursive"
   },
   "author": "Achim Kramer <achim@zibra.de>",
   "license": "GNU-GPLv3",
   "dependencies": {
+    "@petsinho/geneticjs": "2.1.1",
     "euclidean-distance": "1.0.0",
     "js-combinatorics": "0.5.5",
-    "@petsinho/geneticjs": "2.1.1",
     "skmeans": "0.11.2",
     "bottlejs": "1.7.2"
   },
