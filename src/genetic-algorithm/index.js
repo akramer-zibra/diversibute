@@ -27,41 +27,9 @@ var interceptedEvolve = (ga, settings) => {
       if (settings.interceptor !== undefined && (run % evolutionStep === 0)) {
         settings.interceptor(ga)
       }
-
-      /*
-      //
-      promises.push(ga.evolve({ evolutions: evolutionStep }).then(result => {
-        // Integrate interceptor function
-        if (settings.interceptor !== undefined) {
-          settings.interceptor(result)
-        }
-
-        return result
-      }))
-      */
     }
 
-    /*
-    // Reduce runs into a sequential chain of promises
-    promises.reduce((promiseChain, currentTask) => {
-      return promiseChain.then(chainResults =>
-        currentTask.then(currentResult =>
-          [...chainResults, currentResult]
-        )
-      )
-    },
-    Promise.resolve([]))
-
-    // Extract winner from latest evolution
-    Promise.all(promises).then(results => {
-      // Resolve latest result
-      resolve(results.pop())
-    }).catch(err => {
-      reject(err)
-    })
-    */
-
-    // Return genetic algorithm object with its population
+    // Return ga object with its scored population
     resolve(ga)
   })
 }
