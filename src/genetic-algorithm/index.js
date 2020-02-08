@@ -29,9 +29,7 @@ var interceptedEvolve = (ga, settings) => {
 
     // Run calculation as evolution bunches
     for (let run = 0; run < settings.evolutions; run++) {
-      // Process evolution
-      //      ga.evolve({ evolutions: evolutionStep })
-      ga.evolve()
+      ga.evolve() // Process evolution
 
       // Integrate interceptor function
       // when iteration is a plural of a evolution step
@@ -40,7 +38,7 @@ var interceptedEvolve = (ga, settings) => {
       }
     }
 
-    // Return ga object with its scored population
+    // Resolve the matured ga population
     resolve(ga)
   })
 }
@@ -91,26 +89,21 @@ var run = (input, settings = {}) => {
     throw new Error("Given input arguments are not valid: 'groups' is missing.")
   }
 
-  // Require genetic algorithm library
-  const Genetics = require('geneticalgorithm')
-
-  // Get dependencies
-  var seedModule = di.container.seed
-
   // Merge given settings with defaults
   settings = Object.assign(defaults, settings) // Use given options and merge with default values
 
   // Load keys from input data
   var keys = Object.keys(input.data)
 
-  // Generate an initial population
-  var population = seedModule.population(keys, input.groups, settings.populationStartSize)
+  // Generate an initial population seed
+  var population = di.container.seed.population(keys, input.groups, settings.populationStartSize)
 
   // Configure genetic algorithm
   var config = configuration(input, settings, population)
 
   // Create a fresh algorithm object here
-  const genetic = Genetics(config)
+  var Genetics = require('geneticalgorithm')
+  var genetic = Genetics(config)
 
   // Genetic evolution is async!
   return new Promise((resolve, reject) => {
