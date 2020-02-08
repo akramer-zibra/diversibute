@@ -58,7 +58,7 @@ describe('Module API', function () {
   })
 
   describe('Genetic Algorithm function', function () {
-    it('Works with medium sized example an default options', function (done) {
+    it('Works with medium sized example and default options', function (done) {
       // Increase timeout
       this.timeout(20000)
 
