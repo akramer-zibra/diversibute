@@ -96,7 +96,7 @@ describe('Module API', function () {
         populationMaxSize: 200,
         evolutions: 300,
         elitism: 1,
-        steps: 1,
+        bunches: 1,
         interceptor: undefined
       }
 
@@ -130,7 +130,7 @@ describe('Module API', function () {
         populationStartSize: 40,
         populationMaxSize: 200,
         evolutions: 200,
-        steps: 4,
+        bunches: 4,
         interceptor: interceptorFake
       }
 

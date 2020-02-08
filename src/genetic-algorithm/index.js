@@ -9,7 +9,7 @@ var defaults = {
   populationMaxSize: 100,
   evolutions: 100,
   elitism: 1, // Every chroosome is elite
-  steps: 1,
+  bunches: 1,
   interceptor: undefined
 }
 
@@ -19,15 +19,15 @@ var defaults = {
  */
 var interceptedEvolve = (ga, settings) => {
   // Validate given settings
-  if (settings.steps < 1) {
-    throw new Error('Number of configured steps must be a number and at least 1')
+  if (settings.bunches < 1) {
+    throw new Error('Number of configured bunches must be a number and at least 1')
   }
 
   return new Promise((resolve, reject) => {
-    // Calculate evolution steps for interception
-    var evolutionStep = Math.floor(settings.evolutions / settings.steps)
+    // Calculate evolution bunches for interception
+    var evolutionStep = Math.floor(settings.evolutions / settings.bunches)
 
-    // Run calculation as evolution steps
+    // Run calculation as evolution bunches
     for (let run = 0; run < settings.evolutions; run++) {
       // Process evolution
       //      ga.evolve({ evolutions: evolutionStep })
