@@ -14,16 +14,23 @@ var interceptedEvolve = (ga, settings) => {
   }
 
   return new Promise((resolve, reject) => {
-    //
-    var promises = []
-
-    // Calculate progress step
-    var evolutionStep = settings.evolutions / settings.steps
+    // Calculate evolution steps for interception
+    var evolutionStep = Math.floor(settings.evolutions / settings.steps)
 
     // Run calculation as evolution steps
-    for (let run = 0; run < settings.steps; run++) {
+    for (let run = 0; run < settings.evolutions; run++) {
+      // Process evolution
+      ga.evolve({ evolutions: evolutionStep })
+
+      // Integrate interceptor function
+      // when iteration is a
+      if (settings.interceptor !== undefined && (run % evolutionStep === 0)) {
+        settings.interceptor(ga)
+      }
+
+      /*
       //
-      promises.push(ga.evolve(evolutionStep).then(result => {
+      promises.push(ga.evolve({ evolutions: evolutionStep }).then(result => {
         // Integrate interceptor function
         if (settings.interceptor !== undefined) {
           settings.interceptor(result)
@@ -31,8 +38,10 @@ var interceptedEvolve = (ga, settings) => {
 
         return result
       }))
+      */
     }
 
+    /*
     // Reduce runs into a sequential chain of promises
     promises.reduce((promiseChain, currentTask) => {
       return promiseChain.then(chainResults =>
@@ -50,6 +59,10 @@ var interceptedEvolve = (ga, settings) => {
     }).catch(err => {
       reject(err)
     })
+    */
+
+    // Return genetic algorithm object with its population
+    resolve(ga)
   })
 }
 
@@ -73,7 +86,7 @@ var run = (input, settings = {}) => {
   }
 
   // Require genetic algorithm library
-  const Genetics = require('@petsinho/geneticjs').Genetics
+  const Genetics = require('geneticalgorithm')
 
   // Get dependencies
   var fitnessModule = di.container.fitness
@@ -121,11 +134,12 @@ var run = (input, settings = {}) => {
     // Run evolution with optional interception
     interceptedEvolve(genetic, settings).then(result => {
       // Resolve winning chromosome with its score
-      var winner = result.best()[0]
+      var winnerPheno = result.best()
+      var winnerScore = result.bestScore()
 
       resolve({
-        combination: winner.phenotype.seq,
-        score: winner.score,
+        combination: winnerPheno.seq,
+        score: winnerScore,
         settings
       })
     })

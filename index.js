@@ -42,3 +42,7 @@ module.exports = {
     return ga.run(input, settings)
   }
 }
+
+// Debug trigger
+// var data = require('./examples/data/3features/input-m.json')
+// ga.run({ data, groups: 5 })

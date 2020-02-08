@@ -11,7 +11,7 @@
   "author": "Achim Kramer <achim@zibra.de>",
   "license": "GNU-GPLv3",
   "dependencies": {
-    "@petsinho/geneticjs": "2.1.1",
+    "geneticalgorithm": "1.0.2",
     "euclidean-distance": "1.0.0",
     "js-combinatorics": "0.5.5",
     "skmeans": "0.11.2",

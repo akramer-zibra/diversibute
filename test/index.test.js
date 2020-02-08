@@ -15,7 +15,7 @@ beforeEach(function () {
 
   // Allow source dependencies
   mockery.registerAllowables(['bottlejs',
-    '@petsinho/geneticjs',
+    'geneticalgorithm',
     'lodash',
     'util',
     '../helpers/shuffle',
@@ -95,6 +95,7 @@ describe('Module API', function () {
         populationStartSize: 40,
         populationMaxSize: 200,
         evolutions: 300,
+        elitism: 1,
         steps: 1,
         interceptor: undefined
       }
