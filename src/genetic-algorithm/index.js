@@ -23,7 +23,7 @@ var interceptedEvolve = (ga, settings) => {
       ga.evolve({ evolutions: evolutionStep })
 
       // Integrate interceptor function
-      // when iteration is a
+      // when iteration is a plural of a evolution step
       if (settings.interceptor !== undefined && (run % evolutionStep === 0)) {
         settings.interceptor(ga)
       }
