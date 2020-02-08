@@ -86,6 +86,7 @@ var run = (input, settings = {}) => {
     populationStartSize: 40,
     populationMaxSize: 100,
     evolutions: 100,
+    elitism: 1, // Every chroosome is elite
     steps: 1,
     interceptor: undefined
   }
@@ -105,9 +106,10 @@ var run = (input, settings = {}) => {
     mutationFunction: mutationFunction,
     crossoverFunction: crossoverFunction,
     fitnessFunction: fitnessModule.score,
-    // Customize with settings
+    /* Customize with settings */
     population: population, // Create an initial population
     populationSize: settings.populationMaxSize,
+    elitism: settings.elitism, // Configure quota of elite population members
     groupSize: input.groups
   }
 
