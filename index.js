@@ -43,6 +43,6 @@ module.exports = {
   }
 }
 
-// Debug trigger
+// Debug entry
 // var data = require('./examples/data/3features/input-m.json')
 // ga.run({ data, groups: 5 })
