@@ -30,7 +30,8 @@ var interceptedEvolve = (ga, settings) => {
     // Run calculation as evolution steps
     for (let run = 0; run < settings.evolutions; run++) {
       // Process evolution
-      ga.evolve({ evolutions: evolutionStep })
+      //      ga.evolve({ evolutions: evolutionStep })
+      ga.evolve()
 
       // Integrate interceptor function
       // when iteration is a plural of a evolution step
@@ -42,6 +43,33 @@ var interceptedEvolve = (ga, settings) => {
     // Return ga object with its scored population
     resolve(ga)
   })
+}
+
+/**
+ * This function creates a configuration object
+ * @param {*} input
+ * @param {*} settings
+ * @param {*} population
+ */
+var configuration = (input, settings, population) => {
+  // Get dependencies
+  var fitnessModule = di.container.fitness
+  var mutationFunction = di.container.mutation
+  var crossoverFunction = di.container.crossover
+
+  // We need to pass input as context to fitness function
+  fitnessModule.context(input)
+
+  return {
+    mutationFunction: mutationFunction,
+    crossoverFunction: crossoverFunction,
+    fitnessFunction: fitnessModule.score,
+    /* Customize with settings */
+    population: population, // Create an initial population
+    populationSize: settings.populationMaxSize,
+    elitism: settings.elitism, // Configure quota of elite population members
+    groupSize: input.groups
+  }
 }
 
 /**
@@ -67,10 +95,7 @@ var run = (input, settings = {}) => {
   const Genetics = require('geneticalgorithm')
 
   // Get dependencies
-  var fitnessModule = di.container.fitness
   var seedModule = di.container.seed
-  var mutationFunction = di.container.mutation
-  var crossoverFunction = di.container.crossover
 
   // Merge given settings with defaults
   settings = Object.assign(defaults, settings) // Use given options and merge with default values
@@ -78,26 +103,14 @@ var run = (input, settings = {}) => {
   // Load keys from input data
   var keys = Object.keys(input.data)
 
-  // We need to pass input as context to fitness function
-  fitnessModule.context(input)
-
   // Generate an initial population
   var population = seedModule.population(keys, input.groups, settings.populationStartSize)
 
   // Configure genetic algorithm
-  var configuration = {
-    mutationFunction: mutationFunction,
-    crossoverFunction: crossoverFunction,
-    fitnessFunction: fitnessModule.score,
-    /* Customize with settings */
-    population: population, // Create an initial population
-    populationSize: settings.populationMaxSize,
-    elitism: settings.elitism, // Configure quota of elite population members
-    groupSize: input.groups
-  }
+  var config = configuration(input, settings, population)
 
   // Create a fresh algorithm object here
-  const genetic = Genetics(configuration)
+  const genetic = Genetics(config)
 
   // Genetic evolution is async!
   return new Promise((resolve, reject) => {
