@@ -177,21 +177,24 @@ describe('Module API', function () {
       // Source under test
       var api = require('../index')
 
-      throw new Error('TODO')
-
       // Configure amount of results
       var settings = {
         results: 13
       }
 
-      // Run genetic function
+      // Run function under test
       api.genetic(input, 5, settings).then((result) => {
-        // Check if there are duplicates
-
+        // Count scores in a counter object
+        var counter = {}
+        result.elements.forEach(combination => {
+          if (!counter[combination.score]) {
+            counter[combination.score] = 1
+            return
+          }
+          expect.fail('Score already exists. Must be duplicate')
+        })
         done()
-      }).catch((err) => {
-        done(err)
-      })
+      }).catch((err) => done(err))
     })
 
     it('Works with interceptor', function (done) {
