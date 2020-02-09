@@ -18,7 +18,7 @@ var defaults = {
  * This internal function runs prepared genetic algorithm as
  * an intercepted chain
  * @param {*} ga
- * @param {*} settings
+ * @param {String: any} settings
  * @returns Genetic algorithm obejct
  */
 var interceptedEvolve = (ga, settings) => {
@@ -94,11 +94,8 @@ var run = (input, settings = {}) => {
   // Merge given settings with defaults
   settings = Object.assign(defaults, settings) // Use given options and merge with default values
 
-  // Load keys from input data
-  var keys = Object.keys(input.data)
-
   // Generate an initial population seed
-  var population = di.container.seed.population(keys, input.groups, settings.populationStartSize)
+  var population = di.container.seed.population(input, settings.populationStartSize)
 
   // Configure genetic algorithm
   var config = configuration(input, settings, population)
