@@ -153,19 +153,23 @@ var run = (input, settings = {}) => {
 
   // Genetic evolution is async!
   return new Promise((resolve, reject) => {
-    // Run evolution with optional interception
-    var evolvedGa = interceptedEvolve(genetic, settings)
+    try {
+      // Run evolution with optional interception
+      var evolvedGa = interceptedEvolve(genetic, settings)
 
-    // Sort population by their scores
-    var rankedPopulation = sortResults(evolvedGa)
+      // Sort population by their scores
+      var rankedPopulation = sortResults(evolvedGa)
 
-    // Create a duplicate-free hash index
-    var uniquePopulationIndex = uniqueResults(rankedPopulation)
+      // Create a duplicate-free hash index
+      var uniquePopulationIndex = uniqueResults(rankedPopulation)
 
-    // Transform ga results into one result structure
-    var result = finalize(uniquePopulationIndex, settings)
+      // Transform ga results into one result structure
+      var result = finalize(uniquePopulationIndex, settings)
 
-    resolve(result)
+      resolve(result)
+    } catch (err) {
+      reject(err)
+    }
   })
 }
 
