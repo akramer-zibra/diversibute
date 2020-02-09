@@ -10,7 +10,8 @@ var defaults = {
   evolutions: 100,
   elitism: 1, // Every chroosome is elite
   bunches: 1,
-  interceptor: undefined
+  interceptor: undefined,
+  results: 1
 }
 
 /**
@@ -74,7 +75,7 @@ var configuration = (input, settings, population) => {
  * This function runs the genetic algorithm with given arguments
  * @param {data: {String: Number}, groups: Number} input
  * @param {String: any} settings
- * @return {combination: Array<number>, score: Number, options: {String: any}}
+ * @return {Array<combination: Array<number>, score: Number, options: {String: any}>}
  */
 var run = (input, settings = {}) => {
   // Check prerequisities
@@ -108,20 +109,34 @@ var run = (input, settings = {}) => {
   // Genetic evolution is async!
   return new Promise((resolve, reject) => {
     // Run evolution with optional interception
-    interceptedEvolve(genetic, settings).then(result => {
-      // Resolve winning chromosome with its score
-      var winnerPheno = result.best()
-      var winnerScore = result.bestScore()
+    interceptedEvolve(genetic, settings).then(ga => {
+      /* Order population by their scores */
+      var scoredPopulation = ga.scoredPopulation()
+      var rankedPopulation = scoredPopulation.sort((a, b) => { return (a.score < b.score) ? 1 : -1 })
 
-      resolve({
-        combination: winnerPheno.seq,
-        score: winnerScore,
-        settings
+      /* Remove duplicates */
+      // Create a hashmap with unique results
+      var uniquePopulationIndex = {}
+      rankedPopulation.forEach(element => {
+        uniquePopulationIndex[element.score] = element
       })
+
+      // Define result object structure
+      var result = {
+        settings, elements: []
+      }
+
+      // Slice configured amount of results
+      // ...and transform it for response
+      Object.keys(uniquePopulationIndex).slice(0, settings.results).forEach(score => {
+        var combination = uniquePopulationIndex[score]
+        result.elements.push({ combination: combination.phenotype.seq, score: combination.score })
+      })
+
+      resolve(result)
+    }).catch(err => {
+      reject(err)
     })
-      .catch(err => {
-        reject(err)
-      })
   })
 }
 

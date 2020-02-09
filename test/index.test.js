@@ -12,21 +12,10 @@ beforeEach(function () {
 
   // Allow source under test module
   mockery.registerAllowable('../index')
-
-  // Allow source dependencies
-  mockery.registerAllowables(['bottlejs',
-    'geneticalgorithm',
-    'lodash',
-    'util',
-    '../helpers/shuffle',
-    './src/genetic-algorithm',
-    './seed',
-    './fitness',
-    './mutation',
-    './crossover'])
 })
 
 afterEach(function () {
+  mockery.deregisterAll()
   mockery.disable()
 })
 
@@ -34,10 +23,16 @@ afterEach(function () {
 describe('Module API', function () {
   describe('Monte Carlo function', function () {
     it('Works with medium sized example', function (done) {
-      // Allow source dependencies
+      // Allow source modules
       mockery.registerAllowables(['bottlejs',
         './src/genetic-algorithm',
         './src/monte-carlo'])
+
+      // Allow source dependencies
+      mockery.registerAllowables(['./seed',
+        './fitness',
+        './mutation',
+        './crossover'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -62,6 +57,16 @@ describe('Module API', function () {
       // Increase timeout
       this.timeout(20000)
 
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs',
+        'geneticalgorithm',
+        './src/genetic-algorithm',
+        './src/monte-carlo',
+        './seed',
+        './fitness',
+        './mutation',
+        './crossover'])
+
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
       var input = require('../examples/data/3features/input-m.json')
@@ -70,9 +75,9 @@ describe('Module API', function () {
       var api = require('../index')
 
       // Run api
-      api.genetic(input, 5).then(result => {
-        // Check response object
-        expect(result).to.be.an('object').has.all.keys('combination', 'score', 'settings')
+      api.genetic(input, 5).then(results => {
+        // Check structure of first result object
+        expect(results.elements[0]).to.be.an('object').has.all.keys('combination', 'score')
         done()
       }).catch(err => {
         done(err)
@@ -83,6 +88,16 @@ describe('Module API', function () {
       // Increase timeout
       this.timeout(20000)
 
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs',
+        'geneticalgorithm',
+        './src/genetic-algorithm',
+        './src/monte-carlo',
+        './seed',
+        './fitness',
+        './mutation',
+        './crossover'])
+
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
       var input = require('../examples/data/3features/input-m.json')
@@ -90,14 +105,15 @@ describe('Module API', function () {
       // Source under test
       var api = require('../index')
 
-      // Define some custom options
+      // Define default settings
       var settings = {
         populationStartSize: 40,
         populationMaxSize: 200,
-        evolutions: 300,
+        evolutions: 30,
         elitism: 1,
         bunches: 1,
-        interceptor: undefined
+        interceptor: undefined,
+        results: 1
       }
 
       // Run api
@@ -110,9 +126,87 @@ describe('Module API', function () {
       })
     })
 
+    it('Result setting specifies amount of results', function (done) {
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs',
+        'geneticalgorithm',
+        './src/genetic-algorithm',
+        './src/monte-carlo',
+        './seed',
+        './fitness',
+        './mutation',
+        './crossover'])
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-m.json')
+      var input = require('../examples/data/3features/input-m.json')
+
+      // Source under test
+      var api = require('../index')
+
+      // Configure amount of results
+      var settings = {
+        results: 13
+      }
+
+      // Run genetic function
+      api.genetic(input, 5, settings).then((result) => {
+        // Check if result set contains given amount of results
+        expect(result.elements.length).to.be.equal(settings.results)
+        done()
+      }).catch((err) => {
+        done(err)
+      })
+    })
+
+    it('Results does not have duplicates', function (done) {
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs',
+        'geneticalgorithm',
+        './src/genetic-algorithm',
+        './src/monte-carlo',
+        './seed',
+        './fitness',
+        './mutation',
+        './crossover'])
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-m.json')
+      var input = require('../examples/data/3features/input-m.json')
+
+      // Source under test
+      var api = require('../index')
+
+      throw new Error('TODO')
+
+      // Configure amount of results
+      var settings = {
+        results: 13
+      }
+
+      // Run genetic function
+      api.genetic(input, 5, settings).then((result) => {
+        // Check if there are duplicates
+
+        done()
+      }).catch((err) => {
+        done(err)
+      })
+    })
+
     it('Works with interceptor', function (done) {
       // Increase timeout
       this.timeout(60000)
+
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs',
+        'geneticalgorithm',
+        './src/genetic-algorithm',
+        './src/monte-carlo',
+        './seed',
+        './fitness',
+        './mutation',
+        './crossover'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -129,15 +223,15 @@ describe('Module API', function () {
       var settings = {
         populationStartSize: 40,
         populationMaxSize: 200,
-        evolutions: 200,
-        bunches: 4,
+        evolutions: 50,
+        bunches: 5,
         interceptor: interceptorFake
       }
 
       // Run api
       api.genetic(input, 5, settings).then(() => {
         // Check if interceptor is called x times
-        expect(interceptorFake.callCount).to.be.equal(4)
+        expect(interceptorFake.callCount).to.be.equal(settings.bunches)
         done()
       }).catch((err) => {
         done(err)
