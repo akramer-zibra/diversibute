@@ -11,7 +11,12 @@ Array.prototype.remove = function (from, to) {            // eslint-disable-line
 /**
  * This function creates one seed chromosome
  */
-var seedFunc = (keys, groups, options = { minShuffle: 5, maxShuffle: 20 }) => {
+// var seedFunc = (keys, groups, options = { minShuffle: 5, maxShuffle: 20 }) => {
+var seedFunc = (input, options = { minShuffle: 5, maxShuffle: 20 }) => {
+  // Extract parameters from input argument
+  var keys = Object.keys(input.data)
+  var groups = input.groups
+
   // Configure constraint limits
   var minGroupSize = 2
 
@@ -72,14 +77,10 @@ var seedFunc = (keys, groups, options = { minShuffle: 5, maxShuffle: 20 }) => {
  */
 // var populationFunc = (keys, groups, amount = 100) => {
 var populationFunc = (input, amount = 100) => {
-  // Extract parameters from function argument
-  var keys = Object.keys(input.data)
-  var groups = input.groups
-
   // Generate a population set with given params
   var population = []
   for (let n = 0; n < amount; n++) {
-    population.push(seedFunc(keys, groups))
+    population.push(seedFunc(input))
   }
   return population
 }

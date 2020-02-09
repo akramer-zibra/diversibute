@@ -42,7 +42,7 @@ var run = (input) => {
       var scoredPopulation = {}
       for (let n = 0; n < keys.length * 10; n++) {
         // Create a seed
-        var seed = seedModule.seed(keys, input.groups)
+        var seed = seedModule.seed(input)
 
         // Calculate Score for each population
         var score = fitnessModule.score(seed)
