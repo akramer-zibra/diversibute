@@ -10,6 +10,8 @@ Array.prototype.remove = function (from, to) {            // eslint-disable-line
 
 /**
  * This function creates one seed chromosome
+ * @param {data: {String: Array<Number>}, groups: Number} input
+ * @param {String: any} options
  */
 var seed = (input, options = { minShuffle: 5, maxShuffle: 20 }) => {
   // Extract parameters from input argument
@@ -73,8 +75,10 @@ var seed = (input, options = { minShuffle: 5, maxShuffle: 20 }) => {
 
 /**
  * This function creates a population from given params
+ * @param {data: {String: Array<Number>}, groups: Number} input
+ * @param {Number} amount
+ * @returns A generated population
  */
-// var populationFunc = (keys, groups, amount = 100) => {
 var population = (input, amount = 100) => {
   // Generate a population set with given params
   var population = []
