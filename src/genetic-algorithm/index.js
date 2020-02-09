@@ -118,7 +118,7 @@ var finalize = (results, settings) => {
 var run = (input, settings = {}) => {
   // Check prerequisities
   if (di === undefined) {
-    throw new Error("You need to run 'register' method first")
+    throw new Error('You need to pass a di instance first while requiring this module')
   }
   // Validate input arguments
   if (input.data === undefined) {
