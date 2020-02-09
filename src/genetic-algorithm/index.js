@@ -73,6 +73,16 @@ var configuration = (input, settings, population) => {
 }
 
 /**
+ * This function sorts the population of the given genetic algorithm
+ * @param {*} ga
+ * @returns {*}
+ */
+var sortResults = (ga) => {
+  var scoredPopulation = ga.scoredPopulation()
+  return scoredPopulation.sort((a, b) => { return (a.score < b.score) ? 1 : -1 })
+}
+
+/**
  * This function creates a hashmap with unique results
  * indexed by their scores
  * @param {*} rankedPopulation
@@ -146,9 +156,8 @@ var run = (input, settings = {}) => {
     // Run evolution with optional interception
     var evolvedGa = interceptedEvolve(genetic, settings)
 
-    /* Order population by their scores */
-    var scoredPopulation = evolvedGa.scoredPopulation()
-    var rankedPopulation = scoredPopulation.sort((a, b) => { return (a.score < b.score) ? 1 : -1 })
+    // Sort population by their scores
+    var rankedPopulation = sortResults(evolvedGa)
 
     // Create a duplicate-free hash index
     var uniquePopulationIndex = uniqueResults(rankedPopulation)
