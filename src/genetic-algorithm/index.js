@@ -18,7 +18,7 @@ var defaults = {
  * This internal function runs prepared genetic algorithm as
  * an intercepted chain
  * @param {*} ga
- * @param {*} settings
+ * @param {String: any} settings
  * @returns Genetic algorithm obejct
  */
 var interceptedEvolve = (ga, settings) => {
