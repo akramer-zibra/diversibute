@@ -73,6 +73,28 @@ var configuration = (input, settings, population) => {
 }
 
 /**
+ * This function transforms given results into one final result structure
+ * @param {*} results
+ * @param {*} settings
+ * @returns {settings: {String: any}, elements: Array<{combination: Array<Number>, score: Number}>}
+ */
+var finalize = (results, settings) => {
+  // Define result object structure
+  var result = {
+    settings, elements: []
+  }
+
+  // Slice configured amount of results
+  // ...and transform it for response
+  Object.keys(results).slice(0, settings.results).forEach(score => {
+    var combination = results[score]
+    result.elements.push({ combination: combination.phenotype.seq, score: combination.score })
+  })
+
+  return result
+}
+
+/**
  * This function runs the genetic algorithm with given arguments
  * @param {data: {String: Number}, groups: Number} input
  * @param {String: any} settings
@@ -120,17 +142,8 @@ var run = (input, settings = {}) => {
       uniquePopulationIndex[element.score] = element
     })
 
-    // Define result object structure
-    var result = {
-      settings, elements: []
-    }
-
-    // Slice configured amount of results
-    // ...and transform it for response
-    Object.keys(uniquePopulationIndex).slice(0, settings.results).forEach(score => {
-      var combination = uniquePopulationIndex[score]
-      result.elements.push({ combination: combination.phenotype.seq, score: combination.score })
-    })
+    // Transform ga results into one result structure
+    var result = finalize(uniquePopulationIndex, settings)
 
     resolve(result)
   })
