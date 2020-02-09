@@ -70,7 +70,12 @@ var seedFunc = (keys, groups, options = { minShuffle: 5, maxShuffle: 20 }) => {
 /**
  * This function creates a population from given params
  */
-var populationFunc = (keys, groups, amount = 100) => {
+// var populationFunc = (keys, groups, amount = 100) => {
+var populationFunc = (input, amount = 100) => {
+  // Extract parameters from function argument
+  var keys = Object.keys(input.data)
+  var groups = input.groups
+
   // Generate a population set with given params
   var population = []
   for (let n = 0; n < amount; n++) {
