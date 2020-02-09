@@ -11,8 +11,7 @@ Array.prototype.remove = function (from, to) {            // eslint-disable-line
 /**
  * This function creates one seed chromosome
  */
-// var seedFunc = (keys, groups, options = { minShuffle: 5, maxShuffle: 20 }) => {
-var seedFunc = (input, options = { minShuffle: 5, maxShuffle: 20 }) => {
+var seed = (input, options = { minShuffle: 5, maxShuffle: 20 }) => {
   // Extract parameters from input argument
   var keys = Object.keys(input.data)
   var groups = input.groups
@@ -76,11 +75,11 @@ var seedFunc = (input, options = { minShuffle: 5, maxShuffle: 20 }) => {
  * This function creates a population from given params
  */
 // var populationFunc = (keys, groups, amount = 100) => {
-var populationFunc = (input, amount = 100) => {
+var population = (input, amount = 100) => {
   // Generate a population set with given params
   var population = []
   for (let n = 0; n < amount; n++) {
-    population.push(seedFunc(input))
+    population.push(seed(input))
   }
   return population
 }
@@ -94,6 +93,6 @@ var populationFunc = (input, amount = 100) => {
  * @returns Array<{seq: Array}> A list with objects, which contain a list of groups ids in a seq-property
  */
 module.exports = {
-  seed: seedFunc,
-  population: populationFunc
+  seed,
+  population
 }
