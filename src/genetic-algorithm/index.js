@@ -17,6 +17,9 @@ var defaults = {
 /**
  * This internal function runs prepared genetic algorithm as
  * an intercepted chain
+ * @param {*} ga
+ * @param {*} settings
+ * @returns Genetic algorithm obejct
  */
 var interceptedEvolve = (ga, settings) => {
   // Validate given settings
@@ -24,24 +27,22 @@ var interceptedEvolve = (ga, settings) => {
     throw new Error('Number of configured bunches must be a number and at least 1')
   }
 
-  return new Promise((resolve, reject) => {
-    // Calculate evolution bunches for interception
-    var evolutionStep = Math.floor(settings.evolutions / settings.bunches)
+  // Calculate evolution bunches for interception
+  var evolutionStep = Math.floor(settings.evolutions / settings.bunches)
 
-    // Run calculation as evolution bunches
-    for (let run = 0; run < settings.evolutions; run++) {
-      ga.evolve() // Process evolution
+  // Run calculation as evolution bunches
+  for (let run = 0; run < settings.evolutions; run++) {
+    ga.evolve() // Process evolution
 
-      // Integrate interceptor function
-      // when iteration is a plural of a evolution step
-      if (settings.interceptor !== undefined && (run % evolutionStep === 0)) {
-        settings.interceptor(ga)
-      }
+    // Integrate interceptor function
+    // when iteration is a plural of a evolution step
+    if (settings.interceptor !== undefined && (run % evolutionStep === 0)) {
+      settings.interceptor(ga)
     }
+  }
 
-    // Resolve the matured ga population
-    resolve(ga)
-  })
+  // Resolve the matured ga population
+  return ga
 }
 
 /**
@@ -109,34 +110,32 @@ var run = (input, settings = {}) => {
   // Genetic evolution is async!
   return new Promise((resolve, reject) => {
     // Run evolution with optional interception
-    interceptedEvolve(genetic, settings).then(ga => {
-      /* Order population by their scores */
-      var scoredPopulation = ga.scoredPopulation()
-      var rankedPopulation = scoredPopulation.sort((a, b) => { return (a.score < b.score) ? 1 : -1 })
+    var evolvedGa = interceptedEvolve(genetic, settings)
 
-      /* Remove duplicates */
-      // Create a hashmap with unique results
-      var uniquePopulationIndex = {}
-      rankedPopulation.forEach(element => {
-        uniquePopulationIndex[element.score] = element
-      })
+    /* Order population by their scores */
+    var scoredPopulation = evolvedGa.scoredPopulation()
+    var rankedPopulation = scoredPopulation.sort((a, b) => { return (a.score < b.score) ? 1 : -1 })
 
-      // Define result object structure
-      var result = {
-        settings, elements: []
-      }
-
-      // Slice configured amount of results
-      // ...and transform it for response
-      Object.keys(uniquePopulationIndex).slice(0, settings.results).forEach(score => {
-        var combination = uniquePopulationIndex[score]
-        result.elements.push({ combination: combination.phenotype.seq, score: combination.score })
-      })
-
-      resolve(result)
-    }).catch(err => {
-      reject(err)
+    /* Remove duplicates */
+    // Create a hashmap with unique results
+    var uniquePopulationIndex = {}
+    rankedPopulation.forEach(element => {
+      uniquePopulationIndex[element.score] = element
     })
+
+    // Define result object structure
+    var result = {
+      settings, elements: []
+    }
+
+    // Slice configured amount of results
+    // ...and transform it for response
+    Object.keys(uniquePopulationIndex).slice(0, settings.results).forEach(score => {
+      var combination = uniquePopulationIndex[score]
+      result.elements.push({ combination: combination.phenotype.seq, score: combination.score })
+    })
+
+    resolve(result)
   })
 }
 
