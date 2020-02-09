@@ -73,6 +73,21 @@ var configuration = (input, settings, population) => {
 }
 
 /**
+ * This function creates a hashmap with unique results
+ * indexed by their scores
+ * @param {*} rankedPopulation
+ */
+var uniqueResults = (rankedPopulation) => {
+  // Create a hashmap with unique results
+  var uniquePopulationIndex = {}
+  rankedPopulation.forEach(element => {
+    uniquePopulationIndex[element.score] = element
+  })
+
+  return uniquePopulationIndex
+}
+
+/**
  * This function transforms given results into one final result structure
  * @param {*} results
  * @param {*} settings
@@ -135,12 +150,8 @@ var run = (input, settings = {}) => {
     var scoredPopulation = evolvedGa.scoredPopulation()
     var rankedPopulation = scoredPopulation.sort((a, b) => { return (a.score < b.score) ? 1 : -1 })
 
-    /* Remove duplicates */
-    // Create a hashmap with unique results
-    var uniquePopulationIndex = {}
-    rankedPopulation.forEach(element => {
-      uniquePopulationIndex[element.score] = element
-    })
+    // Create a duplicate-free hash index
+    var uniquePopulationIndex = uniqueResults(rankedPopulation)
 
     // Transform ga results into one result structure
     var result = finalize(uniquePopulationIndex, settings)
