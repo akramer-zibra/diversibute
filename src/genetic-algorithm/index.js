@@ -130,7 +130,7 @@ var run = (input, settings = {}) => {
   assertRunArguments(input, settings)
 
   // Merge given settings with defaults
-  settings = Object.assign(defaults, settings) // Use given options and merge with default values
+  settings = Object.assign(defaults, settings)
 
   // Generate an initial population seed
   var population = di.container.seed.population(input, settings.populationStartSize)
@@ -171,7 +171,7 @@ var run = (input, settings = {}) => {
  * @throws Errors in case of invalid arguments
  */
 var assertRunArguments = (input, settings) => {
-  // Ioc container bject must be available
+  // Ioc container object must be available
   if (di === undefined) {
     throw new Error('You need to pass a "di" instance first while requiring this module')
   }
@@ -191,7 +191,7 @@ var assertRunArguments = (input, settings) => {
  * @returns Genetic Algorithm object
  */
 module.exports = (bottle) => {
-  // Cache bottle instance
+  // Cache bottle instance reference
   di = bottle
 
   // Load genetic algorithm functions
