@@ -126,20 +126,11 @@ var finalize = (results, settings) => {
  * @return {Array<combination: Array<number>, score: Number, options: {String: any}>}
  */
 var run = (input, settings = {}) => {
-  // Check prerequisities
-  if (di === undefined) {
-    throw new Error('You need to pass a "di" instance first while requiring this module')
-  }
-  // Validate input arguments
-  if (input.data === undefined) {
-    throw new Error("Given input arguments are not valid: 'data' is missing.")
-  }
-  if (input.groups === undefined) {
-    throw new Error("Given input arguments are not valid: 'groups' is missing.")
-  }
+  // Validate given arguments
+  assertRunArguments(input, settings)
 
   // Merge given settings with defaults
-  settings = Object.assign(defaults, settings) // Use given options and merge with default values
+  settings = Object.assign(defaults, settings)
 
   // Generate an initial population seed
   var population = di.container.seed.population(input, settings.populationStartSize)
@@ -148,8 +139,7 @@ var run = (input, settings = {}) => {
   var config = configuration(input, settings, population)
 
   // Create a fresh algorithm object here
-  var Genetics = require('geneticalgorithm')
-  var genetic = Genetics(config)
+  var genetic = require('geneticalgorithm')(config)
 
   // Genetic evolution is async!
   return new Promise((resolve, reject) => {
@@ -174,12 +164,34 @@ var run = (input, settings = {}) => {
 }
 
 /**
+ * This function validates given function parameters.
+ * It throws errors in case of invald arguments
+ * @param {*} input
+ * @param {*} settings
+ * @throws Errors in case of invalid arguments
+ */
+var assertRunArguments = (input, settings) => {
+  // Ioc container object must be available
+  if (di === undefined) {
+    throw new Error('You need to pass a "di" instance first while requiring this module')
+  }
+  // Input data must be available
+  if (input.data === undefined) {
+    throw new Error("Given input arguments are not valid: 'data' is missing.")
+  }
+  // Number of wished groups must be available
+  if (input.groups === undefined) {
+    throw new Error("Given input arguments are not valid: 'groups' is missing.")
+  }
+}
+
+/**
  * Constructor method for this module
  * @param {Bottle} bottle BottleJS instance
  * @returns Genetic Algorithm object
  */
 module.exports = (bottle) => {
-  // Cache bottle instance
+  // Cache bottle instance reference
   di = bottle
 
   // Load genetic algorithm functions
