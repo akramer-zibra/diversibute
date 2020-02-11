@@ -126,17 +126,8 @@ var finalize = (results, settings) => {
  * @return {Array<combination: Array<number>, score: Number, options: {String: any}>}
  */
 var run = (input, settings = {}) => {
-  // Check prerequisities
-  if (di === undefined) {
-    throw new Error('You need to pass a "di" instance first while requiring this module')
-  }
-  // Validate input arguments
-  if (input.data === undefined) {
-    throw new Error("Given input arguments are not valid: 'data' is missing.")
-  }
-  if (input.groups === undefined) {
-    throw new Error("Given input arguments are not valid: 'groups' is missing.")
-  }
+  // Validate given arguments
+  assertRunArguments(input, settings)
 
   // Merge given settings with defaults
   settings = Object.assign(defaults, settings) // Use given options and merge with default values
@@ -171,6 +162,28 @@ var run = (input, settings = {}) => {
       reject(err)
     }
   })
+}
+
+/**
+ * This function validates given function parameters.
+ * It throws errors in case of invald arguments
+ * @param {*} input
+ * @param {*} settings
+ * @throws Errors in case of invalid arguments
+ */
+var assertRunArguments = (input, settings) => {
+  // Ioc container bject must be available
+  if (di === undefined) {
+    throw new Error('You need to pass a "di" instance first while requiring this module')
+  }
+  // Input data must be available
+  if (input.data === undefined) {
+    throw new Error("Given input arguments are not valid: 'data' is missing.")
+  }
+  // Number of wished groups must be available
+  if (input.groups === undefined) {
+    throw new Error("Given input arguments are not valid: 'groups' is missing.")
+  }
 }
 
 /**
