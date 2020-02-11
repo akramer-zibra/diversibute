@@ -7,16 +7,12 @@ var mockery = require('mockery')
  * @param {*} arr
  * @returns String hash
  */
-var arrayHash = (arr) => {
+var utilArrayHash = (arr) => {
   mockery.registerAllowable('crypto')
   var crypto = require('crypto')
 
-  var arrString = arr.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue.toString()
-  }, '')
-
   const hash = crypto.createHash('sha256')
-  hash.update(arrString)
+  hash.update(arr.toString())
 
   return hash.digest('hex')
 }
@@ -147,7 +143,7 @@ describe('Seed module', function () {
 
     // Check each population
     population.forEach(result => {
-      var hash = arrayHash(result.seq)
+      var hash = utilArrayHash(result.seq)
 
       // Check if hash already exists
       expect([hash]).to.not.have.members(resultHashes)
