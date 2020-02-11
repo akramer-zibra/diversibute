@@ -139,8 +139,7 @@ var run = (input, settings = {}) => {
   var config = configuration(input, settings, population)
 
   // Create a fresh algorithm object here
-  var Genetics = require('geneticalgorithm')
-  var genetic = Genetics(config)
+  var genetic = require('geneticalgorithm')(config)
 
   // Genetic evolution is async!
   return new Promise((resolve, reject) => {
