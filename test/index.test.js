@@ -206,6 +206,40 @@ describe('Module API', function () {
       })
     })
 
+    it('Replies with given input', function (done) {
+      // Increase timeout
+      this.timeout(20000)
+
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs',
+        'geneticalgorithm',
+        './src/genetic-algorithm',
+        './src/monte-carlo',
+        './seed',
+        './fitness',
+        './mutation',
+        './crossover'])
+
+      // Source under test
+      var api = require('../index')
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-s.json')
+      var data = require('../examples/data/3features/input-s.json')
+
+      var groups = 4
+
+      // Run api
+      api.genetic(data, groups, { evolutions: 1 }).then(result => { // we run it with 1 evolution for faster response
+        // Check if result object containts input
+        expect(result.input.data).to.deep.equal(data)
+        expect(result.input.groups).to.equal(groups)
+        done()
+      }).catch(err => {
+        done(err)
+      })
+    })
+
     it('Result setting specifies amount of results', function (done) {
       // Allow source dependencies
       mockery.registerAllowables(['bottlejs',
