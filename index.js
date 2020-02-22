@@ -19,12 +19,12 @@ module.exports = {
    * @param {Number} groups Number of groups
    * @returns {Promise<{combination: Array<Number>, score: Number}>}
    */
-  monteCarlo: (data, groups) => {
+  monteCarlo: (data, groups, settings = {}) => {
     // Wrap data- and groups-input into one input group
     var input = { data, groups }
 
     // Run monte-carlo algorithm
-    return mc.run(input)
+    return mc.run(input, settings)
   },
   /**
    * This function creates a group combination from given input
@@ -43,6 +43,8 @@ module.exports = {
   }
 }
 
+/*
 // Debug entry
-// var data = require('./examples/data/3features/input-m.json')
-// ga.run({ data, groups: 5 })
+var data = require('./examples/data/3features/input-m.json')
+mc.run({ data, groups: 5 }, { results: 5 })
+*/

@@ -3,6 +3,11 @@
  */
 var di
 
+/** Default settings for monte carlo */
+var defaults = {
+  results: 1
+}
+
 /**
  * This function searches for best combination by a bunch of random combinations
  * @param {data: {String: Number}, groups: Number} input
@@ -11,6 +16,9 @@ var di
 var run = (input, settings = {}) => {
   // Check given input data and assert if something is wrong
   assertRunArguments(input)
+
+  // Merge given settings with defaults
+  settings = Object.assign(defaults, settings)
 
   return new Promise((resolve, reject) => {
     try {
@@ -41,13 +49,20 @@ var run = (input, settings = {}) => {
       }
 
       // Sort scores
-      var ranking = scores.sort((a, b) => { return a - b })
+      var ranking = scores.sort((a, b) => { return b - a })
 
-      // Use highest ranking fpr result
-      var highestScore = ranking.pop()
+      // Define empty result
+      var result = {
+        settings,
+        elements: []
+      }
 
-      // Return result
-      resolve({ settings, elements: [{ combination: scoredPopulation[highestScore].seq, score: highestScore }] })
+      // Push configured results in elements collection
+      ranking.slice(0, settings.results).forEach(score => {
+        result.elements.push({ combination: scoredPopulation[score].seq, score })
+      })
+
+      resolve(result) // Return result structure
     } catch (err) {
       reject(err)
     }
