@@ -80,6 +80,54 @@ describe('Module API', function () {
         done(err)
       })
     })
+
+    it('Throws error with too less input data', function (done) {
+      // Allow source modules
+      mockery.registerAllowables(['bottlejs', './src/genetic-algorithm', './src/monte-carlo'])
+
+      // Allow source dependencies
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover'])
+
+      // Source under test
+      var api = require('../index')
+
+      // Run api
+      try {
+        api.monteCarlo({
+          A: [1],
+          B: [1]
+        }, 3).then((result) => {
+          expect.fail()
+          done()
+        })
+      } catch (err) {
+        done()
+      }
+    })
+
+    it('Throws error with too small groups number', function (done) {
+      // Allow source modules
+      mockery.registerAllowables(['bottlejs', './src/genetic-algorithm', './src/monte-carlo'])
+
+      // Allow source dependencies
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover'])
+
+      // Source under test
+      var api = require('../index')
+
+      // Run api
+      try {
+        api.monteCarlo({
+          A: [1],
+          B: [1]
+        }, 1).then((result) => {
+          expect.fail()
+          done()
+        })
+      } catch (err) {
+        done()
+      }
+    })
   })
 
   describe('Genetic Algorithm function', function () {
