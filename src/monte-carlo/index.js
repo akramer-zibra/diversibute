@@ -47,7 +47,7 @@ var run = (input) => {
       var highestScore = ranking.pop()
 
       // Return result
-      resolve({ combination: scoredPopulation[highestScore].seq, score: highestScore })
+      resolve({ settings: {}, elements: [{ combination: scoredPopulation[highestScore].seq, score: highestScore }] })
     } catch (err) {
       reject(err)
     }
