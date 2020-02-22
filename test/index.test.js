@@ -274,53 +274,6 @@ describe('Module API', function () {
       })
     })
 
-    it('Throws error with too less input data', function (done) {
-      // Allow source dependencies
-      mockery.registerAllowables(['bottlejs', 'geneticalgorithm', './src/genetic-algorithm', './src/monte-carlo', './seed', './fitness', './mutation', './crossover'])
-
-      // Source under test
-      var api = require('../index')
-
-      // Run function under test
-      try {
-        api.genetic({
-          A: [1],
-          B: [1],
-          C: [1]
-        }, 2).then((result) => {
-          expect.fail()
-          done()
-        })
-      } catch (err) {
-        expect(err).to.be.an('error')
-        done()
-      }
-    })
-
-    it('Throws error with too small groups number', function (done) {
-      // Allow source dependencies
-      mockery.registerAllowables(['bottlejs', 'geneticalgorithm', './src/genetic-algorithm', './src/monte-carlo', './seed', './fitness', './mutation', './crossover'])
-
-      // Source under test
-      var api = require('../index')
-
-      // Run function under test
-      try {
-        api.genetic({
-          A: [1],
-          B: [1],
-          C: [1],
-          D: [1]
-        }, 1).then((result) => {
-          expect.fail()
-          done()
-        })
-      } catch (err) {
-        expect(err).to.be.an('error')
-        done()
-      }
-    })
-
     it('Results does not have duplicates', function (done) {
       // Allow source dependencies
       mockery.registerAllowables(['bottlejs',
@@ -402,6 +355,53 @@ describe('Module API', function () {
       }).catch((err) => {
         done(err)
       })
+    })
+
+    it('Throws error with too less input data', function (done) {
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm', './src/genetic-algorithm', './src/monte-carlo', './seed', './fitness', './mutation', './crossover'])
+
+      // Source under test
+      var api = require('../index')
+
+      // Run function under test
+      try {
+        api.genetic({
+          A: [1],
+          B: [1],
+          C: [1]
+        }, 2).then((result) => {
+          expect.fail()
+          done()
+        })
+      } catch (err) {
+        expect(err).to.be.an('error')
+        done()
+      }
+    })
+
+    it('Throws error with too small groups number', function (done) {
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm', './src/genetic-algorithm', './src/monte-carlo', './seed', './fitness', './mutation', './crossover'])
+
+      // Source under test
+      var api = require('../index')
+
+      // Run function under test
+      try {
+        api.genetic({
+          A: [1],
+          B: [1],
+          C: [1],
+          D: [1]
+        }, 1).then((result) => {
+          expect.fail()
+          done()
+        })
+      } catch (err) {
+        expect(err).to.be.an('error')
+        done()
+      }
     })
   })
 })
