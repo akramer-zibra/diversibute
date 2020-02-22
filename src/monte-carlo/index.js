@@ -49,7 +49,7 @@ var run = (input, settings = {}) => {
       }
 
       // Sort scores
-      var ranking = scores.sort((a, b) => { return a - b })
+      var ranking = scores.sort((a, b) => { return b - a })
 
       // Define empty result
       var result = {
@@ -61,8 +61,6 @@ var run = (input, settings = {}) => {
       ranking.slice(0, settings.results).forEach(score => {
         result.elements.push({ combination: scoredPopulation[score].seq, score })
       })
-
-      console.log(result)
 
       resolve(result) // Return result structure
     } catch (err) {
