@@ -8,7 +8,7 @@ var di
  * @param {data: {String: Number}, groups: Number} input
  * @return Promise with a result
  */
-var run = (input) => {
+var run = (input, settings = {}) => {
   // Check given input data and assert if something is wrong
   assertRunArguments(input)
 
@@ -47,7 +47,7 @@ var run = (input) => {
       var highestScore = ranking.pop()
 
       // Return result
-      resolve({ combination: scoredPopulation[highestScore].seq, score: highestScore })
+      resolve({ settings, elements: [{ combination: scoredPopulation[highestScore].seq, score: highestScore }] })
     } catch (err) {
       reject(err)
     }

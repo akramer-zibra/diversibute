@@ -43,8 +43,10 @@ describe('Module API', function () {
 
       // Run api
       api.monteCarlo(input, 5).then(result => {
-        // Check response object
-        expect(result).to.be.an('object').has.all.keys('combination', 'score')
+        // Check response object structure
+        expect(result.settings).to.be.an('object')
+        expect(result.elements.length).to.be.at.least(1)
+        expect(result.elements[0]).to.be.an('object').has.all.keys('combination', 'score')
         done()
       }).catch(err => {
         done(err)
