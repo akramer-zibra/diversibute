@@ -20,6 +20,9 @@ module.exports = {
    * @returns {Promise<{combination: Array<Number>, score: Number}>}
    */
   monteCarlo: (data, groups, settings = {}) => {
+    // Validate input arguments
+    validate(data, groups)
+
     // Wrap data- and groups-input into one input group
     var input = { data, groups }
 
@@ -35,11 +38,31 @@ module.exports = {
    * @returns {Promise<{combination: Array<Number>, score: Number}>}
    */
   genetic: (data, groups, settings = {}) => {
+    // Validate input arguments
+    validate(data, groups)
+
     // Wrap data- and groups-input into one input object
     var input = { data, groups }
 
     // Run algorithm with arguments
     return ga.run(input, settings)
+  }
+}
+
+/**
+ * Validates given input arguments
+ * @param {*} data
+ * @param {*} groups
+ */
+var validate = (data, groups) => {
+  //
+  if (groups < 2) {
+    throw new Error('Error: Number of groups must be at least 2. Given ' + groups)
+  }
+
+  // We need at least two elements for each group
+  if (Object.keys(data).length < (2 * groups)) {
+    throw new Error('Error: We need at least 2xgroups input elements. Given ' + Object.keys(data).length)
   }
 }
 
