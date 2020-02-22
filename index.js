@@ -62,7 +62,7 @@ var validate = (data, groups) => {
 
   // We need at least two elements for each group
   if (Object.keys(data).length < (2 * groups)) {
-    throw new Error('Error: We need at least 2xgroups input elements. Given ' + Object.keys(data).length)
+    throw new Error('Error: We need at least 2 x groups input elements. Given ' + Object.keys(data).length)
   }
 }
 
