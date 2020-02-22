@@ -101,6 +101,7 @@ describe('Module API', function () {
           done()
         })
       } catch (err) {
+        expect(err).to.be.an('error')
         done()
       }
     })
@@ -125,6 +126,7 @@ describe('Module API', function () {
           done()
         })
       } catch (err) {
+        expect(err).to.be.an('error')
         done()
       }
     })
