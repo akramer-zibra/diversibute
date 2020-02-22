@@ -8,7 +8,7 @@ var defaults = {
   populationStartSize: 40,
   populationMaxSize: 100,
   evolutions: 100,
-  elitism: 1, // Every chroosome is elite
+  elitism: 1, // Every chromosome is elite
   bunches: 1,
   interceptor: undefined,
   results: 1
