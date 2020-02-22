@@ -75,22 +75,7 @@ var run = (input, settings = {}) => {
  * @param {*} input
  */
 var assertRunArguments = (input) => {
-  // Check necessary arguments
-  if (input.data === undefined) {
-    throw new Error("Given input arguments are not valid: 'data' is missing.")
-  }
-  if (input.groups === undefined) {
-    throw new Error("Given input arguments are not valid: 'groups' is missing.")
-  }
-  // Check group argument plausibility
-  if (input.groups < 1) {
-    throw new Error('Error: Number of groups must be at least 1. Given: ' + input.groups)
-  }
-  // Check given arguments distribution plausibility
-  var keys = Object.keys(input.data) // Get group member keys
-  if (input.groups > keys.length) {
-    throw new Error("Error: We can't distribute given numbers of members to a higher number of groups")
-  }
+
 }
 
 /**

@@ -175,14 +175,6 @@ var assertRunArguments = (input, settings) => {
   if (di === undefined) {
     throw new Error('You need to pass a "di" instance first while requiring this module')
   }
-  // Input data must be available
-  if (input.data === undefined) {
-    throw new Error("Given input arguments are not valid: 'data' is missing.")
-  }
-  // Number of wished groups must be available
-  if (input.groups === undefined) {
-    throw new Error("Given input arguments are not valid: 'groups' is missing.")
-  }
 }
 
 /**
