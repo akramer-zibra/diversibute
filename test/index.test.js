@@ -260,7 +260,8 @@ describe('Module API', function () {
 
       // Configure amount of results
       var settings = {
-        results: 13
+        results: 13,
+        evolutions: 5 // We run this with a small number of evolutions for faster response
       }
 
       // Run genetic function
@@ -340,7 +341,8 @@ describe('Module API', function () {
 
       // Configure amount of results
       var settings = {
-        results: 13
+        results: 13,
+        evolutions: 10 // We run this with a small number of evolutions for faster response
       }
 
       // Run function under test
