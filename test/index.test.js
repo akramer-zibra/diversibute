@@ -81,6 +81,35 @@ describe('Module API', function () {
       })
     })
 
+    it('Replies with given input', function (done) {
+      // Allow source modules
+      mockery.registerAllowables(['bottlejs',
+        './src/genetic-algorithm',
+        './src/monte-carlo'])
+
+      // Allow source dependencies
+      mockery.registerAllowables(['./seed',
+        './fitness',
+        './mutation',
+        './crossover'])
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-s.json')
+      var input = require('../examples/data/3features/input-s.json')
+
+      // Source under test
+      var api = require('../index')
+
+      // Run api
+      api.monteCarlo(input, 5).then(result => {
+        expect(result.input.data).to.be.deep.equal(input)
+        expect(result.input.groups).to.equal(5)
+        done()
+      }).catch(err => {
+        done(err)
+      })
+    })
+
     it('Throws error with too less input data', function (done) {
       // Allow source modules
       mockery.registerAllowables(['bottlejs', './src/genetic-algorithm', './src/monte-carlo'])

@@ -50,6 +50,7 @@ var run = (input, settings = {}) => {
 
       // Define empty result
       var result = {
+        input,
         settings,
         elements: []
       }
