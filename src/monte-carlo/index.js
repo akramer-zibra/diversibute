@@ -14,9 +14,6 @@ var defaults = {
  * @return Promise with a result
  */
 var run = (input, settings = {}) => {
-  // Check given input data and assert if something is wrong
-  assertRunArguments(input)
-
   // Merge given settings with defaults
   settings = Object.assign(defaults, settings)
 
@@ -67,15 +64,6 @@ var run = (input, settings = {}) => {
       reject(err)
     }
   })
-}
-
-/**
- * This function checks the given input properties
- * It throws errors in case of failure
- * @param {*} input
- */
-var assertRunArguments = (input) => {
-
 }
 
 /**
