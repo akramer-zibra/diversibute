@@ -29,10 +29,8 @@ describe('Module API', function () {
         './src/monte-carlo'])
 
       // Allow source dependencies
-      mockery.registerAllowables(['./seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -45,8 +43,8 @@ describe('Module API', function () {
       api.monteCarlo(input, 5).then(result => {
         // Check response object structure
         expect(result.settings).to.be.an('object')
-        expect(result.elements.length).to.be.at.least(1)
-        expect(result.elements[0]).to.be.an('object').has.all.keys('combination', 'score')
+        expect(result.results.length).to.be.at.least(1)
+        expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
         done()
       }).catch(err => {
         done(err)
@@ -60,10 +58,8 @@ describe('Module API', function () {
         './src/monte-carlo'])
 
       // Allow source dependencies
-      mockery.registerAllowables(['./seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -74,7 +70,33 @@ describe('Module API', function () {
 
       // Run api
       api.monteCarlo(input, 5, { results: 11 }).then(result => {
-        expect(result.elements).to.be.lengthOf(11)
+        expect(result.results).to.be.lengthOf(11)
+        done()
+      }).catch(err => {
+        done(err)
+      })
+    })
+
+    it('Replies with given input', function (done) {
+      // Allow source modules
+      mockery.registerAllowables(['bottlejs',
+        './src/genetic-algorithm',
+        './src/monte-carlo'])
+
+      // Allow source dependencies
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover', './mapper/result'])
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-s.json')
+      var input = require('../examples/data/3features/input-s.json')
+
+      // Source under test
+      var api = require('../index')
+
+      // Run api
+      api.monteCarlo(input, 5).then(result => {
+        expect(result.input.data).to.be.deep.equal(input)
+        expect(result.input.groups).to.equal(5)
         done()
       }).catch(err => {
         done(err)
@@ -138,14 +160,10 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -157,7 +175,7 @@ describe('Module API', function () {
       // Run api
       api.genetic(input, 5).then(results => {
         // Check structure of first result object
-        expect(results.elements[0]).to.be.an('object').has.all.keys('combination', 'score')
+        expect(results.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
         done()
       }).catch(err => {
         done(err)
@@ -169,14 +187,10 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -206,16 +220,42 @@ describe('Module API', function () {
       })
     })
 
+    it('Replies with given input', function (done) {
+      // Increase timeout
+      this.timeout(20000)
+
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
+
+      // Source under test
+      var api = require('../index')
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-s.json')
+      var data = require('../examples/data/3features/input-s.json')
+
+      var groups = 4
+
+      // Run api
+      api.genetic(data, groups, { evolutions: 1 }).then(result => { // we run it with 1 evolution for faster response
+        // Check if result object containts input
+        expect(result.input.data).to.deep.equal(data)
+        expect(result.input.groups).to.equal(groups)
+        done()
+      }).catch(err => {
+        done(err)
+      })
+    })
+
     it('Result setting specifies amount of results', function (done) {
       // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -226,13 +266,89 @@ describe('Module API', function () {
 
       // Configure amount of results
       var settings = {
-        results: 13
+        results: 13,
+        evolutions: 5 // We run this with a small number of evolutions for faster response
       }
 
       // Run genetic function
       api.genetic(input, 5, settings).then((result) => {
         // Check if result set contains given amount of results
-        expect(result.elements.length).to.be.equal(settings.results)
+        expect(result.results.length).to.be.equal(settings.results)
+        done()
+      }).catch((err) => {
+        done(err)
+      })
+    })
+
+    it('Results does not have duplicates', function (done) {
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-m.json')
+      var input = require('../examples/data/3features/input-m.json')
+
+      // Source under test
+      var api = require('../index')
+
+      // Configure amount of results
+      var settings = {
+        results: 13,
+        evolutions: 10 // We run this with a small number of evolutions for faster response
+      }
+
+      // Run function under test
+      api.genetic(input, 5, settings).then((result) => {
+        // Count scores in a counter object
+        var counter = {}
+        result.results.forEach(resultEntry => {
+          if (!counter[resultEntry.score]) {
+            counter[resultEntry.score] = 1
+            return
+          }
+          expect.fail('Score already exists. Must be duplicate')
+        })
+        done()
+      }).catch((err) => done(err))
+    })
+
+    it('Works with interceptor', function (done) {
+      // Increase timeout
+      this.timeout(60000)
+
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-m.json')
+      var input = require('../examples/data/3features/input-m.json')
+
+      // Source under test
+      var api = require('../index')
+
+      // Create an interceptor fake with sinon
+      var interceptorFake = sinon.fake()
+
+      // Define some custom options
+      // WITH interception
+      var settings = {
+        populationStartSize: 40,
+        populationMaxSize: 200,
+        evolutions: 50,
+        bunches: 5,
+        interceptor: interceptorFake
+      }
+
+      // Run api
+      api.genetic(input, 5, settings).then(() => {
+        // Check if interceptor is called x times
+        expect(interceptorFake.callCount).to.be.equal(settings.bunches)
         done()
       }).catch((err) => {
         done(err)
@@ -284,88 +400,6 @@ describe('Module API', function () {
         expect(err).to.be.an('error')
         done()
       }
-    })
-
-    it('Results does not have duplicates', function (done) {
-      // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
-
-      // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
-
-      // Source under test
-      var api = require('../index')
-
-      // Configure amount of results
-      var settings = {
-        results: 13
-      }
-
-      // Run function under test
-      api.genetic(input, 5, settings).then((result) => {
-        // Count scores in a counter object
-        var counter = {}
-        result.elements.forEach(combination => {
-          if (!counter[combination.score]) {
-            counter[combination.score] = 1
-            return
-          }
-          expect.fail('Score already exists. Must be duplicate')
-        })
-        done()
-      }).catch((err) => done(err))
-    })
-
-    it('Works with interceptor', function (done) {
-      // Increase timeout
-      this.timeout(60000)
-
-      // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
-
-      // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
-
-      // Source under test
-      var api = require('../index')
-
-      // Create an interceptor fake with sinon
-      var interceptorFake = sinon.fake()
-
-      // Define some custom options
-      // WITH interception
-      var settings = {
-        populationStartSize: 40,
-        populationMaxSize: 200,
-        evolutions: 50,
-        bunches: 5,
-        interceptor: interceptorFake
-      }
-
-      // Run api
-      api.genetic(input, 5, settings).then(() => {
-        // Check if interceptor is called x times
-        expect(interceptorFake.callCount).to.be.equal(settings.bunches)
-        done()
-      }).catch((err) => {
-        done(err)
-      })
     })
   })
 })
