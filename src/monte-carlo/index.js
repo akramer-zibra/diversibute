@@ -58,23 +58,6 @@ var run = (input, settings = {}) => {
         sortedPopulations.push(element)
       })
 
-      // e.g. ranking = [38.6, 36.2, 35.4, 31.1, 30.8, 30.5]
-      // e.g. scoredPopulation = {"38.6": {...}, "36.2"}
-
-      /*
-      // Define empty result
-      var result = {
-        input,
-        settings,
-        elements: []
-      }
-
-      // Push configured results in elements collection
-      ranking.slice(0, settings.results).forEach(score => {
-        result.elements.push({ combination: scoredPopulation[score].seq, score })
-      })
-      */
-
       // Map everything into a result object structure
       var result = require('./mapper/result').result(input, settings, sortedPopulations)
 
