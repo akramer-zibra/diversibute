@@ -10,7 +10,7 @@ beforeEach(function () {
   })
 
   // Allow source under test module
-  mockery.registerAllowable('../../src/mapper/result')
+  mockery.registerAllowable('../../../src/genetic-algorithm/mapper/result')
 })
 
 afterEach(function () {
