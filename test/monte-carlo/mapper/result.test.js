@@ -10,7 +10,7 @@ beforeEach(function () {
   })
 
   // Allow source under test module
-  mockery.registerAllowable('../../../src/genetic-algorithm/mapper/result')
+  mockery.registerAllowable('../../../src/monte-carlo/mapper/result')
 })
 
 afterEach(function () {
@@ -19,10 +19,10 @@ afterEach(function () {
 })
 
 //
-describe('Result mapper (Genetic Algorithm)', function () {
+describe('Result mapper (Monte Carlo)', function () {
   it('maps input, settings and chromosomes to result structure', function () {
     // Source under test
-    var mapper = require('../../../src/genetic-algorithm/mapper/result')
+    var mapper = require('../../../src/monte-carlo/mapper/result')
 
     // Dummy input
     var input = {
@@ -45,11 +45,11 @@ describe('Result mapper (Genetic Algorithm)', function () {
 
     // Dummy chromosome results
     var chromosomes = [
-      { phenotype: { seq: [1, 1, 1, 2, 2, 2, 2] }, score: 11.11 },
-      { phenotype: { seq: [1, 1, 1, 2, 2, 2, 2] }, score: 11.11 },
-      { phenotype: { seq: [1, 1, 1, 2, 2, 2, 2] }, score: 11.11 },
-      { phenotype: { seq: [1, 1, 1, 2, 2, 2, 2] }, score: 11.11 },
-      { phenotype: { seq: [1, 1, 1, 2, 2, 2, 2] }, score: 11.11 }
+      { seq: [1, 1, 1, 2, 2, 2, 2], score: 11.11 },
+      { seq: [1, 1, 1, 2, 2, 2, 2], score: 11.11 },
+      { seq: [1, 1, 1, 2, 2, 2, 2], score: 11.11 },
+      { seq: [1, 1, 1, 2, 2, 2, 2], score: 11.11 },
+      { seq: [1, 1, 1, 2, 2, 2, 2], score: 11.11 }
     ]
 
     // Run map function
@@ -61,7 +61,7 @@ describe('Result mapper (Genetic Algorithm)', function () {
     expect(result.results).to.be.an('array')
     expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
     expect(result.results[0].groups).to.be.lengthOf(2)
-    expect(result.results[0].seq).to.be.lengthOf(chromosomes[0].phenotype.seq.length)
+    expect(result.results[0].seq).to.be.lengthOf(chromosomes[0].seq.length)
     expect(result.results[0].score).to.be.a('number')
   })
 })

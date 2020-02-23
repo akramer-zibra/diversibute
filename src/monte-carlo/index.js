@@ -37,17 +37,31 @@ var run = (input, settings = {}) => {
         // Create a seed
         var seed = seedModule.seed(input)
 
-        // Calculate Score for each population
+        // Calculate Score for this population
         var score = fitnessModule.score(seed)
 
         //
-        scoredPopulation[score] = seed // Use this as an index
+        scoredPopulation[score] = seed // Use this seed's score as an index
         scores.push(score)
       }
 
       // Sort scores
       var ranking = scores.sort((a, b) => { return b - a })
 
+      // Create a sorted list population. HIghest scores first
+      var sortedPopulations = []
+      ranking.forEach(score => {
+        var element = {
+          seq: scoredPopulation[score].seq,
+          score
+        }
+        sortedPopulations.push(element)
+      })
+
+      // e.g. ranking = [38.6, 36.2, 35.4, 31.1, 30.8, 30.5]
+      // e.g. scoredPopulation = {"38.6": {...}, "36.2"}
+
+      /*
       // Define empty result
       var result = {
         input,
@@ -59,6 +73,10 @@ var run = (input, settings = {}) => {
       ranking.slice(0, settings.results).forEach(score => {
         result.elements.push({ combination: scoredPopulation[score].seq, score })
       })
+      */
+
+      // Map everything into a result object structure
+      var result = require('./mapper/result').result(input, settings, sortedPopulations)
 
       resolve(result) // Return result structure
     } catch (err) {

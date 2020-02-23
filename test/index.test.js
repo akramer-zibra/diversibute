@@ -29,10 +29,8 @@ describe('Module API', function () {
         './src/monte-carlo'])
 
       // Allow source dependencies
-      mockery.registerAllowables(['./seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -45,8 +43,8 @@ describe('Module API', function () {
       api.monteCarlo(input, 5).then(result => {
         // Check response object structure
         expect(result.settings).to.be.an('object')
-        expect(result.elements.length).to.be.at.least(1)
-        expect(result.elements[0]).to.be.an('object').has.all.keys('combination', 'score')
+        expect(result.results.length).to.be.at.least(1)
+        expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
         done()
       }).catch(err => {
         done(err)
@@ -60,10 +58,8 @@ describe('Module API', function () {
         './src/monte-carlo'])
 
       // Allow source dependencies
-      mockery.registerAllowables(['./seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -74,7 +70,7 @@ describe('Module API', function () {
 
       // Run api
       api.monteCarlo(input, 5, { results: 11 }).then(result => {
-        expect(result.elements).to.be.lengthOf(11)
+        expect(result.results).to.be.lengthOf(11)
         done()
       }).catch(err => {
         done(err)
@@ -88,10 +84,7 @@ describe('Module API', function () {
         './src/monte-carlo'])
 
       // Allow source dependencies
-      mockery.registerAllowables(['./seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover', './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-s.json')
