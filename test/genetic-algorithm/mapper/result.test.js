@@ -22,7 +22,7 @@ afterEach(function () {
 describe('Result mapper', function () {
   it('maps input, settings and chromosomes to result structure', function () {
     // Source under test
-    var mapper = require('../../src/mapper/result')
+    var mapper = require('../../../src/genetic-algorithm/mapper/result')
 
     // Dummy input
     var input = {

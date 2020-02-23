@@ -151,8 +151,8 @@ var run = (input, settings = {}) => {
       // Create a duplicate-free hash index
       var uniquePopulationIndex = uniqueResults(rankedPopulation)
 
-      // Transform ga results into one result structure
-      var result = finalize(input, uniquePopulationIndex, settings)
+      // Transform ga results into result structure
+      var result = require('./mapper/result').result(input, settings, uniquePopulationIndex)
 
       resolve(result)
     } catch (err) {

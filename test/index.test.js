@@ -167,14 +167,10 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -186,7 +182,7 @@ describe('Module API', function () {
       // Run api
       api.genetic(input, 5).then(results => {
         // Check structure of first result object
-        expect(results.elements[0]).to.be.an('object').has.all.keys('combination', 'score')
+        expect(results.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
         done()
       }).catch(err => {
         done(err)
@@ -198,14 +194,10 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -240,14 +232,10 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Source under test
       var api = require('../index')
@@ -271,14 +259,10 @@ describe('Module API', function () {
 
     it('Result setting specifies amount of results', function (done) {
       // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -296,7 +280,7 @@ describe('Module API', function () {
       // Run genetic function
       api.genetic(input, 5, settings).then((result) => {
         // Check if result set contains given amount of results
-        expect(result.elements.length).to.be.equal(settings.results)
+        expect(result.results.length).to.be.equal(settings.results)
         done()
       }).catch((err) => {
         done(err)
@@ -305,14 +289,10 @@ describe('Module API', function () {
 
     it('Results does not have duplicates', function (done) {
       // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
@@ -331,9 +311,9 @@ describe('Module API', function () {
       api.genetic(input, 5, settings).then((result) => {
         // Count scores in a counter object
         var counter = {}
-        result.elements.forEach(combination => {
-          if (!counter[combination.score]) {
-            counter[combination.score] = 1
+        result.results.forEach(resultEntry => {
+          if (!counter[resultEntry.score]) {
+            counter[resultEntry.score] = 1
             return
           }
           expect.fail('Score already exists. Must be duplicate')
@@ -347,14 +327,10 @@ describe('Module API', function () {
       this.timeout(60000)
 
       // Allow source dependencies
-      mockery.registerAllowables(['bottlejs',
-        'geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo',
-        './seed',
-        './fitness',
-        './mutation',
-        './crossover'])
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
 
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
