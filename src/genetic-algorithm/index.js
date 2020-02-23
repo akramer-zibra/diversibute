@@ -98,29 +98,6 @@ var uniqueResults = (rankedPopulation) => {
 }
 
 /**
- * This function transforms given results into one final result structure
- * @param {*} input
- * @param {*} results
- * @param {*} settings
- * @returns {settings: {String: any}, elements: Array<{combination: Array<Number>, score: Number}>}
- */
-var finalize = (input, results, settings) => {
-  // Define result object structure
-  var result = {
-    input, settings, elements: []
-  }
-
-  // Slice configured amount of results
-  // ...and transform it for response
-  Object.keys(results).slice(0, settings.results).forEach(score => {
-    var combination = results[score]
-    result.elements.push({ combination: combination.phenotype.seq, score: combination.score })
-  })
-
-  return result
-}
-
-/**
  * This function runs the genetic algorithm with given arguments
  * @param {data: {String: Number}, groups: Number} input
  * @param {String: any} settings
