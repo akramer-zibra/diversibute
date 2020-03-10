@@ -57,7 +57,10 @@ describe('Module API', function () {
   })
 
   describe('Monte-Carlo Algorithm', function () {
-    it('Works with medium sized example', function (done) {
+    // Define unit under test
+    var api
+
+    beforeEach(() => {
       // Allow source modules
       mockery.registerAllowables(['./src/genetic-algorithm',
         './src/monte-carlo'])
@@ -67,12 +70,14 @@ describe('Module API', function () {
         '../genetic-algorithm/seed', '../genetic-algorithm/fitness',
         './mapper/result'])
 
+      // Reinitialize unit under test
+      api = require('../index')
+    })
+
+    it('Works with medium sized example', function (done) {
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
       var input = require('../examples/data/3features/input-m.json')
-
-      // Source under test
-      var api = require('../index')
 
       // Run api
       api.monteCarlo(input, 5).then(result => {
@@ -87,20 +92,9 @@ describe('Module API', function () {
     })
 
     it('Works via diverse() api', function (done) {
-      // Allow source modules
-      mockery.registerAllowables(['./src/genetic-algorithm', './src/monte-carlo'])
-
-      // Allow source dependencies
-      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
-        '../genetic-algorithm/seed', '../genetic-algorithm/fitness',
-        './mapper/result'])
-
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
       var input = require('../examples/data/3features/input-m.json')
-
-      // Source under test
-      var api = require('../index')
 
       // Run api
       api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
@@ -116,20 +110,9 @@ describe('Module API', function () {
     })
 
     it('Returns number of specified results', function (done) {
-      // Allow source modules
-      mockery.registerAllowables(['./src/genetic-algorithm', './src/monte-carlo'])
-
-      // Allow source dependencies
-      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
-        '../genetic-algorithm/seed', '../genetic-algorithm/fitness',
-        './mapper/result'])
-
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
       var input = require('../examples/data/3features/input-m.json')
-
-      // Source under test
-      var api = require('../index')
 
       // Run api
       api.monteCarlo(input, 5, { results: 11 }).then(result => {
@@ -141,20 +124,9 @@ describe('Module API', function () {
     })
 
     it('Replies with given input', function (done) {
-      // Allow source modules
-      mockery.registerAllowables(['./src/genetic-algorithm', './src/monte-carlo'])
-
-      // Allow source dependencies
-      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
-        '../genetic-algorithm/seed', '../genetic-algorithm/fitness',
-        './mapper/result'])
-
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-s.json')
       var input = require('../examples/data/3features/input-s.json')
-
-      // Source under test
-      var api = require('../index')
 
       // Run api
       api.monteCarlo(input, 5).then(result => {
@@ -167,15 +139,6 @@ describe('Module API', function () {
     })
 
     it('Throws error with too less input data', function (done) {
-      // Allow source modules
-      mockery.registerAllowables(['./src/genetic-algorithm', './src/monte-carlo'])
-
-      // Allow source dependencies
-      mockery.registerAllowables(['./seed', './fitness', '../genetic-algorithm/seed', '../genetic-algorithm/fitness', './mutation', './crossover'])
-
-      // Source under test
-      var api = require('../index')
-
       // Run api
       try {
         api.monteCarlo({
@@ -192,15 +155,6 @@ describe('Module API', function () {
     })
 
     it('Throws error with too small groups number', function (done) {
-      // Allow source modules
-      mockery.registerAllowables(['./src/genetic-algorithm', './src/monte-carlo'])
-
-      // Allow source dependencies
-      mockery.registerAllowables(['./seed', './fitness', '../genetic-algorithm/seed', '../genetic-algorithm/fitness', './mutation', './crossover'])
-
-      // Source under test
-      var api = require('../index')
-
       // Run api
       try {
         api.monteCarlo({
