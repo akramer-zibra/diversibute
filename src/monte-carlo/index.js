@@ -1,7 +1,6 @@
-/*
- * Internal member variable
- */
-var di
+/** Internal member variable */
+var seedModule
+var fitnessModule
 
 /** Default settings for monte carlo */
 var defaults = {
@@ -19,10 +18,6 @@ var run = (input, settings = {}) => {
 
   return new Promise((resolve, reject) => {
     try {
-      // Dependencies
-      var fitnessModule = di.container.fitness
-      var seedModule = di.container.seed
-
       // We need to pass input as context to fitness function
       fitnessModule.context(input)
 
@@ -71,9 +66,10 @@ var run = (input, settings = {}) => {
 /**
  * Constructor methode
  */
-module.exports = (bottle) => {
-  // Pust reference to ioc container into internal variable
-  di = bottle
+module.exports = () => {
+  // Load dependencies
+  seedModule = require('../genetic-algorithm/seed')
+  fitnessModule = require('../genetic-algorithm/fitness')
 
   // Register some special methods?!...
 
