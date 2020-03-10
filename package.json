@@ -14,8 +14,7 @@
     "geneticalgorithm": "1.0.2",
     "euclidean-distance": "1.0.0",
     "js-combinatorics": "0.5.5",
-    "skmeans": "0.11.2",
-    "bottlejs": "1.7.2"
+    "skmeans": "0.11.2"
   },
   "devDependencies": {
     "eslint": "6.8.0",
