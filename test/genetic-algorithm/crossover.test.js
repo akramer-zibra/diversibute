@@ -18,13 +18,17 @@ afterEach(function () {
 })
 
 describe('Crossover module', function () {
+  // Define unit undr test
+  var crossover
+
+  beforeEach(() => {
+    crossover = require('../../src/genetic-algorithm/crossover') // Reinitialize
+  })
+
   it('Creates two new children from two given chromosomes', function () {
     // Dummy chromosome data
     var chromosomeA = { seq: [1, 1, 2, 2, 3, 3, 4, 4] }
     var chromosomeB = { seq: [4, 4, 3, 3, 2, 2, 1, 1] }
-
-    // Source under test
-    var crossover = require('../../src/genetic-algorithm/crossover')
 
     // Use crossover function
     var crossed = crossover(chromosomeA, chromosomeB)
@@ -40,9 +44,6 @@ describe('Crossover module', function () {
     // Dummy chromosome data
     var chromosomeA = { seq: [1, 1, 2, 2, 3, 3, 4, 4] }
     var chromosomeB = { seq: [4, 4, 3, 3, 2, 2, 1, 1] }
-
-    // Source under test
-    var crossover = require('../../src/genetic-algorithm/crossover')
 
     // Use crossover function
     var crossed = crossover(chromosomeA, chromosomeB)
