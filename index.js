@@ -95,9 +95,3 @@ var validate = (data, groups) => {
     throw new Error('Error: We need at least 2 x groups input elements. Given ' + Object.keys(data).length)
   }
 }
-
-/*
-// Debug entry
-var data = require('./examples/data/3features/input-m.json')
-mc.run({ data, groups: 5 }, { results: 5 })
-*/
