@@ -45,6 +45,7 @@ describe('Module API', function () {
         expect(result.settings).to.be.an('object')
         expect(result.results.length).to.be.at.least(1)
         expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
+        expect(result.settings.algorithm).to.be.equal('genetic')
         done()
       }).catch(err => {
         done(err)
@@ -105,6 +106,7 @@ describe('Module API', function () {
         expect(result.settings).to.be.an('object')
         expect(result.results.length).to.be.at.least(1)
         expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
+        expect(result.settings.algorithm).to.be.equal('monte-carlo')
         done()
       }).catch(err => {
         done(err)
@@ -313,6 +315,7 @@ describe('Module API', function () {
       api.diverse(input, 5, settings).then(results => {
         // Check structure of first result object
         expect(results.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
+        expect(results.settings.algorithm).to.be.equal('genetic')
         done()
       }).catch(err => {
         done(err)
