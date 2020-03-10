@@ -22,24 +22,26 @@ afterEach(function () {
 // module API test
 describe('Module API', function () {
   describe('diverse() Function', function () {
-    it('Works with defaults', function (done) {
+    // Load input data
+    mockery.registerAllowable('../examples/data/3features/input-m.json')
+    var input = require('../examples/data/3features/input-m.json')
+
+    // Define unit under test
+    var api
+
+    // Prepare
+    beforeEach(() => {
       // Allow source modules
-      mockery.registerAllowables(['geneticalgorithm',
-        './src/genetic-algorithm',
-        './src/monte-carlo'])
+      mockery.registerAllowables(['geneticalgorithm', './src/genetic-algorithm', './src/monte-carlo'])
 
       // Allow source dependencies
-      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
-        '../genetic-algorithm/seed', '../genetic-algorithm/fitness',
-        './mapper/result'])
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover', '../genetic-algorithm/seed', '../genetic-algorithm/fitness', './mapper/result'])
 
-      // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      // Reinitialize unit under test
+      api = require('../index')
+    })
 
-      // Source under test
-      var api = require('../index')
-
+    it('Works with defaults', function (done) {
       // Run api
       api.diverse(input, 5).then(result => {
         // Check response object structure
