@@ -72,7 +72,7 @@ module.exports = {
     var input = { data, groups }
 
     // Decide which algorithm to use
-    var algorithm = (settings.algorithm === 'genetic') ? ga : mc
+    var algorithm = (settings.algorithm === 'monte-carlo') ? mc : ga
 
     // Run algorithm and return a promise
     return algorithm.run(input, settings)
