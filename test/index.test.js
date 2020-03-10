@@ -21,7 +21,39 @@ afterEach(function () {
 
 // module API test
 describe('Module API', function () {
-  describe('Monte Carlo function', function () {
+  describe('diverse() Function', function () {
+    it('Works with defaults', function (done) {
+      // Allow source modules
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm',
+        './src/monte-carlo'])
+
+      // Allow source dependencies
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-m.json')
+      var input = require('../examples/data/3features/input-m.json')
+
+      // Source under test
+      var api = require('../index')
+
+      // Run api
+      api.diverse(input, 5).then(result => {
+        // Check response object structure
+        expect(result.settings).to.be.an('object')
+        expect(result.results.length).to.be.at.least(1)
+        expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
+        expect(result.settings.algorithm).to.be.equal('genetic')
+        done()
+      }).catch(err => {
+        done(err)
+      })
+    })
+  })
+
+  describe('Monte-Carlo Algorithm', function () {
     it('Works with medium sized example', function (done) {
       // Allow source modules
       mockery.registerAllowables(['bottlejs',
@@ -45,6 +77,36 @@ describe('Module API', function () {
         expect(result.settings).to.be.an('object')
         expect(result.results.length).to.be.at.least(1)
         expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
+        done()
+      }).catch(err => {
+        done(err)
+      })
+    })
+
+    it('Works via diverse() api', function (done) {
+      // Allow source modules
+      mockery.registerAllowables(['bottlejs',
+        './src/genetic-algorithm',
+        './src/monte-carlo'])
+
+      // Allow source dependencies
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-m.json')
+      var input = require('../examples/data/3features/input-m.json')
+
+      // Source under test
+      var api = require('../index')
+
+      // Run api
+      api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
+        // Check response object structure
+        expect(result.settings).to.be.an('object')
+        expect(result.results.length).to.be.at.least(1)
+        expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
+        expect(result.settings.algorithm).to.be.equal('monte-carlo')
         done()
       }).catch(err => {
         done(err)
@@ -154,7 +216,7 @@ describe('Module API', function () {
     })
   })
 
-  describe('Genetic Algorithm function', function () {
+  describe('Genetic Algorithm', function () {
     it('Works with medium sized example and default options', function (done) {
       // Increase timeout
       this.timeout(20000)
@@ -214,6 +276,46 @@ describe('Module API', function () {
       api.genetic(input, 5, settings).then(result => {
         // Check response object and returned options
         expect(result.settings).to.deep.equal(settings)
+        done()
+      }).catch(err => {
+        done(err)
+      })
+    })
+
+    it('Works via diverse() api', function (done) {
+      // Increase timeout
+      this.timeout(20000)
+
+      // Allow source dependencies
+      mockery.registerAllowables(['bottlejs', 'geneticalgorithm',
+        './src/genetic-algorithm', './src/monte-carlo',
+        './seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-m.json')
+      var input = require('../examples/data/3features/input-m.json')
+
+      // Source under test
+      var api = require('../index')
+
+      // Define default settings
+      var settings = {
+        algorithm: 'genetic',
+        populationStartSize: 40,
+        populationMaxSize: 200,
+        evolutions: 30,
+        elitism: 1,
+        bunches: 1,
+        interceptor: undefined,
+        results: 1
+      }
+
+      // Run api
+      api.diverse(input, 5, settings).then(results => {
+        // Check structure of first result object
+        expect(results.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
+        expect(results.settings.algorithm).to.be.equal('genetic')
         done()
       }).catch(err => {
         done(err)
