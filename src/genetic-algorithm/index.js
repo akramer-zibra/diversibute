@@ -1,7 +1,8 @@
-/*
- * Internal member variables
- */
-var di
+/** Internal member variables */
+var seed
+var fitness
+var mutation
+var crossover
 
 /** Default settings for genetic algorithm */
 var defaults = {
@@ -53,9 +54,9 @@ var interceptedEvolve = (ga, settings) => {
  */
 var configuration = (input, settings, population) => {
   // Get dependencies
-  var fitnessModule = di.container.fitness
-  var mutationFunction = di.container.mutation
-  var crossoverFunction = di.container.crossover
+  var fitnessModule = fitness
+  var mutationFunction = mutation
+  var crossoverFunction = crossover
 
   // We need to pass input as context to fitness function
   fitnessModule.context(input)
@@ -108,7 +109,7 @@ var run = (input, settings = {}) => {
   settings = Object.assign(defaults, settings)
 
   // Generate an initial population seed
-  var population = di.container.seed.population(input, settings.populationStartSize)
+  var population = seed.population(input, settings.populationStartSize)
 
   // Configure genetic algorithm
   var config = configuration(input, settings, population)
@@ -143,18 +144,12 @@ var run = (input, settings = {}) => {
  * @param {Bottle} bottle BottleJS instance
  * @returns Genetic Algorithm object
  */
-module.exports = (bottle) => {
-  // Cache bottle instance reference
-  di = bottle
-
-  // Load genetic algorithm functions
-  bottle.constant('seed', require('./seed'))
-  bottle.constant('fitness', require('./fitness'))
-  bottle.constant('mutation', require('./mutation'))
-  bottle.constant('crossover', require('./crossover'))
-
-  // Put reference to this module in di container
-  bottle.constant('ga', module.exports)
+module.exports = () => {
+  // Load dependencies
+  seed = require('./seed')
+  fitness = require('./fitness')
+  mutation = require('./mutation')
+  crossover = require('./crossover')
 
   return {
     run

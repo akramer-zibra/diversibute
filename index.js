@@ -1,12 +1,8 @@
-// Start with an initial Inverion of Control container
-const Bottle = require('bottlejs')
-const di = new Bottle()
-
 // Build genetic-algorithm module
-const ga = require('./src/genetic-algorithm')(di)
+const ga = require('./src/genetic-algorithm')()
 
 // Build montecarlo algorithm module
-const mc = require('./src/monte-carlo')(di)
+const mc = require('./src/monte-carlo')()
 
 /** Konfiguration */
 const defaults = {
