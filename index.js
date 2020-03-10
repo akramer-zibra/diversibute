@@ -23,6 +23,7 @@ module.exports = {
    * @param {{String: Array<Number>}} data
    * @param {Number} groups Number of groups
    * @returns {Promise<{combination: Array<Number>, score: Number}>}
+   * @deprecated
    */
   monteCarlo: (data, groups, settings = {}) => {
     // Validate input arguments
@@ -41,6 +42,7 @@ module.exports = {
    * @param {Number} groups Number of groups
    * @param {String: any} settings Object with option properties
    * @returns {Promise<{combination: Array<Number>, score: Number}>}
+   * @deprecated
    */
   genetic: (data, groups, settings = {}) => {
     // Validate input arguments
