@@ -21,12 +21,16 @@ afterEach(function () {
 })
 
 describe('Mutation module', function () {
+  // Define unit under test
+  var mutation
+
+  beforeEach(() => {
+    mutation = require('../../src/genetic-algorithm/mutation') // Reinitialize
+  })
+
   it('Mutates with default settings', function () {
     // Dummy chromosome data
     var chromosome = { seq: [1, 1, 2, 2, 3, 3, 4, 4] }
-
-    // Source under test
-    var mutation = require('../../src/genetic-algorithm/mutation')
 
     // Use mutation function
     var mutated = mutation(chromosome)
@@ -37,9 +41,6 @@ describe('Mutation module', function () {
   it('Mutates and keeps its structure', function () {
     // Dummy chromosome data
     var chromosome = { seq: [1, 1, 2, 2, 3, 3, 4, 4] }
-
-    // Source under test
-    var mutation = require('../../src/genetic-algorithm/mutation')
 
     // Use mutation function
     var mutated = mutation(chromosome)
@@ -52,9 +53,6 @@ describe('Mutation module', function () {
     // Dummy chromosome data
     var chromosome = { seq: [1, 1, 2, 2, 3, 3, 4, 4] }
 
-    // Source under test
-    var mutation = require('../../src/genetic-algorithm/mutation')
-
     // Use mutation function
     var mutated = mutation(chromosome, { shuffleQuota: 1.0, twistQuota: 0 })
 
@@ -64,9 +62,6 @@ describe('Mutation module', function () {
   it('Mutates with 100percent twist probability', function () {
     // Dummy chromosome data
     var chromosome = { seq: [1, 1, 2, 2, 3, 3, 4, 4] }
-
-    // Source under test
-    var mutation = require('../../src/genetic-algorithm/mutation')
 
     // Use mutation function
     var mutated = mutation(chromosome, { shuffleQuota: 0, twistQuota: 1.0 })
