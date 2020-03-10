@@ -8,6 +8,11 @@ const ga = require('./src/genetic-algorithm')(di)
 // Build montecarlo algorithm module
 const mc = require('./src/monte-carlo')(di)
 
+/** Konfiguration */
+const defaults = {
+  algorithm: 'genetic'
+}
+
 /**
  * Module definition of this kreatives-feld package
  */
@@ -46,6 +51,31 @@ module.exports = {
 
     // Run algorithm with arguments
     return ga.run(input, settings)
+  },
+
+  /**
+   * This function creates a group combination from given input
+   * and returns combination with its fitness score
+   * @param {{String: Array<Number>}} input
+   * @param {Number} groups Number of groups
+   * @param {String: any} settings Object with option properties
+   * @returns {Promise<{combination: Array<Number>, score: Number}>}
+   */
+  diverse: (data, groups, settings = {}) => {
+    // Validate input arguments
+    validate(data, groups)
+
+    // Merge given settings with defaults
+    settings = Object.assign(defaults, settings)
+
+    // Wrap data- and groups-input into one input object
+    var input = { data, groups }
+
+    // Decide which algorithm to use
+    var algorithm = (settings.algorithm === 'genetic') ? ga : mc
+
+    // Run algorithm and return a promise
+    return algorithm.run(input, settings)
   }
 }
 
