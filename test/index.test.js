@@ -51,6 +51,35 @@ describe('Module API', function () {
       })
     })
 
+    it('Works via diverse() api', function (done) {
+      // Allow source modules
+      mockery.registerAllowables(['bottlejs',
+        './src/genetic-algorithm',
+        './src/monte-carlo'])
+
+      // Allow source dependencies
+      mockery.registerAllowables(['./seed', './fitness', './mutation', './crossover',
+        './mapper/result'])
+
+      // Load input data
+      mockery.registerAllowable('../examples/data/3features/input-m.json')
+      var input = require('../examples/data/3features/input-m.json')
+
+      // Source under test
+      var api = require('../index')
+
+      // Run api
+      api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
+        // Check response object structure
+        expect(result.settings).to.be.an('object')
+        expect(result.results.length).to.be.at.least(1)
+        expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
+        done()
+      }).catch(err => {
+        done(err)
+      })
+    })
+
     it('Returns number of specified results', function (done) {
       // Allow source modules
       mockery.registerAllowables(['bottlejs',
