@@ -1,3 +1,5 @@
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?id=akramer-zibra_diversibute&metric=alert_status)](https://sonarcloud.io/dashboard?id=akramer-zibra_diversibute)
+
 # Diversibute ("diverse distribution")
 Dieses JavaScript-Module dient dazu eine Gruppe in möglichst heterogene Untergruppen einzuteilen. Für die Bewertung der Heterogenität werden den Gruppenmitgliedern Eigenschaftswerte zugeschrieben, anhand derer die Algorithmen eine Heterogenität berechnen.
 
