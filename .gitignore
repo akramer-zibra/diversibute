@@ -1,3 +1,5 @@
 .vscode
 node_modules
 .ipynb_checkpoints
+.nyc_output
+coverage
