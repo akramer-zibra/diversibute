@@ -26,14 +26,19 @@ afterEach(function () {
 })
 
 describe('Fitness function', function () {
+  // Define source under test
+  var fitness
+
+  beforeEach(() => {
+    // Reinitialize Source under test
+    fitness = require('../../src/genetic-algorithm/fitness')
+  })
+
   describe('Essential calculation', function () {
     it('Works with medium size example data', function () {
       // Example input data
       mockery.registerAllowable('../../examples/data/3features/input-m.json')
       var input = require('../../examples/data/3features/input-m.json')
-
-      // Source under test
-      var fitness = require('../../src/genetic-algorithm/fitness')
 
       // Set context for testing
       fitness.context({ data: input, groups: 5 })
@@ -47,9 +52,6 @@ describe('Fitness function', function () {
 
   describe('Check necessary prerequesites', function () {
     it('Throws Error if context is missing', function () {
-      // Source under test
-      var fitness = require('../../src/genetic-algorithm/fitness')
-
       // Fitness function should throw error in case of missing context
       expect(function () {
         fitness.score({ seq: [] })
@@ -57,9 +59,6 @@ describe('Fitness function', function () {
     })
 
     it('Returns NEGATIVE_INFINITY in case of undefined argument', function () {
-      // Source under test
-      var fitness = require('../../src/genetic-algorithm/fitness')
-
       // Configure dummy context
       fitness.context({ data: [], groups: [] })
 
@@ -71,9 +70,6 @@ describe('Fitness function', function () {
       mockery.registerMock('../constraints/chromosome', () => {
         return false
       })
-
-      // Source under test
-      var fitness = require('../../src/genetic-algorithm/fitness')
 
       // Configure dummy context
       fitness.context({ data: [], groups: [] })

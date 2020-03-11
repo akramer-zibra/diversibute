@@ -33,123 +33,111 @@ afterEach(function () {
 })
 
 describe('Seed module', function () {
-  it('Seed has correct number of members', function () {
-    // Dummy input data
-    var input = {
-      data: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K: [], L: [], M: [] },
-      groups: 4
-    }
+  describe('seed function', function () {
+    // Define unit under test
+    var seed
 
-    // Source under test
-    var seedFunc = require('../../src/genetic-algorithm/seed').seed
-
-    // Use seed function
-    var seed = seedFunc(input)
-
-    //
-    expect(seed.seq).to.have.lengthOf(Object.keys(input.data).length)
-  })
-
-  it('Seed has given number of groups', function () {
-    // Dummy input data
-    var input = {
-      data: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K: [], L: [], M: [] },
-      groups: 4
-    }
-
-    // Source under test
-    var seedFunc = require('../../src/genetic-algorithm/seed').seed
-
-    // Use seed function
-    var seed = seedFunc(input)
-
-    // Count group
-    var counter = {}
-    seed.seq.forEach(group => {
-      if (!counter[group]) {
-        counter[group] = 1
-      }
-      counter[group]++
+    beforeEach(() => {
+      seed = require('../../src/genetic-algorithm/seed').seed // Renitialize
     })
 
-    //
-    expect(Object.keys(counter)).to.have.lengthOf(input.groups)
-  })
-
-  it('Number of groupmembers do not differ by more than 1', function () {
-    // Dummy input data
-    var input = {
-      data: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K: [], L: [], M: [] },
-      groups: 4
-    }
-
-    // Source under test
-    var seedFunc = require('../../src/genetic-algorithm/seed').seed
-
-    // Use seed function
-    var seed = seedFunc(input)
-
-    // Count group
-    var counter = {}
-    seed.seq.forEach(group => {
-      if (!counter[group]) {
-        counter[group] = 1
+    it('Seed has correct number of members', function () {
+      // Dummy input data
+      var input = {
+        data: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K: [], L: [], M: [] },
+        groups: 4
       }
-      counter[group]++
+
+      //
+      expect(seed(input).seq).to.have.lengthOf(Object.keys(input.data).length)
     })
 
-    //
-    var minGroupCount = Math.min(...Object.values(counter))
-    var maxGroupCount = Math.max(...Object.values(counter))
+    it('Seed has given number of groups', function () {
+      // Dummy input data
+      var input = {
+        data: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K: [], L: [], M: [] },
+        groups: 4
+      }
 
-    //
-    expect(maxGroupCount - minGroupCount).to.be.at.most(1)
+      // Count group
+      var counter = {}
+      seed(input).seq.forEach(group => {
+        if (!counter[group]) {
+          counter[group] = 1
+        }
+        counter[group]++
+      })
+
+      //
+      expect(Object.keys(counter)).to.have.lengthOf(input.groups)
+    })
+
+    it('Number of groupmembers do not differ by more than 1', function () {
+      // Dummy input data
+      var input = {
+        data: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K: [], L: [], M: [] },
+        groups: 4
+      }
+
+      // Count group
+      var counter = {}
+      seed(input).seq.forEach(group => {
+        if (!counter[group]) {
+          counter[group] = 1
+        }
+        counter[group]++
+      })
+
+      //
+      var minGroupCount = Math.min(...Object.values(counter))
+      var maxGroupCount = Math.max(...Object.values(counter))
+
+      //
+      expect(maxGroupCount - minGroupCount).to.be.at.most(1)
+    })
   })
 
-  it('Population method creates given number of seeds', function () {
-    // Dummy input data
-    var input = {
-      data: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K: [], L: [], M: [] },
-      groups: 4
-    }
+  describe('population function', function () {
+    // Define unit under test
+    var population
 
-    // Source under test
-    var poulationFunc = require('../../src/genetic-algorithm/seed').population
+    beforeEach(() => {
+      population = require('../../src/genetic-algorithm/seed').population
+    })
 
-    var amount = 11
+    it('Population method creates given number of seeds', function () {
+      // Dummy input data
+      var input = {
+        data: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K: [], L: [], M: [] },
+        groups: 4
+      }
 
-    // Use population function
-    var population = poulationFunc(input, amount)
+      var amount = 11
 
-    //
-    expect(population).to.have.lengthOf(amount)
-  })
+      //
+      expect(population(input, amount)).to.have.lengthOf(amount)
+    })
 
-  it('Population method creates unique seeds', function () {
-    // Dummy input data
-    var input = {
-      data: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K: [], L: [], M: [] },
-      groups: 4
-    }
+    it('Population method creates unique seeds', function () {
+      // Dummy input data
+      var input = {
+        data: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K: [], L: [], M: [] },
+        groups: 4
+      }
 
-    // Source under test
-    var poulationFunc = require('../../src/genetic-algorithm/seed').population
+      // Use a collection of hashes
+      var resultHashes = []
 
-    // Use population function
-    var population = poulationFunc(input, 11)
+      // Check each population
+      population(input, 11).forEach(result => {
+        var hash = utilArrayHash(result.seq)
 
-    // Use a collection of hashes
-    var resultHashes = []
+        // Check if hash already exists
+        expect([hash]).to.not.have.members(resultHashes)
 
-    // Check each population
-    population.forEach(result => {
-      var hash = utilArrayHash(result.seq)
-
-      // Check if hash already exists
-      expect([hash]).to.not.have.members(resultHashes)
-
-      // Remember hash for next check
-      resultHashes.push(hash)
+        // Remember hash for next check
+        resultHashes.push(hash)
+      })
     })
   })
 })

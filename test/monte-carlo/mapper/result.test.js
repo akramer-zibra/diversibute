@@ -20,10 +20,10 @@ afterEach(function () {
 
 //
 describe('Result mapper (Monte Carlo)', function () {
-  it('maps input, settings and chromosomes to result structure', function () {
-    // Source under test
-    var mapper = require('../../../src/monte-carlo/mapper/result')
+  // Source under test
+  var mapper = require('../../../src/monte-carlo/mapper/result')
 
+  it('maps input, settings and chromosomes to result structure', function () {
     // Dummy input
     var input = {
       data: {
