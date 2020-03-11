@@ -6,7 +6,7 @@
   "scripts": {
     "debug": "node --nolazy --inspect-brk=9229 index.js",
     "lint": "npx standard index.js src/** test/**",
-    "test": "./node_modules/.bin/mocha --reporter spec --recursive"
+    "test": "nyc --reporter=html --reporter=text mocha --reporter spec --recursive"
   },
   "author": "Achim Kramer <achim@zibra.de>",
   "license": "GNU-GPLv3",
@@ -21,6 +21,7 @@
     "mocha": "7.0.0",
     "chai": "4.2.0",
     "mockery": "2.1.0",
+    "nyc": "15.0.0",
     "sinon": "8.1.1",
     "standard": "14.3.1"
   }
