@@ -30,16 +30,16 @@ Der Verteilalgorithmus lässt sich durch nachfolgende Konfigurationswerte steuer
 | results | `number` | Definiert die Anzahl der gewünschten Resultate | `1`
 
 ### Ergebnis
-Nachfolgende Tabelle erklärt die Datenstruktur des Ergebnis-Objekts
+Nachfolgende Tabelle erklärt die Datenstruktur der Ergebnisse
 
 | Wert | Typ | Beschreibung
 |---|---|---|
 | input.data | `Object` | Die Eingabedaten
 | input.groups | `number` | Die Anzahl an gewünschten Gruppen
 | settings | `Object` | Die angewendete Konfiguration dieser Berechnung
-| results | `Array` | Eine Array-Collection mit [Result](#Result-Struktur)-Objekten
+| results | `Array` | Eine Array-Collection mit berechneten [Zusammensetzungen](#Struktur der berechneten Zusammensetzungen)-Objekten
 
-#### Result-Struktur
+#### Struktur der berechneten Zusammensetzungen
 | Wert | Typ | Beschreibung
 |---|---|---|
 | groups | `Array` | Ist ein Array mit Arrays. Letzteren Arrays beschreiben die berechneten Gruppenzusammensetzungen
