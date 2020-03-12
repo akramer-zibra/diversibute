@@ -10,8 +10,10 @@ Dieses Modul kann ohne weiteres in NodeJS Projekten eingebunden werden. Dies set
 
 Anschließend das Modul einfach als Abhängigkeit über npm installieren `npm install diversibute@https://github.com/akramer-zibra/diversibute --save`
 
+Es können auch spezifische Versionen des Moduls installiert werden. ies lässt sich dadurch erreichen, dass in der Github URL die gewünschte Version an das Ende anghängt wird, z.B. so `https://github.com/akramer-zibra/diversibute#0.3.0`
+
 ## Funktionsweise
-Das Modul besitzt eine einzige Methode `diverse()`.
+Das Modul besitzt eine einzige Methode `diverse()` über die der Verteilalgorithmus ausgeführt wird.
 
 | Parameter | Typ | Beschreibung |
 |---|---|---|
