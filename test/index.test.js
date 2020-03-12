@@ -22,9 +22,12 @@ afterEach(function () {
 // module API test
 describe('Module API', function () {
   describe('diverse() Function', function () {
+    // Increase timeout
+    this.timeout(3000)
+
     // Load input data
-    mockery.registerAllowable('../examples/data/3features/input-m.json')
-    var input = require('../examples/data/3features/input-m.json')
+    mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+    var input = require('./_fixtures/data/3features/input-m.json')
 
     // Define unit under test
     var api
@@ -54,6 +57,43 @@ describe('Module API', function () {
         done(err)
       })
     })
+
+    it('Throws error if given groups are too little', function (done) {
+      // Run api
+      try {
+        api.diverse({
+          A: [1],
+          B: [1],
+          C: [2],
+          D: [2],
+          E: [2],
+          F: [2]
+        }, 1).then((result) => {
+          expect.fail()
+          done()
+        })
+      } catch (err) {
+        expect(err).to.be.an('error')
+        done()
+      }
+    })
+
+    it('Throws error with too less input data', function (done) {
+      // Run function under test
+      try {
+        api.diverse({
+          A: [1],
+          B: [1],
+          C: [1]
+        }, 2).then((result) => {
+          expect.fail()
+          done()
+        })
+      } catch (err) {
+        expect(err).to.be.an('error')
+        done()
+      }
+    })
   })
 
   describe('Monte-Carlo Algorithm', function () {
@@ -76,33 +116,15 @@ describe('Module API', function () {
 
     it('Works with medium sized example', function (done) {
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
-      // Run api
-      api.monteCarlo(input, 5).then(result => {
-        // Check response object structure
-        expect(result.settings).to.be.an('object')
-        expect(result.results.length).to.be.at.least(1)
-        expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
-        done()
-      }).catch(err => {
-        done(err)
-      })
-    })
-
-    it('Works via diverse() api', function (done) {
-      // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
-
-      // Run api
+      // Run monte-carlo algorithm through api
       api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
         // Check response object structure
         expect(result.settings).to.be.an('object')
         expect(result.results.length).to.be.at.least(1)
         expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
-        expect(result.settings.algorithm).to.be.equal('monte-carlo')
         done()
       }).catch(err => {
         done(err)
@@ -111,11 +133,11 @@ describe('Module API', function () {
 
     it('Returns number of specified results', function (done) {
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
-      // Run api
-      api.monteCarlo(input, 5, { results: 11 }).then(result => {
+      // Run monte carlo thourgh api
+      api.diverse(input, 5, { algorithm: 'monte-carlo', results: 11 }).then(result => {
         expect(result.results).to.be.lengthOf(11)
         done()
       }).catch(err => {
@@ -125,49 +147,17 @@ describe('Module API', function () {
 
     it('Replies with given input', function (done) {
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-s.json')
-      var input = require('../examples/data/3features/input-s.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-s.json')
+      var input = require('./_fixtures/data/3features/input-s.json')
 
-      // Run api
-      api.monteCarlo(input, 5).then(result => {
+      // Run monte carlo through api
+      api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
         expect(result.input.data).to.be.deep.equal(input)
         expect(result.input.groups).to.equal(5)
         done()
       }).catch(err => {
         done(err)
       })
-    })
-
-    it('Throws error with too less input data', function (done) {
-      // Run api
-      try {
-        api.monteCarlo({
-          A: [1],
-          B: [1]
-        }, 3).then((result) => {
-          expect.fail()
-          done()
-        })
-      } catch (err) {
-        expect(err).to.be.an('error')
-        done()
-      }
-    })
-
-    it('Throws error with too small groups number', function (done) {
-      // Run api
-      try {
-        api.monteCarlo({
-          A: [1],
-          B: [1]
-        }, 1).then((result) => {
-          expect.fail()
-          done()
-        })
-      } catch (err) {
-        expect(err).to.be.an('error')
-        done()
-      }
     })
   })
 
@@ -192,11 +182,11 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Run api
-      api.genetic(input, 5).then(results => {
+      api.diverse(input, 5, { algorithm: 'genetic' }).then(results => {
         // Check structure of first result object
         expect(results.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
         done()
@@ -210,37 +200,8 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
-
-      // Define default settings
-      var settings = {
-        populationStartSize: 40,
-        populationMaxSize: 200,
-        evolutions: 30,
-        elitism: 1,
-        bunches: 1,
-        interceptor: undefined,
-        results: 1
-      }
-
-      // Run api
-      api.genetic(input, 5, settings).then(result => {
-        // Check response object and returned options
-        expect(result.settings).to.deep.equal(settings)
-        done()
-      }).catch(err => {
-        done(err)
-      })
-    })
-
-    it('Works via diverse() api', function (done) {
-      // Increase timeout
-      this.timeout(20000)
-
-      // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Define default settings
       var settings = {
@@ -255,10 +216,9 @@ describe('Module API', function () {
       }
 
       // Run api
-      api.diverse(input, 5, settings).then(results => {
-        // Check structure of first result object
-        expect(results.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
-        expect(results.settings.algorithm).to.be.equal('genetic')
+      api.diverse(input, 5, settings).then(result => {
+        // Check response object and returned options
+        expect(result.settings).to.deep.equal(settings)
         done()
       }).catch(err => {
         done(err)
@@ -270,13 +230,13 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-s.json')
-      var data = require('../examples/data/3features/input-s.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-s.json')
+      var data = require('./_fixtures/data/3features/input-s.json')
 
       var groups = 4
 
       // Run api
-      api.genetic(data, groups, { evolutions: 1 }).then(result => { // we run it with 1 evolution for faster response
+      api.diverse(data, groups, { algorithm: 'genetic', evolutions: 1 }).then(result => { // we run it with 1 evolution for faster response
         // Check if result object containts input
         expect(result.input.data).to.deep.equal(data)
         expect(result.input.groups).to.equal(groups)
@@ -288,17 +248,18 @@ describe('Module API', function () {
 
     it('Result setting specifies amount of results', function (done) {
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Configure amount of results
       var settings = {
+        algorithm: 'genetic',
         results: 13,
         evolutions: 5 // We run this with a small number of evolutions for faster response
       }
 
       // Run genetic function
-      api.genetic(input, 5, settings).then((result) => {
+      api.diverse(input, 5, settings).then((result) => {
         // Check if result set contains given amount of results
         expect(result.results.length).to.be.equal(settings.results)
         done()
@@ -309,17 +270,18 @@ describe('Module API', function () {
 
     it('Results does not have duplicates', function (done) {
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Configure amount of results
       var settings = {
+        algorithm: 'genetic',
         results: 13,
         evolutions: 10 // We run this with a small number of evolutions for faster response
       }
 
       // Run function under test
-      api.genetic(input, 5, settings).then((result) => {
+      api.diverse(input, 5, settings).then((result) => {
         // Count scores in a counter object
         var counter = {}
         result.results.forEach(resultEntry => {
@@ -338,8 +300,8 @@ describe('Module API', function () {
       this.timeout(60000)
 
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Create an interceptor fake with sinon
       var interceptorFake = sinon.fake()
@@ -347,6 +309,7 @@ describe('Module API', function () {
       // Define some custom options
       // WITH interception
       var settings = {
+        algorithm: 'genetic',
         populationStartSize: 40,
         populationMaxSize: 200,
         evolutions: 50,
@@ -355,48 +318,13 @@ describe('Module API', function () {
       }
 
       // Run api
-      api.genetic(input, 5, settings).then(() => {
+      api.diverse(input, 5, settings).then(() => {
         // Check if interceptor is called x times
         expect(interceptorFake.callCount).to.be.equal(settings.bunches)
         done()
       }).catch((err) => {
         done(err)
       })
-    })
-
-    it('Throws error with too less input data', function (done) {
-      // Run function under test
-      try {
-        api.genetic({
-          A: [1],
-          B: [1],
-          C: [1]
-        }, 2).then((result) => {
-          expect.fail()
-          done()
-        })
-      } catch (err) {
-        expect(err).to.be.an('error')
-        done()
-      }
-    })
-
-    it('Throws error with too small groups number', function (done) {
-      // Run function under test
-      try {
-        api.genetic({
-          A: [1],
-          B: [1],
-          C: [1],
-          D: [1]
-        }, 1).then((result) => {
-          expect.fail()
-          done()
-        })
-      } catch (err) {
-        expect(err).to.be.an('error')
-        done()
-      }
     })
   })
 })

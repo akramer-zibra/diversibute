@@ -95,6 +95,25 @@ describe('Seed module', function () {
       //
       expect(maxGroupCount - minGroupCount).to.be.at.most(1)
     })
+
+    it('Throws error in case of conflicting params', function (done) {
+      try {
+        // Create a seed with conflicting input
+        seed({
+          data: {
+            A: [1],
+            B: [2],
+            C: [3]
+          },
+          groups: 3
+        }, {})
+        expect.fail()
+        done()
+      } catch (err) {
+        expect(err).to.be.an('error')
+        done()
+      }
+    })
   })
 
   describe('population function', function () {

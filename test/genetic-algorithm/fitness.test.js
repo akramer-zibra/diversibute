@@ -37,8 +37,8 @@ describe('Fitness function', function () {
   describe('Essential calculation', function () {
     it('Works with medium size example data', function () {
       // Example input data
-      mockery.registerAllowable('../../examples/data/3features/input-m.json')
-      var input = require('../../examples/data/3features/input-m.json')
+      mockery.registerAllowable('../_fixtures/data/3features/input-m.json')
+      var input = require('../_fixtures/data/3features/input-m.json')
 
       // Set context for testing
       fitness.context({ data: input, groups: 5 })
