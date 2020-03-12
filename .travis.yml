@@ -1,12 +1,12 @@
 language: node_js
 node_js:
   - 12
-  
+
 addons:
   sonarcloud:
     organization: "akramer-zibra"
     token:
-      secure: $SONAR_TOKEN
+      secure: "n2/hbk2aqLD3n+T7rRVN4FSkjzRkX17RJ9GFxOYSYgUyQII6qgm+LBnhAuGY5oIFnkPNTVrpmVzN8Grt++wacWSJZMMzLmSIL2q/iEjlaae2oAQrc5nB/JAedn9pIKZYSEXRbFu2DlRFiNfYpgeme2lcEqhjdYCxzChrTPjz3ccvB/uOwQt5rxygmW7eY9H5mznPgkjVWidNZpzPElNdsXw5D2bsz2f6nPVZrColY0V3an3kYWL96P2MgYcfY+HXopqy1MJHwtjLPY9q9gvRMVgWd8iU9sWDQLNa+Hhr6XMjnqhxx73zbOG0LwCP2cVj9l/nDQAAwM/QEaZndmcc73Xsbhwan36v8ILy85X9JBxsTPOEI+MEU+CrfEbvFR4mIH+3QN3EZ6BNSFpwqdyGdsrnWhjPuAGCfRi9+6eazBukKWJvxKkvl0p1pI9od1tWgnIFDtOlRUNIg5lY2KDgc0OQfLpQ0j8u12fVr9mRMyZWXweGfV7oKSvsbVREpKyCev6HLiXp3tA/npMagwDCAH0hxAWmW93JKL+31pjPX64j4P31IoaS0FMh6TpzHUOJ5Dt8HdpJw8vSSabLv0Zice4GYPvMROgrzduPu/ObqegjyXBg7FCsT9ILOAUxMebErbMe+c5DqrOhAf5ItdOsK9IQ4ugtvlFfXx6SiyXew3g="
 
 script:
   # First run tests with coverage
