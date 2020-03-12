@@ -19,7 +19,15 @@ Das Modul besitzt eine einzige Methode `diverse()` über die der Verteilalgorith
 |---|---|---|
 | data | `Object` | Schlüssel sind Bezeichnungen der Gruppenmitglieder. Values sind Array-Collections mit Dezimalwerten zwischen `0` und `10`
 | groups | `number` | Anzahl der gewünschten Gruppenanzahl
-| settings | `Object` | Konfigurationsobjekt
+| settings | `Object` | [Konfigurationsobjekt](Konfiguration)
+
+### Konfiguration
+Der Verteilalgorithmus lässt sich durch nachfolgende Konfigurationswerte steuern
+
+| Wert | Typ | Beschreibung | default
+|---|---|---|---|
+| algorithmus | `string` | Wählt zwischen den beiden Algorithmen `genetic` und `monte-carlo` | `genetic`
+| results | `number` | Definiert die Anzahl der gewünschten Resultate | `1`
 
 ## Beispiel
 Dieses Beispiel berechnet für eine Gruppe bestehend aus `19 Personen` und jeweils `3 Merkmalen` eine möglicht heterogene und ausgewogene Aufteilung in `4` Gruppen.
@@ -60,6 +68,23 @@ diversibute.diverse(data, numberOfWishedGroups, {results: 5}).then(result => {
 ```
 
 Ein vollständiges Anwendungsbeispiel gibt es hier [diversibute-example](https://github.com/akramer-zibra/diversibute-example)
+
+## Advanced
+
+### Spezielle Konfigurationswerte für genetic-Algorithmus
+Diese Werte funktinieren ausschließlich für den `genetic`-Algorithmus
+
+| Wert | Typ | Beschreibung | default
+|---|---|---|---|
+| populationStartSize | `number` | Definiert die Größe der Startpopulation | `40`
+| populationMaxSize | `number` | Definiert die maximale Größe der Population | `100`
+| evolutions | `number` | Definiert wieviele Evolutionen der Algorithmus durchläuft, bis er sein Ergebnis zurückgibt | `100`
+
+#### Interception
+| Wert | Typ | Beschreibung | default
+|---|---|---|---|
+| bunches | `number` | Definiert, in wievielen Schritten der genetische Algorithmus zum Ergebnis kommt | `1`
+| interceptor | `Function` | Definiert eine Callback-Function, die während des Evolutionsprozesses aufgerufen wird. `bunsches` muss hierfür größer als `1` sein | `undefined`
 
 ## Testing
 Der Code kann mithilfe des Skripts `npm test` durchgetestet werden.
