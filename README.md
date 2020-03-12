@@ -32,7 +32,7 @@ Der Verteilalgorithmus lässt sich durch nachfolgende Konfigurationswerte steuer
 ## Beispiel
 Dieses Beispiel berechnet für eine Gruppe bestehend aus `19 Personen` und jeweils `3 Merkmalen` eine möglicht heterogene und ausgewogene Aufteilung in `4` Gruppen.
 
-```
+```javascript
 var diversibute = require('diversibute')
 
 // Beispiel Eingabedaten
