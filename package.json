@@ -6,7 +6,7 @@
   "scripts": {
     "debug": "node --nolazy --inspect-brk=9229 index.js",
     "lint": "npx standard index.js src/** test/**",
-    "test": "nyc --reporter=lcov --reporter=text mocha -R @danmasta/mocha-sonar --reporter-options reporter=spec --recursive"
+    "test": "nyc --reporter=lcov --reporter=text mocha --reporter spec --recursive"
   },
   "author": "Achim Kramer <achim@zibra.de>",
   "license": "GNU-GPLv3",
@@ -17,7 +17,6 @@
     "skmeans": "0.11.2"
   },
   "devDependencies": {
-    "@danmasta/mocha-sonar": "0.0.6",
     "chai": "4.2.0",
     "eslint": "6.8.0",
     "mocha": "7.0.0",
