@@ -178,7 +178,7 @@ describe('Module API', function () {
       var input = require('../examples/data/3features/input-m.json')
 
       // Run api
-      api.genetic(input, 5).then(results => {
+      api.diverse(input, 5, { algorithm: 'genetic' }).then(results => {
         // Check structure of first result object
         expect(results.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
         done()
@@ -188,35 +188,6 @@ describe('Module API', function () {
     })
 
     it('Works with custom options', function (done) {
-      // Increase timeout
-      this.timeout(20000)
-
-      // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
-
-      // Define default settings
-      var settings = {
-        populationStartSize: 40,
-        populationMaxSize: 200,
-        evolutions: 30,
-        elitism: 1,
-        bunches: 1,
-        interceptor: undefined,
-        results: 1
-      }
-
-      // Run api
-      api.genetic(input, 5, settings).then(result => {
-        // Check response object and returned options
-        expect(result.settings).to.deep.equal(settings)
-        done()
-      }).catch(err => {
-        done(err)
-      })
-    })
-
-    it('Works via diverse() api', function (done) {
       // Increase timeout
       this.timeout(20000)
 
@@ -237,10 +208,9 @@ describe('Module API', function () {
       }
 
       // Run api
-      api.diverse(input, 5, settings).then(results => {
-        // Check structure of first result object
-        expect(results.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
-        expect(results.settings.algorithm).to.be.equal('genetic')
+      api.diverse(input, 5, settings).then(result => {
+        // Check response object and returned options
+        expect(result.settings).to.deep.equal(settings)
         done()
       }).catch(err => {
         done(err)
@@ -258,7 +228,7 @@ describe('Module API', function () {
       var groups = 4
 
       // Run api
-      api.genetic(data, groups, { evolutions: 1 }).then(result => { // we run it with 1 evolution for faster response
+      api.diverse(data, groups, { algorithm: 'genetic', evolutions: 1 }).then(result => { // we run it with 1 evolution for faster response
         // Check if result object containts input
         expect(result.input.data).to.deep.equal(data)
         expect(result.input.groups).to.equal(groups)
@@ -275,12 +245,13 @@ describe('Module API', function () {
 
       // Configure amount of results
       var settings = {
+        algorithm: 'genetic',
         results: 13,
         evolutions: 5 // We run this with a small number of evolutions for faster response
       }
 
       // Run genetic function
-      api.genetic(input, 5, settings).then((result) => {
+      api.diverse(input, 5, settings).then((result) => {
         // Check if result set contains given amount of results
         expect(result.results.length).to.be.equal(settings.results)
         done()
@@ -296,12 +267,13 @@ describe('Module API', function () {
 
       // Configure amount of results
       var settings = {
+        algorithm: 'genetic',
         results: 13,
         evolutions: 10 // We run this with a small number of evolutions for faster response
       }
 
       // Run function under test
-      api.genetic(input, 5, settings).then((result) => {
+      api.diverse(input, 5, settings).then((result) => {
         // Count scores in a counter object
         var counter = {}
         result.results.forEach(resultEntry => {
@@ -329,6 +301,7 @@ describe('Module API', function () {
       // Define some custom options
       // WITH interception
       var settings = {
+        algorithm: 'genetic',
         populationStartSize: 40,
         populationMaxSize: 200,
         evolutions: 50,
@@ -337,7 +310,7 @@ describe('Module API', function () {
       }
 
       // Run api
-      api.genetic(input, 5, settings).then(() => {
+      api.diverse(input, 5, settings).then(() => {
         // Check if interceptor is called x times
         expect(interceptorFake.callCount).to.be.equal(settings.bunches)
         done()
@@ -349,11 +322,11 @@ describe('Module API', function () {
     it('Throws error with too less input data', function (done) {
       // Run function under test
       try {
-        api.genetic({
+        api.diverse({
           A: [1],
           B: [1],
           C: [1]
-        }, 2).then((result) => {
+        }, 2, { algorithm: 'genetic' }).then((result) => {
           expect.fail()
           done()
         })
@@ -366,12 +339,12 @@ describe('Module API', function () {
     it('Throws error with too small groups number', function (done) {
       // Run function under test
       try {
-        api.genetic({
+        api.diverse({
           A: [1],
           B: [1],
           C: [1],
           D: [1]
-        }, 1).then((result) => {
+        }, 1, { algorithm: 'genetic' }).then((result) => {
           expect.fail()
           done()
         })
