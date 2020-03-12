@@ -37,7 +37,7 @@ Nachfolgende Tabelle erklärt die Datenstruktur der Ergebnisse
 | input.data | `Object` | Die Eingabedaten
 | input.groups | `number` | Die Anzahl an gewünschten Gruppen
 | settings | `Object` | Die angewendete Konfiguration dieser Berechnung
-| results | `Array` | Eine Array-Collection mit berechneten [Zusammensetzungen](#Struktur der berechneten Zusammensetzungen)-Objekten
+| results | `Array` | Eine Array-Collection mit berechneten [Zusammensetzungen](#Struktur der berechneten Zusammensetzungen) Objekten
 
 #### Struktur der berechneten Zusammensetzungen
 | Wert | Typ | Beschreibung
