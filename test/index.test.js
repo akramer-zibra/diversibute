@@ -26,8 +26,8 @@ describe('Module API', function () {
     this.timeout(3000)
 
     // Load input data
-    mockery.registerAllowable('../examples/data/3features/input-m.json')
-    var input = require('../examples/data/3features/input-m.json')
+    mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+    var input = require('./_fixtures/data/3features/input-m.json')
 
     // Define unit under test
     var api
@@ -116,8 +116,8 @@ describe('Module API', function () {
 
     it('Works with medium sized example', function (done) {
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Run monte-carlo algorithm through api
       api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
@@ -133,8 +133,8 @@ describe('Module API', function () {
 
     it('Returns number of specified results', function (done) {
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Run monte carlo thourgh api
       api.diverse(input, 5, { algorithm: 'monte-carlo', results: 11 }).then(result => {
@@ -147,8 +147,8 @@ describe('Module API', function () {
 
     it('Replies with given input', function (done) {
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-s.json')
-      var input = require('../examples/data/3features/input-s.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-s.json')
+      var input = require('./_fixtures/data/3features/input-s.json')
 
       // Run monte carlo through api
       api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
@@ -182,8 +182,8 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Run api
       api.diverse(input, 5, { algorithm: 'genetic' }).then(results => {
@@ -200,8 +200,8 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Define default settings
       var settings = {
@@ -230,8 +230,8 @@ describe('Module API', function () {
       this.timeout(20000)
 
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-s.json')
-      var data = require('../examples/data/3features/input-s.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-s.json')
+      var data = require('./_fixtures/data/3features/input-s.json')
 
       var groups = 4
 
@@ -248,8 +248,8 @@ describe('Module API', function () {
 
     it('Result setting specifies amount of results', function (done) {
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Configure amount of results
       var settings = {
@@ -270,8 +270,8 @@ describe('Module API', function () {
 
     it('Results does not have duplicates', function (done) {
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Configure amount of results
       var settings = {
@@ -300,8 +300,8 @@ describe('Module API', function () {
       this.timeout(60000)
 
       // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
+      mockery.registerAllowable('./_fixtures/data/3features/input-m.json')
+      var input = require('./_fixtures/data/3features/input-m.json')
 
       // Create an interceptor fake with sinon
       var interceptorFake = sinon.fake()
