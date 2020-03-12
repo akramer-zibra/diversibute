@@ -1,4 +1,4 @@
-/** Konfiguration */
+/** Default settings */
 const defaults = {
   algorithm: 'genetic'
 }
