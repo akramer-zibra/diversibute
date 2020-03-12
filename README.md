@@ -6,7 +6,7 @@ Dieses JavaScript-Module dient dazu eine Gruppe in möglichst heterogene Untergr
 Dieses Modul ist wesentlich von der Idee der [Kreativen Felder](http://olaf-axel-burow.de/index.php/forschung/kreative-felder) von Olaf-Axel Burow inspiriert. Burow versteht Kreativität als ein Zusammenspiel mehrerer Personen und deren sozialen Eigenschaften. Seine Theorie ist eine Weiterentwicklung der [Feldtheorie](https://de.wikipedia.org/wiki/Feldtheorie_(Psychologie)) aus der Gestaltpsychologie beziehungsweise Gruppendynamik. Ein kreatives Feld ist ähnlich einem Magnetfeld: es ist durch die Polung seiner Bestandteile gekennzeichnet. Bei Kreativen Feldern ist ein Schlüssel die [Heterogenität](https://de.wikipedia.org/wiki/Heterogenit%C3%A4t_%28P%C3%A4dagogik%29) der Beteiligten.
 
 ## Installation 
-Dieses Modul kann ohne weiteres in NodeJS Projekten eingebunden werden. Dies setzt eine [NodeJS](https://nodejs.org/en/download/) Laufzeitugebung voraus.  
+Dieses Modul kann ohne weiteres in NodeJS Projekten eingebunden werden. Dies setzt eine [NodeJS](https://nodejs.org/en/download/) Laufzeitumgebung voraus.  
 
 Anschließend das Modul einfach als Abhängigkeit über npm installieren `npm install diversibute@https://github.com/akramer-zibra/diversibute --save`
 
