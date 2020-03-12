@@ -9,3 +9,5 @@ script:
   - npm test 
   # Second run lint
   - npm run lint
+after_script:
+  - npx coveralls < ./coverage/lcov.info
