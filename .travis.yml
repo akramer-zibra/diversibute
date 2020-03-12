@@ -1,9 +1,13 @@
 language: node_js
 node_js:
   - 12
-
+cache:
+  directories:
+    - node_modules
 script:
   # First run tests with coverage
-  - npm test 
+  - npm run test-ci 
   # Second run lint
   - npm run lint
+after_script:
+  - npx coveralls < ./coverage/lcov.info
