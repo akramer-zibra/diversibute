@@ -79,8 +79,8 @@ describe('Module API', function () {
       mockery.registerAllowable('../examples/data/3features/input-m.json')
       var input = require('../examples/data/3features/input-m.json')
 
-      // Run api
-      api.monteCarlo(input, 5).then(result => {
+      // Run monte-carlo algorithm through api
+      api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
         // Check response object structure
         expect(result.settings).to.be.an('object')
         expect(result.results.length).to.be.at.least(1)
