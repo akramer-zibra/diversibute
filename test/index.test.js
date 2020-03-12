@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 var expect = require('chai').expect
 var mockery = require('mockery')
-var sinon = require('sinon')
 
 beforeEach(function () {
   mockery.enable({
