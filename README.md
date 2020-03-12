@@ -1,6 +1,4 @@
-[![Build Status](https://api.travis-ci.com/akramer-zibra/diversibute.svg?branch=master)](https://travis-ci.com/github/akramer-zibra/diversibute)
-
-[![Coverage Status](https://coveralls.io/repos/github/akramer-zibra/diversibute/badge.svg?branch=48-coveralls-integration)](https://coveralls.io/github/akramer-zibra/diversibute?branch=48-coveralls-integration)
+[![Build Status](https://api.travis-ci.com/akramer-zibra/diversibute.svg?branch=master)](https://travis-ci.com/github/akramer-zibra/diversibute) [![Coverage Status](https://coveralls.io/repos/github/akramer-zibra/diversibute/badge.svg?branch=48-coveralls-integration)](https://coveralls.io/github/akramer-zibra/diversibute?branch=48-coveralls-integration)
 
 # Diversibute ("diverse distribution")
 Dieses JavaScript-Module dient dazu eine Gruppe in möglichst heterogene Untergruppen einzuteilen. Für die Bewertung der Heterogenität werden den Gruppenmitgliedern Eigenschaftswerte zugeschrieben, anhand derer die Algorithmen eine Heterogenität berechnen.
