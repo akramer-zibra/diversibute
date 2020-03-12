@@ -1,4 +1,17 @@
 language: node_js
 node_js:
   - 12
-script: npm test
+  
+addons:
+  sonarcloud:
+    organization: "akramer-zibra"
+    token:
+      secure: $SONAR_TOKEN
+
+script:
+  # First run tests with coverage
+  - npm test 
+  # Second run lint
+  - npm run lint
+  # Afterwards analyse with sonar scanner
+  - sonar-scanner
