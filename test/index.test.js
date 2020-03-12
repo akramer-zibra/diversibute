@@ -57,6 +57,26 @@ describe('Module API', function () {
         done(err)
       })
     })
+
+    it('Throws error if given groups are too little', function (done) {
+      // Run api
+      try {
+        api.diverse({
+          A: [1],
+          B: [1],
+          C: [2],
+          D: [2],
+          E: [2],
+          F: [2]
+        }, 1).then((result) => {
+          expect.fail()
+          done()
+        })
+      } catch (err) {
+        expect(err).to.be.an('error')
+        done()
+      }
+    })
   })
 
   describe('Monte-Carlo Algorithm', function () {
@@ -130,22 +150,6 @@ describe('Module API', function () {
           A: [1],
           B: [1]
         }, 3, { algorithm: 'monte-carlo' }).then((result) => {
-          expect.fail()
-          done()
-        })
-      } catch (err) {
-        expect(err).to.be.an('error')
-        done()
-      }
-    })
-
-    it('Throws error with too small groups number', function (done) {
-      // Run api
-      try {
-        api.diverse({
-          A: [1],
-          B: [1]
-        }, 1, { algorithm: 'monte-carlo' }).then((result) => {
           expect.fail()
           done()
         })
@@ -330,24 +334,6 @@ describe('Module API', function () {
           B: [1],
           C: [1]
         }, 2, { algorithm: 'genetic' }).then((result) => {
-          expect.fail()
-          done()
-        })
-      } catch (err) {
-        expect(err).to.be.an('error')
-        done()
-      }
-    })
-
-    it('Throws error with too small groups number', function (done) {
-      // Run function under test
-      try {
-        api.diverse({
-          A: [1],
-          B: [1],
-          C: [1],
-          D: [1]
-        }, 1, { algorithm: 'genetic' }).then((result) => {
           expect.fail()
           done()
         })
