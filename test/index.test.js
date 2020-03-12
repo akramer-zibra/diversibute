@@ -22,6 +22,9 @@ afterEach(function () {
 // module API test
 describe('Module API', function () {
   describe('diverse() Function', function () {
+    // Increase timeout
+    this.timeout(3000)
+
     // Load input data
     mockery.registerAllowable('../examples/data/3features/input-m.json')
     var input = require('../examples/data/3features/input-m.json')
