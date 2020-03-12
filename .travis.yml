@@ -5,7 +5,8 @@ node_js:
 addons:
   sonarcloud:
     organization: "akramer-zibra"
-    token: $SONAR_TOKEN
+    token: 
+      secure: $SONAR_TOKEN
 
 script:
   # First run tests with coverage
