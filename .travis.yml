@@ -6,7 +6,7 @@ addons:
   sonarcloud:
     organization: "akramer-zibra"
     token: 
-      secure: ${SONAR_TOKEN}
+      secure: $SONAR_TOKEN
 
 script:
   # First run tests with coverage
