@@ -1,4 +1,17 @@
 language: node_js
 node_js:
   - 12
-script: npm test
+
+addons:
+  sonarcloud:
+    organization: "akramer-zibra"
+    token:
+      secure: "eLtS2GRu5M98SwGVc03dWrNIWzWRgDsNhpGp5qXBUixlXN7mjpiSLGMDNIY3QjJLOd05NjXIdAoZy7sbpyT/RcgOT8gXoKUz9CFsh4SpOtoI4+0jfI25UFa+W806tsa0yF/zmxMsSa1uZ/BjLf9cOwBOz5KVLjbQmo13F4E3/Y+xRwSFAXJX7b/FfHmtMoRk6SOCzWGeiV8WYsZn21i4QqcjgQY3VEZWygg6EzbLHSXp0ENFNQNUKes9xjb0RYIGnP75jGbqsXmK1Cri0IsiXqKQej6FcA7JgbxxZmChkCnwejretijamPgMiFW9nIJUlRCjUztvuf9AeOP/qxwL6/DpV2lE7LEm8qSEuSMV/zhdjkBubD7C1m4ZvOv3Ec3KfMbYSXYFYE9vY4kdZIgA2+OaSGoA4j4DqMxtAjwin2ibgqNK8vhfSEjvIymseuhfD4Gk/TkVvacVuF9QJo6uqxj5OLz7cKeA1hzHx2fiFrfv6Z4Y/aznaL2/ak6U6ca4koEiIr53lILXLun6Hb6hICoq5xMc7k5E/NDx1csx9Xz06k8dM6Qmo5vWytUO+LP9gHQho/B3CnRvBzIx+jTjifiWt5i8euj5ne/0dwN+hAr9+4aPCnw9ncoeJA7JYPIjTc3bdLxYN8kRGIfE+kbkClg9xcXIT3wPr76DM8YTVQM="
+
+script:
+  # First run tests with coverage
+  - npm test 
+  # Second run lint
+  - npm run lint
+  # Afterwards analyse with sonar scanner
+  - sonar-scanner
