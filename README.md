@@ -19,7 +19,7 @@ Das Modul besitzt eine einzige Methode `diverse()` über die der Verteilalgorith
 |---|---|---|
 | data | `Object` | Schlüssel sind Bezeichnungen der Gruppenmitglieder. Values sind Array-Collections mit Dezimalwerten zwischen `0` und `10`
 | groups | `number` | Anzahl der gewünschten Gruppenanzahl
-| settings | `Object` | [Konfigurationsobjekt](Konfiguration)
+| settings | `Object` | [Konfigurationsobjekt](#Konfiguration)
 
 ### Konfiguration
 Der Verteilalgorithmus lässt sich durch nachfolgende Konfigurationswerte steuern
@@ -28,6 +28,23 @@ Der Verteilalgorithmus lässt sich durch nachfolgende Konfigurationswerte steuer
 |---|---|---|---|
 | algorithmus | `string` | Wählt zwischen den beiden Algorithmen `genetic` und `monte-carlo` | `genetic`
 | results | `number` | Definiert die Anzahl der gewünschten Resultate | `1`
+
+### Ergebnis
+Nachfolgende Tabelle erklärt die Datenstruktur des Ergebnis-Objekts
+
+| Wert | Typ | Beschreibung
+|---|---|---|
+| input.data | `Object` | Die Eingabedaten
+| input.groups | `number` | Die Anzahl an gewünschten Gruppen
+| settings | `Object` | Die angewendete Konfiguration dieser Berechnung
+| results | `Array` | Eine Array-Collection mit [Result](#Result-Struktur)-Objekten
+
+#### Result-Struktur
+| Wert | Typ | Beschreibung
+|---|---|---|
+| groups | `Array` | Ist ein Array mit Arrays. Letzteren Arrays beschreiben die berechneten Gruppenzusammensetzungen
+| seq | `Array` | Eine sequentielle Repräsentation der berechneten Gruppenzusammensetzung. Die Werte stehen für Gruppen. Der Index enstspricht den Keys der Eingabewerte
+| score | `number` | Der berechnete Fitness-Wert des Ergebnis. Höher ist besser 
 
 ## Beispiel
 Dieses Beispiel berechnet für eine Gruppe bestehend aus `19 Personen` und jeweils `3 Merkmalen` eine möglicht heterogene und ausgewogene Aufteilung in `4` Gruppen.
