@@ -6,7 +6,7 @@ cache:
     - node_modules
 script:
   # First run tests with coverage
-  - npm test-ci 
+  - npm run test-ci 
   # Second run lint
   - npm run lint
 after_script:
