@@ -42,10 +42,10 @@ var data = {
 }
 
 // Anzahl gewünschter Gruppen
-var numberOfSubgroups = 4;
+var groups = 4;
 
 // Gruppen berechnen
-diversibute.diverse(data, numberOfSubgroups, {results: 5}).then(result => {
+diversibute.diverse(data, groups, {results: 5}).then(result => {
     console.log(result)
 })
 ```
