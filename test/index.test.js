@@ -91,31 +91,13 @@ describe('Module API', function () {
       })
     })
 
-    it('Works via diverse() api', function (done) {
-      // Load input data
-      mockery.registerAllowable('../examples/data/3features/input-m.json')
-      var input = require('../examples/data/3features/input-m.json')
-
-      // Run api
-      api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
-        // Check response object structure
-        expect(result.settings).to.be.an('object')
-        expect(result.results.length).to.be.at.least(1)
-        expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
-        expect(result.settings.algorithm).to.be.equal('monte-carlo')
-        done()
-      }).catch(err => {
-        done(err)
-      })
-    })
-
     it('Returns number of specified results', function (done) {
       // Load input data
       mockery.registerAllowable('../examples/data/3features/input-m.json')
       var input = require('../examples/data/3features/input-m.json')
 
-      // Run api
-      api.monteCarlo(input, 5, { results: 11 }).then(result => {
+      // Run monte carlo thourgh api
+      api.diverse(input, 5, { algorithm: 'monte-carlo', results: 11 }).then(result => {
         expect(result.results).to.be.lengthOf(11)
         done()
       }).catch(err => {
@@ -128,8 +110,8 @@ describe('Module API', function () {
       mockery.registerAllowable('../examples/data/3features/input-s.json')
       var input = require('../examples/data/3features/input-s.json')
 
-      // Run api
-      api.monteCarlo(input, 5).then(result => {
+      // Run monte carlo through api
+      api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
         expect(result.input.data).to.be.deep.equal(input)
         expect(result.input.groups).to.equal(5)
         done()
@@ -141,10 +123,10 @@ describe('Module API', function () {
     it('Throws error with too less input data', function (done) {
       // Run api
       try {
-        api.monteCarlo({
+        api.diverse({
           A: [1],
           B: [1]
-        }, 3).then((result) => {
+        }, 3, { algorithm: 'monte-carlo' }).then((result) => {
           expect.fail()
           done()
         })
@@ -157,10 +139,10 @@ describe('Module API', function () {
     it('Throws error with too small groups number', function (done) {
       // Run api
       try {
-        api.monteCarlo({
+        api.diverse({
           A: [1],
           B: [1]
-        }, 1).then((result) => {
+        }, 1, { algorithm: 'monte-carlo' }).then((result) => {
           expect.fail()
           done()
         })
