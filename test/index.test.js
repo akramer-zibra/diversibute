@@ -57,6 +57,20 @@ describe('Module API', function () {
       })
     })
 
+    it('Takes monte-carlo by property', function (done) {
+      // Run api
+      api.diverse(input, 5, { algorithm: 'monte-carlo' }).then(result => {
+        // Check response object structure
+        expect(result.settings).to.be.an('object')
+        expect(result.results.length).to.be.at.least(1)
+        expect(result.results[0]).to.be.an('object').has.all.keys('groups', 'seq', 'score')
+        expect(result.settings.algorithm).to.be.equal('monte-carlo')
+        done()
+      }).catch(err => {
+        done(err)
+      })
+    })
+
     it('Throws error if given groups are too little', function (done) {
       // Run api
       try {
