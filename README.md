@@ -15,6 +15,8 @@ Es können auch spezifische Versionen des Moduls installiert werden. ies lässt 
 ## Beispiel
 Dieses Beispiel berechnet für eine Gruppe bestehend aus `19 Personen` und jeweils `3 Merkmalen` eine möglicht heterogene und ausgewogene Aufteilung in `4` Gruppen.
 
+![](assets/diversibute-video-widescreen-high.gif)
+
 ```javascript
 var diversibute = require('diversibute')
 
