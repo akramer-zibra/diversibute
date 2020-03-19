@@ -3,6 +3,8 @@
 # Diversibute ("diverse distribution")
 Dieses JavaScript-Module dient dazu eine Gruppe in möglichst heterogene und dennoch möglichst gleichgroße Untergruppen einzuteilen. Für die Bewertung der Heterogenität werden den Gruppenmitgliedern Eigenschaftswerte zugeschrieben, anhand derer die Algorithmen eine Heterogenität berechnen. Ergebnis des Algorithmus sind mehrere heterogene Gruppenzusammensetzungen. 
 
+Anwendungsbereiche liegen unter anderem in der Bildungsarbeit. Eine Seminarleiterin oder ein Seminarleiter kann mit diesem Algorithmus anhand einiger Merkmale gezielt heterogene Gruppenzusammensetzungen berechnen lassen. Auch Lehrer und Lehrerinnen können dies nutzen um diverse Gruppen berechnen zu lassen, die möglichst gleich groß sind. Diversität bringt einerseits neue Lernpotenziale in die Gruppen und anderseits kann es die Bildung von Toleranz fördern, dadurch dass sie dadurch gefordert wird.
+
 ## Installation 
 Dieses Modul kann ohne weiteres in NodeJS Projekten eingebunden werden. Dies setzt eine [NodeJS](https://nodejs.org/en/download/) Laufzeitumgebung voraus.  
 
