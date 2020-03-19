@@ -1,6 +1,6 @@
 {
   "name": "diversibute",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Dieses Modul ermittelt möglichst heterogene Untergruppen anhand skalarer Eigenschaftswerte von Gruppenmitgliedern.",
   "main": "index.js",
   "scripts": {
