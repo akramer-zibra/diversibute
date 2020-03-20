@@ -15,7 +15,7 @@
     "geneticalgorithm": "1.0.2",
     "euclidean-distance": "1.0.0",
     "js-combinatorics": "0.5.5",
-    "skmeans": "0.11.2"
+    "skmeans": "0.11.3"
   },
   "devDependencies": {
     "chai": "4.2.0",
