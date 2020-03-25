@@ -10,7 +10,7 @@
     "test-ci": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --recursive"
   },
   "author": "Achim Kramer <achim@zibra.de>",
-  "license": "GNU-GPLv3",
+  "license": "GPL-3.0",
   "dependencies": {
     "geneticalgorithm": "1.0.2",
     "euclidean-distance": "1.0.0",
